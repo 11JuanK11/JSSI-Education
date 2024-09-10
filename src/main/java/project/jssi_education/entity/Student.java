@@ -1,5 +1,8 @@
 package project.jssi_education.entity;
 
-public class Student {
+import jakarta.persistence.Entity;
+
+@Entity
+public class Student extends User{
 
 }
