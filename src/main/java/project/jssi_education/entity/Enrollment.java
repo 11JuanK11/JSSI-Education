@@ -3,10 +3,9 @@ package project.jssi_education.entity;
 import jakarta.persistence.Entity;
 
 @Entity
-public class Schedule {
+public class Enrollment {
     
-    private int schedule;
+    private int enrolmentId;
     private Course course;
-    private String timeslot;  
-    
+    private Student student;
 }
