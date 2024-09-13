@@ -178,3 +178,48 @@ a {
     flex-direction: column;
     gap: 20px;
 }
+
+footer {
+    background-color: #9DB2BF;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    height: auto;
+    font-family: "Rubik", system-ui;
+    font-size: 15px;
+    color: #27374D;
+}
+
+.left-part {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.left-part > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.left-part div img {
+    height: 90px;
+    width: auto;
+}
+
+.left-part div p {
+    margin: 0;
+}
+
+.left-part div p a {
+    text-decoration: none;
+    color: #27374D;
+}
+
+.right-part {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
