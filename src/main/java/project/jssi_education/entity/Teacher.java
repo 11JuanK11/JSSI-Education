@@ -1,7 +1,10 @@
 package project.jssi_education.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,7 +20,7 @@ public class Teacher{
     @JoinColumn(name = "employment_contract_id")
     private EmploymentContract employmentContract;
 
-    @ManyToOne
-    @JoinColumn(name = "offer_id", nullable = false)
-    private Offer offer;
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<Offer> offers;
 }
