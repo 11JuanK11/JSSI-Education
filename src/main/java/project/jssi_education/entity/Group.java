@@ -10,18 +10,22 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "group")
+@Table(name = "user_group")
 public class Group implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long groupId;
 
-    private Teacher teacher;
     private LocalTime starTime;
     private LocalTime endTime;
     private int numberStudents;
     private String classroom;
+
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", nullable = false)
+    private Teacher teacher;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
