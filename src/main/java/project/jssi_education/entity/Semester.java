@@ -13,7 +13,7 @@ public class Semester {
     private Long id;
     private int Semester;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "semester", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<Course> courses;
 }
