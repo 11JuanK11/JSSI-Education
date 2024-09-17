@@ -1,7 +1,5 @@
 package project.jssi_education.entity;
 
-import java.time.LocalTime;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,18 +8,11 @@ import lombok.Data;
 
 @Entity
 @Data
-
-public class Group {
-    
+public class Degree {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long groupId;
-
-    private Teacher teacher;
-    private LocalTime starTime;
-    private LocalTime endTime;
-    private int numberStudents;
-    private String classroom;
+    private Long id;
+    private String name;
 
 
 }
