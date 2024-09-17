@@ -2,10 +2,7 @@ package project.jssi_education.entity;
 
 import java.util.ArrayList;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -18,5 +15,9 @@ public class Grade {
     private Long gradeId;
     
     private ArrayList<Float> score;
-    private boolean status;
+    private Boolean status;
+
+    @ManyToOne
+    @JoinColumn(name = "group_has_student_id", nullable = false)
+    private GroupStudent group_has_student;
 }
