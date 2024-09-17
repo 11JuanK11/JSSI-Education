@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Entity
 @Data
-
+@Table(name = "group")
 public class Group {
     
     @Id
