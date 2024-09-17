@@ -24,4 +24,8 @@ public class Teacher implements Serializable {
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<Offer> offers;
+
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<Group> groups;
 }
