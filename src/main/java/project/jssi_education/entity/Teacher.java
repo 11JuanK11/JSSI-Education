@@ -16,4 +16,8 @@ public class Teacher{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employment_contract_id")
     private EmploymentContract employmentContract;
+
+    @ManyToOne
+    @JoinColumn(name = "offer_id", nullable = false)
+    private Offer offer;
 }

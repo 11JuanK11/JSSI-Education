@@ -26,5 +26,7 @@ public class Group {
     @JsonIgnore
     private Set<GroupStudent> group_has_student;
 
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Offer_id")
+    private Offer offer;
 }
