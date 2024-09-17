@@ -3,16 +3,20 @@ package project.jssi_education.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Set;
-
 @Entity
 @Data
-public class Degree {
+public class DegreeCourse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
 
-    @OneToMany(mappedBy = "degree")
-    private Set<DegreeCourse> degreeCourses;
+    @ManyToOne
+    @JoinColumn(name = "degree_id")
+    private Degree degree;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
+
+
 }
