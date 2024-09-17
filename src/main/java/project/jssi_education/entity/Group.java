@@ -1,11 +1,10 @@
 package project.jssi_education.entity;
 
 import java.time.LocalTime;
+import java.util.Set;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -22,6 +21,10 @@ public class Group {
     private LocalTime endTime;
     private int numberStudents;
     private String classroom;
+
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<GroupStudent> group_has_student;
 
 
 }

@@ -2,10 +2,7 @@ package project.jssi_education.entity;
 
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -18,4 +15,8 @@ public class Attendance {
     private Long attendanceId;
     private Date date;
     private boolean status;
+
+    @ManyToOne
+    @JoinColumn(name = "group_has_student_id", nullable = false)
+    private GroupStudent group_has_student;
 }
