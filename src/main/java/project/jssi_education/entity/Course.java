@@ -17,8 +17,11 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long courseId;
     private String courseName;
-    private HashMap<Date, LocalTime> offers;
 
     @OneToMany(mappedBy = "course")
     private Set<DegreeCourse> degreeCourses;
+
+    @ManyToOne
+    @JoinColumn(name = "semester_id", nullable = false)
+    private Semester semester;
 }
