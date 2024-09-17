@@ -1,5 +1,6 @@
 package project.jssi_education.entity;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "course")
-public class Course {
+public class Course implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

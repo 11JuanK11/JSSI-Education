@@ -1,5 +1,6 @@
 package project.jssi_education.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import jakarta.persistence.*;
@@ -8,7 +9,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "grade")
-public class Grade {
+public class Grade implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
