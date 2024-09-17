@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Data
 @Table(name = "student")
-public class Student {
+public class Student implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

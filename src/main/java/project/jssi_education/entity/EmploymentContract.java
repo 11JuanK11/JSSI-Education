@@ -3,12 +3,13 @@ package project.jssi_education.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
 @Data
 @Table(name = "employment_contract")
-public class EmploymentContract {
+public class EmploymentContract implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
