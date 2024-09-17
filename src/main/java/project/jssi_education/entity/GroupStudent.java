@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-
+@Table(name = "group_student")
 public class GroupStudent {
 
     @Id

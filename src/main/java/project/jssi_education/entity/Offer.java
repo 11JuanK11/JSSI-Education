@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
+@Table(name = "offer")
 public class Offer {
 
     @Id
