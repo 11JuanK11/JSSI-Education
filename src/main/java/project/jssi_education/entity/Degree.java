@@ -1,5 +1,6 @@
 package project.jssi_education.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,4 +18,8 @@ public class Degree implements Serializable {
 
     @OneToMany(mappedBy = "degree")
     private Set<DegreeCourse> degreeCourses;
+
+    @OneToMany(mappedBy = "degree", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<Student> students;
 }
