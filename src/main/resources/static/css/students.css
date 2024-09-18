@@ -1,9 +1,7 @@
-/* Aplica la fuente a todo el documento */
 * {
     font-family: 'Inter', sans-serif !important;
 }
 
-/* Ajustes de la barra de navegación */
 .navbar {
     padding: 0 !important;
 }
@@ -27,7 +25,6 @@
     background-color: #9DB2BF !important;
 }
 
-/* Ajustes para el main */
 main {
     display: flex;
     flex-direction: row;
