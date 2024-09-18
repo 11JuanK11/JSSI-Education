@@ -20,8 +20,8 @@ public class Student implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "degree_id")
+    @ManyToOne
+    @JoinColumn(name = "degree_id", nullable = false)
     private Degree degree;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
