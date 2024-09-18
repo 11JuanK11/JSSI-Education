@@ -20,16 +20,4 @@ public class User implements Serializable {
     private String email;
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "student_id")
-    private Student student;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "manager_id")
-    private Manager manager;
-
 }

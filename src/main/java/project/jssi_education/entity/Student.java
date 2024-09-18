@@ -17,6 +17,10 @@ public class Student implements Serializable {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "degree_id")
     private Degree degree;
 

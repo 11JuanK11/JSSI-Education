@@ -18,6 +18,10 @@ public class Teacher implements Serializable {
     private String specialization;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employment_contract_id")
     private EmploymentContract employmentContract;
 
