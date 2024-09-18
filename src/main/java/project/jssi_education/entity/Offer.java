@@ -17,10 +17,6 @@ public class Offer implements Serializable {
     private String hour;
     private String classroom;
 
-    @ManyToOne
-    @JoinColumn(name = "teacher_id", nullable = false)
-    private Teacher teacher;
-
     @ManyToMany
     @JoinTable(
             name = "offer_dayweek",
