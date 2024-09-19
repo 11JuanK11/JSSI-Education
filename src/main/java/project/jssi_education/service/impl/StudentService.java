@@ -62,6 +62,15 @@ public class StudentService implements IStudentService {
     }
 
     @Override
+    public void deleteByIdNumber(int idNumber) throws ResourceNotFoundException {
+        Student student = studentRepository.findByUserIdNumber(idNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with idNumber: " + idNumber));
+        studentRepository.delete(student);
+    }
+
+
+
+    @Override
     public void update(Long id, Student student) throws ResourceNotFoundException {
         Student existingStudent = FindbyId(id);
         if (student.getUser() != null) {
@@ -94,6 +103,48 @@ public class StudentService implements IStudentService {
 
         studentRepository.save(existingStudent);
     }
+
+    @Override
+    public void updateByIdNumber(int idNumber, Student student) throws ResourceNotFoundException {
+        // Buscar al estudiante existente a través de su idNumber (asociado al User)
+        Student existingStudent = studentRepository.findByUserIdNumber(idNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with idNumber: " + idNumber));
+
+        // Actualizar la información del usuario si se proporciona
+        if (student.getUser() != null) {
+            User userToUpdate = existingStudent.getUser();
+
+            if (student.getUser().getName() != null) {
+                userToUpdate.setName(student.getUser().getName());
+            }
+            if (student.getUser().getLastname() != null) {
+                userToUpdate.setLastname(student.getUser().getLastname());
+            }
+            if (student.getUser().getUserName() != null) {
+                userToUpdate.setUserName(student.getUser().getUserName());
+            }
+            if (student.getUser().getEmail() != null) {
+                userToUpdate.setEmail(student.getUser().getEmail());
+            }
+            if (student.getUser().getPassword() != null) {
+                userToUpdate.setPassword(student.getUser().getPassword());
+            }
+
+            existingStudent.setUser(userToUpdate);
+        }
+
+        // Actualizar la información del grado si se proporciona
+        if (student.getDegree() != null && student.getDegree().getId() != null) {
+            Degree degreeToUpdate = degreeRepository.findById(student.getDegree().getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Degree not found with id: " + student.getDegree().getId()));
+            existingStudent.setDegree(degreeToUpdate);
+        }
+
+        // Guardar los cambios
+        studentRepository.save(existingStudent);
+    }
+
+
 
 
 }
