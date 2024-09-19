@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-@Entity
 @Data
 @Table(name = "schedule")
 public class Schedule implements Serializable {
