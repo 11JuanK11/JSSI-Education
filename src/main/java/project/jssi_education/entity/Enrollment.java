@@ -6,7 +6,6 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-@Table(name = "enrollment")
 public class Enrollment implements Serializable {
 
     @Id

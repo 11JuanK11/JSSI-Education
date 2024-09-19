@@ -6,7 +6,6 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-@Table(name = "schedule")
 public class Schedule implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
