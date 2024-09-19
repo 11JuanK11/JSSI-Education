@@ -1,12 +1,14 @@
 package project.jssi_education.service;
 
 import project.jssi_education.entity.Student;
+import project.jssi_education.exception.ResourceNotFoundException;
 
 import java.util.List;
 
 public interface IStudentService {
-    public Student FindbyId(Long id);
+    public Student FindbyId(Long id) throws ResourceNotFoundException ;
     public List<Student> FindAll();
-    public void Insert(Student student);
+    public void Insert(Student student) throws ResourceNotFoundException;
+    public void deleteById(Long id) throws ResourceNotFoundException;
 
 }

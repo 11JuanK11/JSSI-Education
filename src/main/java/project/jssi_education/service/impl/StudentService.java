@@ -52,4 +52,13 @@ public class StudentService implements IStudentService {
         studentRepository.save(student);
     }
 
+    @Override
+    public void deleteById(Long id) throws ResourceNotFoundException {
+        if (!studentRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Student not found with id: " + id);
+        }
+        studentRepository.deleteById(id);
+    }
+
+
 }
