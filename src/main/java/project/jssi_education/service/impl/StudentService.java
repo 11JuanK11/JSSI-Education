@@ -24,13 +24,9 @@ public class StudentService implements IStudentService {
     private IDegreeRepository degreeRepository;
 
     @Override
-    public Student FindbyId(Long id){
-        for (Student student: studentRepository.findAll()){
-            if (student.getId().equals(id)){
-                return student;
-            }
-        }
-        return null;
+    public Student FindbyId(Long id) throws ResourceNotFoundException {
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
     }
 
     @Override
@@ -55,5 +51,14 @@ public class StudentService implements IStudentService {
         student.setUser(user);
         studentRepository.save(student);
     }
+
+    @Override
+    public void deleteById(Long id) throws ResourceNotFoundException {
+        if (!studentRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Student not found with id: " + id);
+        }
+        studentRepository.deleteById(id);
+    }
+
 
 }
