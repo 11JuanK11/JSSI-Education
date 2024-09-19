@@ -19,6 +19,6 @@ public class Grade implements Serializable {
     private Boolean status;
 
     @ManyToOne
-    @JoinColumn(name = "group_has_student_id", nullable = false)
-    private GroupCourse group_has_student;
+    @JoinColumn(name = "group_has_course_id", nullable = false)
+    private GroupCourse group_has_course;
 }
