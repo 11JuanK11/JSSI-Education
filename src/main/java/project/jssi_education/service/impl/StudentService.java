@@ -62,6 +62,15 @@ public class StudentService implements IStudentService {
     }
 
     @Override
+    public void deleteByIdNumber(int idNumber) throws ResourceNotFoundException {
+        Student student = studentRepository.findByUserIdNumber(idNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with idNumber: " + idNumber));
+        studentRepository.delete(student);
+    }
+
+
+
+    @Override
     public void update(Long id, Student student) throws ResourceNotFoundException {
         Student existingStudent = FindbyId(id);
         if (student.getUser() != null) {

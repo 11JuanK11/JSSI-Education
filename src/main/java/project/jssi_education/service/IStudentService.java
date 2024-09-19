@@ -10,6 +10,7 @@ public interface IStudentService {
     public List<Student> FindAll();
     public void Insert(Student student) throws ResourceNotFoundException;
     public void deleteById(Long id) throws ResourceNotFoundException;
+    public void deleteByIdNumber(int idNumber) throws ResourceNotFoundException;
     public void update(Long id, Student student) throws ResourceNotFoundException;
 
 }
