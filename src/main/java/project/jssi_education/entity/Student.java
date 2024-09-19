@@ -24,8 +24,4 @@ public class Student implements Serializable {
     @JoinColumn(name = "degree_id", nullable = false)
     private Degree degree;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private Set<GroupCourse> group_has_student;
-
 }

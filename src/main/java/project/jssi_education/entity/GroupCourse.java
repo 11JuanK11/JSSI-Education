@@ -19,8 +19,8 @@ public class GroupCourse implements Serializable {
     private Group group;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", nullable = false)
-    private Student student;
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
 
     @OneToMany(mappedBy = "group_has_student", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
