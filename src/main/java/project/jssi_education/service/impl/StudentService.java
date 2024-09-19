@@ -2,6 +2,7 @@ package project.jssi_education.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.jssi_education.entity.Degree;
 import project.jssi_education.entity.Student;
 import project.jssi_education.entity.User;
 import project.jssi_education.exception.ResourceNotFoundException;
@@ -58,6 +59,40 @@ public class StudentService implements IStudentService {
             throw new ResourceNotFoundException("Student not found with id: " + id);
         }
         studentRepository.deleteById(id);
+    }
+
+    @Override
+    public void update(Long id, Student student) throws ResourceNotFoundException {
+        Student existingStudent = FindbyId(id);
+        if (student.getUser() != null) {
+            User userToUpdate = existingStudent.getUser();
+
+            if (student.getUser().getName() != null) {
+                userToUpdate.setName(student.getUser().getName());
+            }
+            if (student.getUser().getLastname() != null) {
+                userToUpdate.setLastname(student.getUser().getLastname());
+            }
+            if (student.getUser().getUserName() != null) {
+                userToUpdate.setUserName(student.getUser().getUserName());
+            }
+            if (student.getUser().getEmail() != null) {
+                userToUpdate.setEmail(student.getUser().getEmail());
+            }
+            if (student.getUser().getPassword() != null) {
+                userToUpdate.setPassword(student.getUser().getPassword());
+            }
+
+            existingStudent.setUser(userToUpdate);
+        }
+
+        if (student.getDegree() != null && student.getDegree().getId() != null) {
+            Degree degreeToUpdate = degreeRepository.findById(student.getDegree().getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Degree not found with id: " + student.getDegree().getId()));
+            existingStudent.setDegree(degreeToUpdate);
+        }
+
+        studentRepository.save(existingStudent);
     }
 
 
