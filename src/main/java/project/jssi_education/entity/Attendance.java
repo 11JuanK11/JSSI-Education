@@ -18,6 +18,6 @@ public class Attendance implements Serializable {
     private boolean status;
 
     @ManyToOne
-    @JoinColumn(name = "group_has_student_id", nullable = false)
-    private GroupStudent group_has_student;
+    @JoinColumn(name = "group_has_course_id", nullable = false)
+    private GroupCourse group_has_course;
 }
