@@ -26,6 +26,6 @@ public class Student implements Serializable {
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private Set<GroupStudent> group_has_student;
+    private Set<GroupCourse> group_has_student;
 
 }

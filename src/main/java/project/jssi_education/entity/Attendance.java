@@ -19,5 +19,5 @@ public class Attendance implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "group_has_student_id", nullable = false)
-    private GroupStudent group_has_student;
+    private GroupCourse group_has_student;
 }

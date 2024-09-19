@@ -29,7 +29,7 @@ public class Group implements Serializable {
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private Set<GroupStudent> group_has_student;
+    private Set<GroupCourse> group_has_student;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Offer_id")
