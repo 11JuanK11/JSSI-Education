@@ -15,6 +15,7 @@ public class StudentService implements IStudentService {
     @Autowired
     private IStudentRepository repo;
 
+    @Override
     public Student FindbyId(Long id){
         for (Student student: repo.findAll()){
             if (student.getId().equals(id)){
@@ -24,10 +25,12 @@ public class StudentService implements IStudentService {
         return null;
     }
 
+    @Override
     public List<Student> FindAll(){
         return repo.findAll();
     }
 
+    @Override
     public void Insert(Student student){
         repo.save(student);
     }
