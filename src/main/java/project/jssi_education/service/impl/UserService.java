@@ -12,7 +12,7 @@ import java.util.List;
 public class UserService implements IUserService{
     @Autowired
     private IUserRepository repo;
-
+    @Override
     public User FindbyId(Long id){
         for (User user: repo.findAll()){
             if (user.getId().equals(id)){
@@ -21,11 +21,11 @@ public class UserService implements IUserService{
         }
         return null;
     }
-
+    @Override
     public List<User> FindAll(){
         return repo.findAll();
     }
-
+    @Override
     public void Insert(User user){
         repo.save(user);
     }
