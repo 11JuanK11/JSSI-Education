@@ -22,7 +22,8 @@ public class TeacherService implements ITeacherService {
 
     @Override
     public Teacher findbyId(Long id) throws ResourceNotFoundException {
-        return teacherRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Teacher not found with id: " + id));
+        return teacherRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found with id: " + id));
     }
 
     @Override
@@ -31,14 +32,19 @@ public class TeacherService implements ITeacherService {
     }
 
     @Override
-    public Teacher insert(Teacher teacher) throws ResourceNotFoundException {
-        if (teacher.getUser() == null || teacher.getUser().getId() == null) {
+    public Teacher insert(Teacher teacher) {
+        if (teacher.getUser() == null) {
             throw new ResourceNotFoundException("User information is missing.");
         }
-        User user = userRepository.findById(teacher.getUser().getId()).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + teacher.getUser().getId()));
-        teacher.setUser(user);
 
-        return teacherRepository.save(teacher);
+        // Crear el nuevo usuario
+        User newUser = teacher.getUser();
+        User savedUser = userRepository.save(newUser); // Guardamos el usuario primero
+
+        // Asignar el usuario guardado al teacher
+        teacher.setUser(savedUser);
+
+        return teacherRepository.save(teacher); // Guardar el teacher
     }
 
     @Override
@@ -53,29 +59,31 @@ public class TeacherService implements ITeacherService {
     public Teacher update(Long id, Teacher teacher) throws ResourceNotFoundException {
         Teacher existingTeacher = findbyId(id);
 
+        // Actualiza el usuario si es necesario
         if (teacher.getUser() != null) {
-            User userToUpdate = existingTeacher.getUser();
+            User existingUser = existingTeacher.getUser();
+            User userToUpdate = teacher.getUser();
 
-            if (teacher.getUser().getIdNumber()>0) {
-                userToUpdate.setIdNumber(teacher.getUser().getIdNumber());
+            if (userToUpdate.getIdNumber() > 0) {
+                existingUser.setIdNumber(userToUpdate.getIdNumber());
             }
-            if (teacher.getUser().getName() != null) {
-                userToUpdate.setName(teacher.getUser().getName());
+            if (userToUpdate.getName() != null) {
+                existingUser.setName(userToUpdate.getName());
             }
-            if (teacher.getUser().getLastname() != null) {
-                userToUpdate.setLastname(teacher.getUser().getLastname());
+            if (userToUpdate.getLastname() != null) {
+                existingUser.setLastname(userToUpdate.getLastname());
             }
-            if (teacher.getUser().getUserName() != null) {
-                userToUpdate.setUserName(teacher.getUser().getUserName());
+            if (userToUpdate.getUserName() != null) {
+                existingUser.setUserName(userToUpdate.getUserName());
             }
-            if (teacher.getUser().getEmail() != null) {
-                userToUpdate.setEmail(teacher.getUser().getEmail());
+            if (userToUpdate.getEmail() != null) {
+                existingUser.setEmail(userToUpdate.getEmail());
             }
-            if (teacher.getUser().getPassword() != null) {
-                userToUpdate.setPassword(teacher.getUser().getPassword());
+            if (userToUpdate.getPassword() != null) {
+                existingUser.setPassword(userToUpdate.getPassword());
             }
 
-            existingTeacher.setUser(userToUpdate);
+            existingTeacher.setUser(existingUser);
         }
 
         if (teacher.getSpecialization() != null) {
@@ -84,8 +92,4 @@ public class TeacherService implements ITeacherService {
 
         return teacherRepository.save(existingTeacher);
     }
-
-
-
-
 }
