@@ -13,7 +13,7 @@ import java.util.List;
 public class DegreeService implements IDegreeService {
     @Autowired
     private IDegreeRepository repo;
-
+    @Override
     public Degree findById(Long id) throws ResourceNotFoundException{
         for (Degree degree : repo.findAll()) {
             if (degree.getId().equals(id)) {
@@ -22,11 +22,11 @@ public class DegreeService implements IDegreeService {
         }
         throw new ResourceNotFoundException("Degree with id " + id + " not found.");
     }
-
+    @Override
     public List<Degree> FindAll(){
         return repo.findAll();
     }
-
+    @Override
     public void Insert(Degree degree){
         repo.save(degree);
     }
