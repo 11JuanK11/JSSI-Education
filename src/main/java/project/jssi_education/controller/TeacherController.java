@@ -42,15 +42,10 @@ public class TeacherController {
     @PostMapping("/")
     public ResponseEntity<?> insert(@RequestBody Teacher teacher) {
         try {
-            if (teacher.getUser() == null || teacher.getUser().getId() == null) {
-                return new ResponseEntity<>("User information is missing.", HttpStatus.BAD_REQUEST);
-            }
-            User userAux = userService.FindbyId(teacher.getUser().getId());
-            teacher.setUser(userAux);
             Teacher createdTeacher = teacherService.insert(teacher);
             return new ResponseEntity<>(createdTeacher, HttpStatus.CREATED);
         } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception ex) {
             return new ResponseEntity<>("An error occurred while creating the teacher.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
