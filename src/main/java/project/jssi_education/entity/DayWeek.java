@@ -1,11 +1,13 @@
 package project.jssi_education.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "day_week")
 public class DayWeek implements Serializable {
@@ -15,6 +17,7 @@ public class DayWeek implements Serializable {
     private Long id;
     private String day;
 
-    @ManyToMany(mappedBy = "dayWeeks")
-    private Set<Offer> offers = new HashSet<>();
+    @OneToMany(mappedBy = "dayWeek", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<OfferDayWeek> offerDayWeeks;
 }

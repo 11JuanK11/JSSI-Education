@@ -16,9 +16,6 @@ public class Group implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long groupId;
-
-    private LocalTime starTime;
-    private LocalTime endTime;
     private int numberStudents;
     private String classroom;
 
