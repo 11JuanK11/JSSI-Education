@@ -11,65 +11,66 @@ window.addEventListener("load", function () {
     }
 
 // ---------------------------------------------- findAll -------------------------------------------------
-    findAllBtn.addEventListener('click', function () {
-        const url = '/teachers/';
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(teachers => {
-                renderTeacherList(teachers);
-            })
-            .catch(error => {
-                alert('Error fetching teachers: ' + error.message);
-                console.error(error);
-            });
-    });
+findAllBtn.addEventListener('click', function () {
+    const url = '/teachers/';
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(teachers => {
+            renderTeacherList(teachers);
+        })
+        .catch(error => {
+            alert('Error fetching teachers: ' + error.message);
+            console.error(error);
+        });
+});
 
-    function renderTeacherList(teachers) {
-        const formContainer = document.getElementById('formContainer');
-        formContainer.innerHTML = `<h2><strong>List of Teachers</strong></h2>`;
+function renderTeacherList(teachers) {
+    const formContainer = document.getElementById('formContainer');
+    formContainer.innerHTML = `<h2><strong>List of Teachers</strong></h2>`;
 
-        if (teachers.length === 0) {
-            formContainer.innerHTML += '<p>No teachers found.</p>';
-            return;
-        }
-
-        const table = `
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>ID Number</th> <!-- Agregando columna para el ID Number -->
-                        <th>Name</th>
-                        <th>Lastname</th>
-                        <th>Username</th> <!-- Agregando columna para el Username -->
-                        <th>Email</th>
-                        <th>Specialization</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${teachers.map(teacher => `
-                        <tr>
-                            <td>${teacher.id}</td>
-                            <td>${teacher.user.idNumber}</td> <!-- Mostrar ID Number -->
-                            <td>${teacher.user.name}</td>
-                            <td>${teacher.user.lastname}</td>
-                            <td>${teacher.user.userName}</td> <!-- Mostrar Username -->
-                            <td>${teacher.user.email}</td>
-                            <td>${teacher.specialization}</td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        `;
-
-        formContainer.innerHTML += table;
+    if (teachers.length === 0) {
+        formContainer.innerHTML += '<p>No teachers found.</p>';
+        return;
     }
 
+    const table = `
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ID Number</th>
+                    <th>Name</th>
+                    <th>Lastname</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Specialization</th>
+                    <th>Password</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${teachers.map(teacher => `
+                    <tr>
+                        <td>${teacher.id}</td>
+                        <td>${teacher.user.idNumber}</td>
+                        <td>${teacher.user.name}</td>
+                        <td>${teacher.user.lastname}</td>
+                        <td>${teacher.user.userName}</td>
+                        <td>${teacher.user.email}</td>
+                        <td>${teacher.specialization}</td>
+                        <td>${teacher.user.password}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+
+    formContainer.innerHTML += table;
+}
 
 
 // ---------------------------------------------- create ----------------------------------------------
@@ -166,9 +167,9 @@ searchBtn.addEventListener('click', function () {
 
     document.getElementById("searchTeacherForm").onsubmit = function (e) {
         e.preventDefault();
-        const id = document.querySelector('#idInput').value;
+        const idNumber = document.querySelector('#idInput').value;
 
-        const url = `/teachers/${id}`;
+        const url = `/teachers/${idNumber}`;
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -196,6 +197,7 @@ searchBtn.addEventListener('click', function () {
     };
 });
 
+
 // ---------------------------------------------- Delete ----------------------------------------------
 deleteBtn.addEventListener('click', function () {
     renderForm(`
@@ -212,9 +214,9 @@ deleteBtn.addEventListener('click', function () {
 
     document.getElementById("deleteTeacherForm").onsubmit = function (e) {
         e.preventDefault();
-        const id = document.querySelector('#idInput').value;
+        const idNumber = document.querySelector('#idInput').value;
 
-        const url = `/teachers/${id}`;
+        const url = `/teachers/${idNumber}`;
         const settings = {
             method: 'DELETE'
         };
@@ -250,9 +252,9 @@ updateBtn.addEventListener('click', function () {
 
     document.getElementById("searchTeacherForm").onsubmit = function (e) {
         e.preventDefault();
-        const id = document.querySelector('#idInput').value;
+        const idNumber = document.querySelector('#idInput').value;
 
-        const url = `/teachers/${id}`;
+        const url = `/teachers/${idNumber}`;
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -277,6 +279,15 @@ updateBtn.addEventListener('click', function () {
                             <div class="mb-3">
                                 <input type="text" class="form-control" id="specializationInput" value="${teacher.specialization}" required>
                             </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="usernameInput" value="${teacher.user.userName}" placeholder="Enter username" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="idNumberInput" value="${teacher.user.idNumber}" placeholder="Enter ID number" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" id="passwordInput" placeholder="Enter new password (leave empty if not changing)">
+                            </div>
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                     </div>
@@ -289,12 +300,19 @@ updateBtn.addEventListener('click', function () {
                         user: {
                             name: document.querySelector('#nameInput').value,
                             lastname: document.querySelector('#lastnameInput').value,
-                            email: document.querySelector('#emailInput').value
+                            email: document.querySelector('#emailInput').value,
+                            userName: document.querySelector('#usernameInput').value,
+                            idNumber: document.querySelector('#idNumberInput').value, 
+                            password: document.querySelector('#passwordInput').value
                         },
                         specialization: document.querySelector('#specializationInput').value
                     };
 
-                    const url = `/teachers/${id}`;
+                    if (!updatedData.user.password) {
+                        delete updatedData.user.password;
+                    }
+
+                    const updateUrl = `/teachers/${idNumber}`;
                     const settings = {
                         method: 'PUT',
                         headers: {
@@ -303,7 +321,7 @@ updateBtn.addEventListener('click', function () {
                         body: JSON.stringify(updatedData)
                     };
 
-                    fetch(url, settings)
+                    fetch(updateUrl, settings)
                         .then(response => {
                             if (!response.ok) {
                                 throw new Error('Error updating teacher');
@@ -325,6 +343,7 @@ updateBtn.addEventListener('click', function () {
             });
     };
 });
+
 
 
 });
