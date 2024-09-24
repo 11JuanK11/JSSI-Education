@@ -16,7 +16,7 @@ public class Group implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long groupId;
-    private int numberStudents;
+    private Integer numberStudents;
     private String classroom;
 
 
