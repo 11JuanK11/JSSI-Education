@@ -1,6 +1,7 @@
 package project.jssi_education.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.jssi_education.entity.User;
 import project.jssi_education.repository.IUserRepository;
@@ -11,10 +12,11 @@ import java.util.List;
 @Service
 public class UserService implements IUserService{
     @Autowired
-    private IUserRepository repo;
+    private IUserRepository userRepository;
+
     @Override
-    public User FindbyId(Long id){
-        for (User user: repo.findAll()){
+    public User findbyId(Long id){
+        for (User user: userRepository.findAll()){
             if (user.getId().equals(id)){
                 return user;
             }
@@ -22,12 +24,12 @@ public class UserService implements IUserService{
         return null;
     }
     @Override
-    public List<User> FindAll(){
-        return repo.findAll();
+    public List<User> findAll(){
+        return userRepository.findAll();
     }
     @Override
-    public void Insert(User user){
-        repo.save(user);
+    public void insert(User user){
+        userRepository.save(user);
     }
 
 }

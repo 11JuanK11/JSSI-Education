@@ -7,10 +7,10 @@ import project.jssi_education.exception.ResourceNotFoundException;
 import java.util.List;
 
 public interface IOfferService {
-    public Offer FindById(Long id) throws ResourceNotFoundException;
-    public List<Offer> FindAll();
-    public void Insert(Offer offer) throws ResourceNotFoundException;
+    public Offer findById(Long id) throws ResourceNotFoundException;
+    public List<Offer> findAll();
+    public void insert(Offer offer) throws ResourceNotFoundException;
     public void deleteById(Long id) throws ResourceNotFoundException;
-    public void Update(Long id, Offer offer) throws ResourceNotFoundException;
+    public void update(Long id, Offer offer) throws ResourceNotFoundException;
 
 }

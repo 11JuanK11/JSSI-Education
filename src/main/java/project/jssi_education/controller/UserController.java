@@ -18,17 +18,17 @@ public class UserController {
 
     @GetMapping("/")
     public List<User> findAll(){
-        return userService.FindAll();
+        return userService.findAll();
     }
 
     @GetMapping("/{id}")
     public User findOne(@PathVariable Long id){
-        return userService.FindbyId(id);
+        return userService.findbyId(id);
     }
 
     @PostMapping("/")
     public void insert(@RequestBody User user){
-        userService.Insert(user);
+        userService.insert(user);
     }
 
 

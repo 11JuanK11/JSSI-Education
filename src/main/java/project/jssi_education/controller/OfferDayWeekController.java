@@ -27,13 +27,13 @@ public class OfferDayWeekController {
 
     @GetMapping("/")
     public List<OfferDayWeek> findAll(){
-        return offerDayWeekService.FindAll();
+        return offerDayWeekService.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findOne(@PathVariable Long id) {
         try {
-            OfferDayWeek offerDayWeek = offerDayWeekService.FindById(id);
+            OfferDayWeek offerDayWeek = offerDayWeekService.findById(id);
             return new ResponseEntity<>(offerDayWeek, HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.NOT_FOUND);
@@ -45,9 +45,9 @@ public class OfferDayWeekController {
     @PostMapping("/")
     public ResponseEntity<String> Insert(@RequestBody OfferDayWeek offerDayWeek) {
         try {
-            Offer offer = offerService.FindById(offerDayWeek.getOffer().getId());
+            Offer offer = offerService.findById(offerDayWeek.getOffer().getId());
             offerDayWeek.setOffer(offer);
-            offerDayWeekService.Insert(offerDayWeek);
+            offerDayWeekService.insert(offerDayWeek);
             return new ResponseEntity<>("Offer Day Week successfully created.", HttpStatus.CREATED);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -71,7 +71,7 @@ public class OfferDayWeekController {
     @PutMapping("/{id}")
     public ResponseEntity<String> Update(@PathVariable Long id, @RequestBody OfferDayWeek offerDayWeek) {
         try {
-            offerDayWeekService.Update(id, offerDayWeek);
+            offerDayWeekService.update(id, offerDayWeek);
             return new ResponseEntity<>("Offer Day Week successfully updated.", HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);

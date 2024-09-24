@@ -6,10 +6,10 @@ import project.jssi_education.exception.ResourceNotFoundException;
 import java.util.List;
 
 public interface IOfferDayWeekService {
-    public OfferDayWeek FindById(Long id) throws ResourceNotFoundException;
-    public List<OfferDayWeek> FindAll();
-    public void Insert(OfferDayWeek offerDayWeek) throws ResourceNotFoundException;
+    public OfferDayWeek findById(Long id) throws ResourceNotFoundException;
+    public List<OfferDayWeek> findAll();
+    public void insert(OfferDayWeek offerDayWeek) throws ResourceNotFoundException;
     public void deleteById(Long id) throws ResourceNotFoundException;
-    public void Update(Long id, OfferDayWeek offerDayWeek) throws ResourceNotFoundException;
+    public void update(Long id, OfferDayWeek offerDayWeek) throws ResourceNotFoundException;
 
 }

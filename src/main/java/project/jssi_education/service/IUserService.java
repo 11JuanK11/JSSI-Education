@@ -5,9 +5,9 @@ import project.jssi_education.entity.User;
 import java.util.List;
 
 public interface IUserService {
-    public User FindbyId(Long id);
+    public User findbyId(Long id);
 
-    public List<User> FindAll();
+    public List<User> findAll();
 
-    public void Insert(User user);
+    public void insert(User user);
 }

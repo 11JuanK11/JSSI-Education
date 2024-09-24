@@ -22,13 +22,13 @@ public class OfferController {
 
     @GetMapping("/")
     public List<Offer> findAll(){
-        return offerService.FindAll();
+        return offerService.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findOne(@PathVariable Long id) {
         try {
-            Offer offer = offerService.FindById(id);
+            Offer offer = offerService.findById(id);
             return new ResponseEntity<>(offer, HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.NOT_FOUND);
@@ -40,7 +40,7 @@ public class OfferController {
     @PostMapping("/")
     public ResponseEntity<String> insert(@RequestBody Offer offer) {
         try {
-            offerService.Insert(offer);
+            offerService.insert(offer);
             return new ResponseEntity<>("Offer successfully created.", HttpStatus.CREATED);
 
         } catch (ResourceNotFoundException ex) {
@@ -65,7 +65,7 @@ public class OfferController {
     @PutMapping("/{id}")
     public ResponseEntity<String> Update(@PathVariable Long id, @RequestBody Offer offer) {
         try {
-            offerService.Update(id, offer);
+            offerService.update(id, offer);
             return new ResponseEntity<>("Offer successfully updated.", HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
