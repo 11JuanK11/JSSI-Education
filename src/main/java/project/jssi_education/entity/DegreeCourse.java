@@ -21,5 +21,11 @@ public class DegreeCourse implements Serializable {
     @JoinColumn(name = "course_id")
     private Course course;
 
+    @Transient
+    private Long degreeId;
+
+    @Transient
+    private Long courseId;
+
 
 }

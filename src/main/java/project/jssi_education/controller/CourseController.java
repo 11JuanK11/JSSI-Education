@@ -5,8 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.jssi_education.entity.Course;
+import project.jssi_education.entity.DegreeCourse;
 import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.service.ICourseService;
+import project.jssi_education.service.IDegreeCourseService;
 
 import java.util.List;
 
@@ -16,6 +18,8 @@ public class CourseController {
 
     @Autowired
     private ICourseService courseService;
+    @Autowired
+    private IDegreeCourseService degreeCourseService;
 
 
     @GetMapping
@@ -33,9 +37,23 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<Course> createCourse(@RequestBody Course course) {
-        Course newCourse = courseService.createCourse(course);
-        return ResponseEntity.ok(newCourse);
+
+        Course createdCourse = courseService.createCourse(course);
+
+        if (course.getDegreeCourses() != null) {
+            for (DegreeCourse degreeCourse : course.getDegreeCourses()) {
+
+                degreeCourse.setCourse(createdCourse);
+
+                if (degreeCourse.getDegree() != null && degreeCourse.getCourse() != null) {
+                    degreeCourseService.createDegreeCourse(degreeCourse);
+                }
+            }
+        }
+
+        return ResponseEntity.ok(createdCourse);
     }
+
 
 
     @PutMapping("/{id}")

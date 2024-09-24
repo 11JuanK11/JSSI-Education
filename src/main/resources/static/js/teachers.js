@@ -302,7 +302,7 @@ updateBtn.addEventListener('click', function () {
                             lastname: document.querySelector('#lastnameInput').value,
                             email: document.querySelector('#emailInput').value,
                             userName: document.querySelector('#usernameInput').value,
-                            idNumber: document.querySelector('#idNumberInput').value, 
+                            idNumber: document.querySelector('#idNumberInput').value,
                             password: document.querySelector('#passwordInput').value
                         },
                         specialization: document.querySelector('#specializationInput').value
