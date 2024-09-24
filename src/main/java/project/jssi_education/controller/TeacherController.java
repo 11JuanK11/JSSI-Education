@@ -27,10 +27,10 @@ public class TeacherController {
         return teacherService.findAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findOne(@PathVariable Long id) {
+    @GetMapping("/{idNumber}")
+    public ResponseEntity<?> findByIdNumber(@PathVariable int idNumber) {
         try {
-            Teacher teacher = teacherService.findbyId(id);
+            Teacher teacher = teacherService.findByTeacherIdNumber(idNumber);
             return new ResponseEntity<>(teacher, HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.NOT_FOUND);
@@ -51,10 +51,10 @@ public class TeacherController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    @DeleteMapping("/{idNumber}")
+    public ResponseEntity<?> deleteByIdNumber(@PathVariable int idNumber) {
         try {
-            teacherService.deleteById(id);
+            teacherService.deleteByTeacherIdNumber(idNumber);
             return new ResponseEntity<>(Map.of("message", "Teacher successfully deleted."), HttpStatus.NO_CONTENT);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.NOT_FOUND);
@@ -63,10 +63,11 @@ public class TeacherController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Teacher teacher) {
+
+    @PutMapping("/{idNumber}")
+    public ResponseEntity<?> update(@PathVariable int idNumber, @RequestBody Teacher teacher) {
         try {
-            Teacher updatedTeacher = teacherService.update(id, teacher);
+            Teacher updatedTeacher = teacherService.update(idNumber, teacher);
             return new ResponseEntity<>(updatedTeacher, HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
