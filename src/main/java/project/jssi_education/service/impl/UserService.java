@@ -12,13 +12,11 @@ import java.util.List;
 @Service
 public class UserService implements IUserService{
     @Autowired
-    private IUserRepository repo;
-
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private IUserRepository userRepository;
 
     @Override
     public User findbyId(Long id){
-        for (User user: repo.findAll()){
+        for (User user: userRepository.findAll()){
             if (user.getId().equals(id)){
                 return user;
             }
@@ -27,11 +25,11 @@ public class UserService implements IUserService{
     }
     @Override
     public List<User> findAll(){
-        return repo.findAll();
+        return userRepository.findAll();
     }
     @Override
     public void insert(User user){
-        repo.save(user);
+        userRepository.save(user);
     }
 
 }
