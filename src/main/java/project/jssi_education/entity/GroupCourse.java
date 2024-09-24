@@ -2,10 +2,12 @@ package project.jssi_education.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "group_student")
 public class GroupCourse implements Serializable {

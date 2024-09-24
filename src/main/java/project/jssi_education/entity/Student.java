@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,5 +23,9 @@ public class Student implements Serializable {
     @ManyToOne
     @JoinColumn(name = "degree_id", nullable = false)
     private Degree degree;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Grade> grades;
 
 }
