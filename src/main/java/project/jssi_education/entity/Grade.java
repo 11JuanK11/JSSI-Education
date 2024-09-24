@@ -15,7 +15,9 @@ public class Grade implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long gradeId;
     
-    private ArrayList<Float> score;
+    private Float testOne;
+    private Float testTwo;
+    private Float followUp;
     private Boolean status;
 
     @ManyToOne
