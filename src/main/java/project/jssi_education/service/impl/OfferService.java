@@ -16,19 +16,19 @@ public class OfferService implements IOfferService {
     private IOfferRepository offerRepository;
 
     @Override
-    public Offer FindById(Long id) throws ResourceNotFoundException {
+    public Offer findById(Long id) throws ResourceNotFoundException {
         return offerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Offer not found with id: " + id));
 
     }
 
     @Override
-    public List<Offer> FindAll() {
+    public List<Offer> findAll() {
         return offerRepository.findAll();
     }
 
     @Override
-    public void Insert(Offer offer) throws ResourceNotFoundException {
+    public void insert(Offer offer) throws ResourceNotFoundException {
         if (offer.getEndTime() == null || offer.getStarTime() == null) {
             throw new ResourceNotFoundException("Offer information is missing.");
         }
@@ -44,8 +44,8 @@ public class OfferService implements IOfferService {
     }
 
     @Override
-    public void Update(Long id, Offer offer) throws ResourceNotFoundException {
-        Offer existingOffer = FindById(id);
+    public void update(Long id, Offer offer) throws ResourceNotFoundException {
+        Offer existingOffer = findById(id);
         if(offer.getStarTime() != null || offer.getEndTime() != null) {
             if (offer.getStarTime() != null) {
                 existingOffer.setStarTime(offer.getStarTime());

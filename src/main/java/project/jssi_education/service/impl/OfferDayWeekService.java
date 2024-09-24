@@ -26,22 +26,22 @@ public class OfferDayWeekService implements IOfferDayWeekService {
 
 
     @Override
-    public OfferDayWeek FindById(Long id) throws ResourceNotFoundException {
+    public OfferDayWeek findById(Long id) throws ResourceNotFoundException {
         return offerDayWeekRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Offer Day Week not found with id: " + id));
     }
 
     @Override
-    public List<OfferDayWeek> FindAll() {
+    public List<OfferDayWeek> findAll() {
         return offerDayWeekRepository.findAll();
     }
 
     @Override
-    public void Insert(OfferDayWeek offerDayWeek) throws ResourceNotFoundException {
+    public void insert(OfferDayWeek offerDayWeek) throws ResourceNotFoundException {
         if (offerDayWeek.getOffer() == null) {
             throw new ResourceNotFoundException("Offer information is missing.");
         }
-        Offer offer = offerService.FindById(offerDayWeek.getOffer().getId());
+        Offer offer = offerService.findById(offerDayWeek.getOffer().getId());
 
         long day_id = offerDayWeek.getDayWeek().getId();
         if (day_id < 1 || day_id > 7)
@@ -59,11 +59,11 @@ public class OfferDayWeekService implements IOfferDayWeekService {
     }
 
     @Override
-    public void Update(Long id, OfferDayWeek offerDayWeek) throws ResourceNotFoundException {
-        OfferDayWeek existingOfferDayWeek = FindById(id);
+    public void update(Long id, OfferDayWeek offerDayWeek) throws ResourceNotFoundException {
+        OfferDayWeek existingOfferDayWeek = findById(id);
         if (offerDayWeek.getOffer() != null && offerDayWeek.getOffer().getId() != null) {
 
-            Offer offerToUpdate = offerService.FindById(offerDayWeek.getOffer().getId());
+            Offer offerToUpdate = offerService.findById(offerDayWeek.getOffer().getId());
 
             existingOfferDayWeek.setOffer(offerToUpdate);
         }
