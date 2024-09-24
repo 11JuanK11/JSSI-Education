@@ -38,15 +38,15 @@ public class ManagerService implements IManagerService {
     }
 
     @Override
-    public void insert(Manager manager) throws ResourceNotFoundException {
-        if (manager.getUser() == null || manager.getUser().getId() == null) {
+    public Manager insert(Manager manager) throws ResourceNotFoundException {
+        if (manager.getUser() == null) {
             throw new ResourceNotFoundException("User information is missing.");
         }
-        User user = userRepository.findById(manager.getUser().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + manager.getUser().getId()));
 
-        manager.setUser(user);
-        managerRepository.save(manager);
+        User userAux = userRepository.save(manager.getUser());
+        manager.setUser(userAux);
+
+        return managerRepository.save(manager);
     }
 
     @Override
