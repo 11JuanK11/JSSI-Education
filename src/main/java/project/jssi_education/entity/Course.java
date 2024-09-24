@@ -20,8 +20,9 @@ public class Course implements Serializable {
     private Long courseId;
     private String courseName;
 
-    //@OneToMany(mappedBy = "course")
+
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<DegreeCourse> degreeCourses;
 
     @ManyToOne
