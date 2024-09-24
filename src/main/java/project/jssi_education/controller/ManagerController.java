@@ -39,6 +39,18 @@ public class ManagerController {
         }
     }
 
+    @GetMapping("/{idNumber}")
+    public ResponseEntity<?> findIdNumber(@PathVariable Long idNumber) {
+        try {
+            Manager manager = managerService.findByIdNumber(idNumber);
+            return new ResponseEntity<>(manager, HttpStatus.OK);
+        } catch (ResourceNotFoundException ex) {
+            return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(Map.of("message", "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/")
     public ResponseEntity<?> insert(@RequestBody Manager manager) {
         try {
@@ -68,10 +80,34 @@ public class ManagerController {
         }
     }
 
+    @DeleteMapping("/{idNumber}/")
+    public ResponseEntity<?> deleteByIdNumber(@PathVariable Long idNumber) {
+        try {
+            managerService.deleteByIdNumber(idNumber);
+            return new ResponseEntity<>(Map.of("message", "Manager successfully deleted."), HttpStatus.NO_CONTENT);
+        } catch (ResourceNotFoundException ex) {
+            return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(Map.of("message", "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Manager manager) {
         try {
             managerService.update(id, manager);
+            return new ResponseEntity<>("Manager successfully updated.", HttpStatus.OK);
+        } catch (ResourceNotFoundException ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity<>("An error occurred while updating the student.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/{idNumber}/")
+    public ResponseEntity<String> updateByIdNumber(@PathVariable Long idNumber, @RequestBody Manager manager) {
+        try {
+            managerService.updateByIdNumber(idNumber, manager);
             return new ResponseEntity<>("Manager successfully updated.", HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
