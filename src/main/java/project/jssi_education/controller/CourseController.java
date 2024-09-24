@@ -39,10 +39,16 @@ public class CourseController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable Long id, @RequestBody Course course) {
-        Course updatedCourse = courseService.updateCourse(id, course);
-        return ResponseEntity.ok(updatedCourse);
+    public ResponseEntity<?> updateCourse(@PathVariable Long id, @RequestBody Course course) {
+        try {
+            Course updatedCourse = courseService.updateCourse(id, course);
+            return ResponseEntity.ok(updatedCourse);
+        } catch (ResourceNotFoundException ex) {
+            String errorMessage = "Course not found with id " + id;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+        }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable Long id) {
