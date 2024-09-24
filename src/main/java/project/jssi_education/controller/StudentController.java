@@ -53,7 +53,7 @@ public class StudentController {
             if (student.getUser() == null || student.getUser().getId() == null) {
                 return new ResponseEntity<>("User information is missing.", HttpStatus.BAD_REQUEST);
             }
-            User userAux = userService.FindbyId(student.getUser().getId());
+            User userAux = userService.findbyId(student.getUser().getId());
             Degree degreeAux = student.getDegree() != null ? degreeService.findById(student.getDegree().getId()) : null;
 
             student.setUser(userAux);

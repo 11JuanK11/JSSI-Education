@@ -45,7 +45,7 @@ public class ManagerController {
             if (manager.getUser() == null || manager.getUser().getId() == null) {
                 return new ResponseEntity<>("User information is missing.", HttpStatus.BAD_REQUEST);
             }
-            User userAux = userService.FindbyId(manager.getUser().getId());
+            User userAux = userService.findbyId(manager.getUser().getId());
             manager.setUser(userAux);
             managerService.insert(manager);
             return new ResponseEntity<>("Manager successfully created.", HttpStatus.CREATED);
