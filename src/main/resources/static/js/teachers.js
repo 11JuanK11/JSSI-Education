@@ -12,7 +12,7 @@ window.addEventListener("load", function () {
 
 // ---------------------------------------------- findAll -------------------------------------------------
     findAllBtn.addEventListener('click', function () {
-        const url = '/teachers/'; // Asegúrate de que este es el endpoint correcto
+        const url = '/teachers/';
         fetch(url)
             .then(response => {
                 if (!response.ok) {

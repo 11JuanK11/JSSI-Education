@@ -10,6 +10,7 @@ import project.jssi_education.repository.IUserRepository;
 import project.jssi_education.service.ITeacherService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TeacherService implements ITeacherService {
@@ -21,9 +22,9 @@ public class TeacherService implements ITeacherService {
     private ITeacherRepository teacherRepository;
 
     @Override
-    public Teacher findbyId(Long id) throws ResourceNotFoundException {
-        return teacherRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found with id: " + id));
+    public Teacher findByTeacherIdNumber(int idNumber) throws ResourceNotFoundException {
+        return teacherRepository.findByTeacherIdNumber(idNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found with idNumber: " + idNumber));
     }
 
     @Override
@@ -47,19 +48,15 @@ public class TeacherService implements ITeacherService {
         return teacherRepository.save(teacher); // Guardar el teacher
     }
 
-    @Override
-    public void deleteById(Long id) throws ResourceNotFoundException {
-        Teacher teacher = teacherRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found with id: " + id));
-
+    public void deleteByTeacherIdNumber(int idNumber) throws ResourceNotFoundException {
+        Teacher teacher = teacherRepository.findByTeacherIdNumber(idNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found with ID number: " + idNumber));
         teacherRepository.delete(teacher);
     }
-
     @Override
-    public Teacher update(Long id, Teacher teacher) throws ResourceNotFoundException {
-        Teacher existingTeacher = findbyId(id);
+    public Teacher update(int idNumber, Teacher teacher) throws ResourceNotFoundException {
+        Teacher existingTeacher = findByTeacherIdNumber(idNumber);
 
-        // Actualiza el usuario si es necesario
         if (teacher.getUser() != null) {
             User existingUser = existingTeacher.getUser();
             User userToUpdate = teacher.getUser();
