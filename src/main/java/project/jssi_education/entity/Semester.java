@@ -18,4 +18,5 @@ public class Semester implements Serializable {
     @OneToMany(mappedBy = "semester", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<Course> courses;
+
 }
