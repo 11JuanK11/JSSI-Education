@@ -161,42 +161,46 @@ window.addEventListener("load", function () {
         };
     });
 
-    // Borrar estudiante
-    deleteBtn.addEventListener('click', function () {
-        renderForm(`
-            <div class="form">
-                <h2><strong>Delete Student</strong></h2>
-                <form id="deleteStudentForm">
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="dniInput" placeholder="Enter ID number" required>
-                    </div>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </div>
-        `);
+//------------------------------------------delete-------------------------------------------------------------------------
 
-        // Manejar el envío del formulario de eliminación
-        document.getElementById('deleteStudentForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const dni = document.getElementById('dniInput').value;
+   deleteBtn.addEventListener('click', function () {
+       renderForm(`
+           <div class="form">
+               <h2><strong>Delete Student</strong></h2>
+               <form id="deleteStudentForm">
+                   <div class="mb-3">
+                       <input type="text" class="form-control" id="dniInput" placeholder="Enter ID number" required>
+                   </div>
+                   <button type="submit" class="btn btn-danger">Delete</button>
+               </form>
+           </div>
+       `);
 
-            // Realizar la eliminación del estudiante
-            fetch(`/api/students/${dni}`, {
-                method: 'DELETE',
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error deleting student');
-                }
-                alert('Student deleted successfully!');
-                renderForm(''); // Limpiar el formulario o redirigir a la lista de estudiantes
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('Error deleting student.');
-            });
-        });
-    });
+
+       document.getElementById('deleteStudentForm').addEventListener('submit', function (e) {
+           e.preventDefault();
+           const dni = document.getElementById('dniInput').value;
+
+
+           fetch(`/students/${dni}`, {
+               method: 'DELETE',
+           })
+           .then(response => {
+               if (response.ok) {
+                   alert('Student deleted successfully!');
+                   renderForm('');
+               } else if (response.status === 404) {
+                   throw new Error('Student not found.');
+               } else {
+                   throw new Error('Error deleting student.');
+               }
+           })
+           .catch((error) => {
+               console.error('Error:', error);
+               alert(error.message);
+           });
+       });
+   });
 
 // ----------------------------------update-------------------------------------------------------------------
 
@@ -275,7 +279,7 @@ updateBtn.addEventListener('click', function () {
                     })
                     .catch(error => console.error('Error loading degrees:', error));
 
-                // Handle the form submission for updating the student
+
                 document.getElementById("updateStudentForm").onsubmit = function (e) {
                     e.preventDefault();
 
@@ -286,14 +290,14 @@ updateBtn.addEventListener('click', function () {
                             lastname: document.querySelector('#lastnameInput').value,
                             userName: document.querySelector('#usernameInput').value,
                             email: document.querySelector('#emailInput').value,
-                            password: document.querySelector('#passwordInput').value || undefined // Send undefined if empty
+                            password: document.querySelector('#passwordInput').value || undefined
                         },
                         degree: {
                             id: document.querySelector('#degreeSelect').value
                         }
                     };
 
-                    // PUT request to update student
+
                     fetch(`/students/${idNumber}`, {
                         method: 'PUT',
                         headers: {
@@ -309,7 +313,7 @@ updateBtn.addEventListener('click', function () {
                     })
                     .then(data => {
                         alert('Student updated successfully!');
-                        renderForm(''); // Clear the form or navigate as necessary
+                        renderForm('');
                     })
                     .catch(error => {
                         alert(error.message);
@@ -323,6 +327,65 @@ updateBtn.addEventListener('click', function () {
             });
     };
 });
+ //---------------------------------------------------findAll-------------------------------------------------------------
+
+ findAllBtn.addEventListener('click', function () {
+     const url = '/students/';
+     fetch(url)
+         .then(response => {
+             if (!response.ok) {
+                 throw new Error('Network response was not ok');
+             }
+             return response.json();
+         })
+         .then(students => {
+             renderStudentList(students);
+         })
+         .catch(error => {
+             alert('Error fetching students: ' + error.message);
+             console.error(error);
+         });
+ });
+
+
+ function renderStudentList(students) {
+     const formContainer = document.getElementById('formContainer');
+     formContainer.innerHTML = `<h2><strong>List of Students</strong></h2>`;
+
+     if (students.length === 0) {
+         formContainer.innerHTML += '<p>No students found.</p>';
+         return;
+     }
+
+     const table = `
+         <table class="table">
+             <thead>
+                 <tr>
+                     <th>ID Number</th>
+                     <th>Name</th>
+                     <th>Lastname</th>
+                     <th>Username</th>
+                     <th>Email</th>
+                     <th>Degree</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 ${students.map(student => `
+                     <tr>
+                         <td>${student.user.idNumber}</td>
+                         <td>${student.user.name}</td>
+                         <td>${student.user.lastname}</td>
+                         <td>${student.user.userName}</td>
+                         <td>${student.user.email}</td>
+                         <td>${student.degree ? student.degree.name : 'No degree'}</td>
+                     </tr>
+                 `).join('')}
+             </tbody>
+         </table>
+     `;
+
+     formContainer.innerHTML += table;
+ }
 
 
 
