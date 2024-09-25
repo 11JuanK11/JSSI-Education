@@ -27,8 +27,9 @@ public class UserService implements IUserService{
         return userRepository.findAll();
     }
     @Override
-    public void insert(User user){
-        userRepository.save(user);
+    public User insert(User user) {
+        return userRepository.save(user);
     }
+
 
 }

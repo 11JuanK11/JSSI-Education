@@ -36,22 +36,16 @@ public class StudentService implements IStudentService {
     }
 
     @Override
-    public void Insert(Student student) throws ResourceNotFoundException {
-        if (student.getUser() == null || student.getUser().getId() == null) {
+    public Student insert(Student student) throws ResourceNotFoundException {
+        if (student.getUser() == null) {
             throw new ResourceNotFoundException("User information is missing.");
         }
+        User savedUser = userRepository.save(student.getUser());
+        student.setUser(savedUser);
 
-        User user = userRepository.findById(student.getUser().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + student.getUser().getId()));
-
-        if (student.getDegree() != null && student.getDegree().getId() != null) {
-            degreeRepository.findById(student.getDegree().getId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Degree not found with id: " + student.getDegree().getId()));
-        }
-
-        student.setUser(user);
-        studentRepository.save(student);
+        return studentRepository.save(student);
     }
+
 
     @Override
     public void deleteById(Long id) throws ResourceNotFoundException {

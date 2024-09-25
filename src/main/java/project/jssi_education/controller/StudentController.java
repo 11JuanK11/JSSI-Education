@@ -9,6 +9,7 @@ import project.jssi_education.entity.Student;
 import project.jssi_education.entity.User;
 import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.service.IStudentService;
+import project.jssi_education.service.IUserService;
 import project.jssi_education.service.impl.DegreeService;
 import project.jssi_education.service.impl.StudentService;
 import project.jssi_education.service.impl.UserService;
@@ -23,7 +24,7 @@ public class StudentController {
     private IStudentService studentService;
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
     @Autowired
     private DegreeService degreeService;
@@ -45,21 +46,21 @@ public class StudentController {
         }
     }
 
-
-
     @PostMapping("/")
-    public ResponseEntity<String> insert(@RequestBody Student student) {
+    public ResponseEntity<?> insert(@RequestBody Student student) {
         try {
-            if (student.getUser() == null || student.getUser().getId() == null) {
+            if (student.getUser() == null) {
                 return new ResponseEntity<>("User information is missing.", HttpStatus.BAD_REQUEST);
             }
-            User userAux = userService.findbyId(student.getUser().getId());
-            Degree degreeAux = student.getDegree() != null ? degreeService.findById(student.getDegree().getId()) : null;
 
+            User userAux = userService.insert(student.getUser());
             student.setUser(userAux);
+
+            Degree degreeAux = student.getDegree() != null ? degreeService.findById(student.getDegree().getId()) : null;
             student.setDegree(degreeAux);
-            studentService.Insert(student);
-            return new ResponseEntity<>("Student successfully created.", HttpStatus.CREATED);
+
+            Student newStudent = studentService.insert(student);
+            return new ResponseEntity<>(newStudent, HttpStatus.CREATED);
 
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -67,6 +68,8 @@ public class StudentController {
             return new ResponseEntity<>("An error occurred while creating the student.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
