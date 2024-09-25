@@ -98,7 +98,7 @@ public class ManagerService implements IManagerService {
     }
 
     @Override
-    public void updateByIdNumber(int idNumber, Manager manager) throws ResourceNotFoundException {
+    public Manager updateByIdNumber(int idNumber, Manager manager) throws ResourceNotFoundException {
         Manager existingManager = findByIdNumber(idNumber);
 
         if (manager.getUser() != null) {
@@ -125,7 +125,7 @@ public class ManagerService implements IManagerService {
             existingManager.setUser(userToUpdate);
         }
 
-        managerRepository.save(existingManager);
+        return managerRepository.save(existingManager);
     }
 
 }
