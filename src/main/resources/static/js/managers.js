@@ -295,4 +295,41 @@ updateBtn.addEventListener('click', function () {
     };
 });
 
+// Delete
+deleteBtn.addEventListener('click', function () {
+    renderForm(`
+        <div class="form">
+            <h2><strong>Delete Manager</strong></h2>
+            <form id="deleteManagerForm">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="idInput" placeholder="Enter ID number" required>
+                </div>
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    `);
+
+    document.getElementById("deleteManagerForm").onsubmit = function (e) {
+        e.preventDefault();
+        const idNumber = document.querySelector('#idInput').value;
+
+        const url = `/managers/${idNumber}`;
+        const settings = {
+            method: 'DELETE'
+        };
+
+        fetch(url, settings)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error deleting manager');
+                }
+                alert('Manager deleted successfully');
+            })
+            .catch(error => {
+                alert(error.message);
+                console.error(error);
+            });
+    };
+});
+
 });
