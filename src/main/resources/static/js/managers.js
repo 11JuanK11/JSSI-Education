@@ -146,5 +146,50 @@ createBtn.addEventListener('click', function () {
     };
 });
 
+// findOne
+searchBtn.addEventListener('click', function () {
+    renderForm(`
+        <div class="form">
+            <h2><strong>Search Manager by ID number</strong></h2>
+            <form id="searchManagerForm">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="idInput" placeholder="Enter ID number" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    `);
+
+    document.getElementById("searchManagerForm").onsubmit = function (e) {
+        e.preventDefault();
+        const idNumber = document.querySelector('#idInput').value;
+
+        const url = `/managers/${idNumber}`;
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Manager not found' + response.ok);
+                }
+                return response.json();
+            })
+            .then(manager => {
+                renderForm(`
+                    <div class="form">
+                        <h2><strong>Manager Details</strong></h2>
+                        <p><strong>ID Number:</strong> ${manager.user.idNumber}</p>
+                        <p><strong>Name:</strong> ${manager.user.name}</p>
+                        <p><strong>Lastname:</strong> ${manager.user.lastname}</p>
+                        <p><strong>Username:</strong> ${manager.user.userName}</p>
+                        <p><strong>Email:</strong> ${manager.user.email}</p>
+                    </div>
+                `);
+            })
+            .catch(error => {
+                alert(error.message);
+                console.error(error);
+            });
+    };
+});
+
 
 });
