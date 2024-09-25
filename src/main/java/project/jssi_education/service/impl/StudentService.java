@@ -133,6 +133,11 @@ public class StudentService implements IStudentService {
         }
         studentRepository.save(existingStudent);
     }
+    @Override
+    public Student findByIdNumber(int idNumber) throws ResourceNotFoundException {
+        return studentRepository.findByUserIdNumber(idNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with idNumber: " + idNumber));
+    }
 
 
 
