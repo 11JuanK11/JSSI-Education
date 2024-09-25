@@ -54,13 +54,9 @@ public class ManagerController {
     @PostMapping("/")
     public ResponseEntity<?> insert(@RequestBody Manager manager) {
         try {
-            if (manager.getUser() == null || manager.getUser().getId() == null) {
-                return new ResponseEntity<>("User information is missing.", HttpStatus.BAD_REQUEST);
-            }
-            User userAux = userService.findbyId(manager.getUser().getId());
-            manager.setUser(userAux);
-            managerService.insert(manager);
-            return new ResponseEntity<>("Manager successfully created.", HttpStatus.CREATED);
+
+            Manager newManager = managerService.insert(manager);
+            return new ResponseEntity<>(newManager, HttpStatus.CREATED);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
