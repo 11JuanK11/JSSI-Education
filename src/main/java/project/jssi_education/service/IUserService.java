@@ -9,5 +9,5 @@ public interface IUserService {
 
     public List<User> findAll();
 
-    public void insert(User user);
+    public User insert(User user);
 }
