@@ -10,7 +10,7 @@ import project.jssi_education.service.IDidacticMaterialService;
 import java.util.List;
 
 @Service
-public class DidacticMaterialsService implements IDidacticMaterialService {
+public class DidacticMaterialService implements IDidacticMaterialService {
 
     @Autowired
     private IDidacticMaterialRepository didacticMaterialsRepository;

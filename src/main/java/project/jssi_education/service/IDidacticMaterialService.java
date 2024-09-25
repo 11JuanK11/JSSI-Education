@@ -6,8 +6,7 @@ import project.jssi_education.exception.ResourceNotFoundException;
 
 import java.util.List;
 
-@Service
-public interface IDidacticMaterialsService {
+public interface IDidacticMaterialService {
     public DidacticMaterial findById(Long id) throws ResourceNotFoundException;
     public List<DidacticMaterial> findAll();
     public void insert(DidacticMaterial didacticMaterial) throws ResourceNotFoundException;
