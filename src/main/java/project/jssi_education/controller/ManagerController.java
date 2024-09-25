@@ -100,11 +100,11 @@ public class ManagerController {
 //        }
 //    }
 
-    @PutMapping("/{idNumber}/")
-    public ResponseEntity<String> updateByIdNumber(@PathVariable int idNumber, @RequestBody Manager manager) {
+    @PutMapping("/{idNumber}")
+    public ResponseEntity<?> updateByIdNumber(@PathVariable int idNumber, @RequestBody Manager manager) {
         try {
-            managerService.updateByIdNumber(idNumber, manager);
-            return new ResponseEntity<>("Manager successfully updated.", HttpStatus.OK);
+            Manager updatedManager = managerService.updateByIdNumber(idNumber, manager);
+            return new ResponseEntity<>(updatedManager, HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {

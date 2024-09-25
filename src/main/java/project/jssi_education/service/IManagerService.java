@@ -13,5 +13,5 @@ public interface IManagerService {
     public void deleteById(Long id) throws ResourceNotFoundException;
     public void deleteByIdNumber(int id) throws ResourceNotFoundException;
     public void update(Long id, Manager manager) throws ResourceNotFoundException;
-    public void updateByIdNumber(int id, Manager manager) throws ResourceNotFoundException;
+    public Manager updateByIdNumber(int id, Manager manager) throws ResourceNotFoundException;
 }
