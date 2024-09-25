@@ -327,6 +327,65 @@ updateBtn.addEventListener('click', function () {
             });
     };
 });
+ //---------------------------------------------------findAll-------------------------------------------------------------
+
+ findAllBtn.addEventListener('click', function () {
+     const url = '/students/';
+     fetch(url)
+         .then(response => {
+             if (!response.ok) {
+                 throw new Error('Network response was not ok');
+             }
+             return response.json();
+         })
+         .then(students => {
+             renderStudentList(students);
+         })
+         .catch(error => {
+             alert('Error fetching students: ' + error.message);
+             console.error(error);
+         });
+ });
+
+
+ function renderStudentList(students) {
+     const formContainer = document.getElementById('formContainer');
+     formContainer.innerHTML = `<h2><strong>List of Students</strong></h2>`;
+
+     if (students.length === 0) {
+         formContainer.innerHTML += '<p>No students found.</p>';
+         return;
+     }
+
+     const table = `
+         <table class="table">
+             <thead>
+                 <tr>
+                     <th>ID Number</th>
+                     <th>Name</th>
+                     <th>Lastname</th>
+                     <th>Username</th>
+                     <th>Email</th>
+                     <th>Degree</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 ${students.map(student => `
+                     <tr>
+                         <td>${student.user.idNumber}</td>
+                         <td>${student.user.name}</td>
+                         <td>${student.user.lastname}</td>
+                         <td>${student.user.userName}</td>
+                         <td>${student.user.email}</td>
+                         <td>${student.degree ? student.degree.name : 'No degree'}</td>
+                     </tr>
+                 `).join('')}
+             </tbody>
+         </table>
+     `;
+
+     formContainer.innerHTML += table;
+ }
 
 
 
