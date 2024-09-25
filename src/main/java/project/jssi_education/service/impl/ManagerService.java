@@ -27,8 +27,8 @@ public class ManagerService implements IManagerService {
     }
 
     @Override
-    public Manager findByIdNumber(Long idNumber) throws ResourceNotFoundException {
-        return managerRepository.findById(idNumber)
+    public Manager findByIdNumber(int idNumber) throws ResourceNotFoundException {
+        return managerRepository.findByUserIdNumber(idNumber)
                 .orElseThrow(() -> new ResourceNotFoundException("Manager not found with id: " + idNumber));
     }
 
@@ -58,11 +58,12 @@ public class ManagerService implements IManagerService {
     }
 
     @Override
-    public void deleteByIdNumber(Long idNumber) throws ResourceNotFoundException {
-        managerRepository.findById(idNumber)
+    public void deleteByIdNumber(int idNumber) throws ResourceNotFoundException {
+        Manager managerDelete = findByIdNumber(idNumber);
+        managerRepository.findByUserIdNumber(idNumber)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + idNumber));
 
-        managerRepository.deleteById(idNumber);
+        managerRepository.delete(managerDelete);
     }
 
     @Override
@@ -97,8 +98,8 @@ public class ManagerService implements IManagerService {
     }
 
     @Override
-    public void updateByIdNumber(Long idNumber, Manager manager) throws ResourceNotFoundException {
-        Manager existingManager = findById(idNumber);
+    public void updateByIdNumber(int idNumber, Manager manager) throws ResourceNotFoundException {
+        Manager existingManager = findByIdNumber(idNumber);
 
         if (manager.getUser() != null) {
             User userToUpdate = existingManager.getUser();
