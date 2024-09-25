@@ -116,42 +116,53 @@ createBtn.addEventListener('click', function () {
     };
 });
 
-    // Buscar estudiante
-    searchBtn.addEventListener('click', function () {
-        renderForm(`
-            <div class="form">
-                <h2><strong>Search Student by ID number</strong></h2>
-                <form id="searchStudentForm">
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="dniInput" placeholder="Enter ID number" required>
+// ---------------------------------------------- findOne ----------------------------------------------
+searchBtn.addEventListener('click', function () {
+    renderForm(`
+        <div class="form">
+            <h2><strong>Search Student by ID number</strong></h2>
+            <form id="searchStudentForm">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="idInput" placeholder="Enter ID number" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    `);
+
+    document.getElementById("searchStudentForm").onsubmit = function (e) {
+        e.preventDefault();
+        const idNumber = document.querySelector('#idInput').value;
+
+        const url = `/students/${idNumber}`;
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Student not found');
+                }
+                return response.json();
+            })
+            .then(student => {
+
+                renderForm(`
+                    <div class="form">
+                        <h2><strong>Student Details</strong></h2>
+                        <p><strong>Name:</strong> ${student.user.name}</p>
+                        <p><strong>Lastname:</strong> ${student.user.lastname}</p>
+                        <p><strong>Email:</strong> ${student.user.email}</p>
+                        <p><strong>Username:</strong> ${student.user.userName}</p>
+                        <p><strong>ID Number:</strong> ${student.user.idNumber}</p>
+                        <p><strong>Degree:</strong> ${student.degree ? student.degree.name : 'No degree assigned'}</p>
                     </div>
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </form>
-            </div>
-        `);
+                `);
+            })
+            .catch(error => {
+                alert(error.message);
+                console.error(error);
+            });
+    };
+});
 
-        // Manejar el envío del formulario de búsqueda
-        document.getElementById('searchStudentForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const dni = document.getElementById('dniInput').value;
-
-            // Realizar la búsqueda del estudiante
-            fetch(`/api/students/${dni}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Student not found');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Aquí puedes renderizar el formulario de actualización con los datos encontrados
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    alert('Student not found.');
-                });
-        });
-    });
 
     // Borrar estudiante
     deleteBtn.addEventListener('click', function () {
@@ -204,12 +215,12 @@ createBtn.addEventListener('click', function () {
             </div>
         `);
 
-        // Manejar el envío del formulario de búsqueda para actualización
+
         document.getElementById('searchForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const dni = document.getElementById('dniInput').value;
 
-            // Realizar la búsqueda del estudiante
+
             fetch(`/api/students/${dni}`)
                 .then(response => {
                     if (!response.ok) {
@@ -218,7 +229,7 @@ createBtn.addEventListener('click', function () {
                     return response.json();
                 })
                 .then(data => {
-                    // Aquí puedes renderizar el formulario de actualización con los datos encontrados
+
                     renderForm(`
                         <div class="form">
                             <h2><strong>Update Student</strong></h2>
@@ -249,7 +260,7 @@ createBtn.addEventListener('click', function () {
                         </div>
                     `);
 
-                    // Manejar el envío del formulario de actualización
+
                     document.getElementById('updateStudentForm').addEventListener('submit', function (e) {
                         e.preventDefault();
 
@@ -269,7 +280,7 @@ createBtn.addEventListener('click', function () {
                             email
                         };
 
-                        // Enviar datos al servidor para actualización
+
                         fetch(`/api/students/${id}`, {
                             method: 'PUT',
                             headers: {
@@ -285,7 +296,7 @@ createBtn.addEventListener('click', function () {
                         })
                         .then(data => {
                             alert('Student updated successfully!');
-                            renderForm(''); // Limpiar el formulario o redirigir a la lista de estudiantes
+                            renderForm('');
                         })
                         .catch((error) => {
                             console.error('Error:', error);

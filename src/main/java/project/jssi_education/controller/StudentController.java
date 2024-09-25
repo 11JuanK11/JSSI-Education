@@ -34,10 +34,22 @@ public class StudentController {
         return studentService.FindAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findOne(@PathVariable Long id) {
+//    @GetMapping("/{id}")
+//    public ResponseEntity<?> findOne(@PathVariable Long id) {
+//        try {
+//            Student student = studentService.FindbyId(id);
+//            return new ResponseEntity<>(student, HttpStatus.OK);
+//        } catch (ResourceNotFoundException ex) {
+//            return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.NOT_FOUND);
+//        } catch (Exception ex) {
+//            return new ResponseEntity<>(Map.of("message", "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
+    @GetMapping("/{idNumber}")
+    public ResponseEntity<?> findOneByIdNumber(@PathVariable int idNumber) {
         try {
-            Student student = studentService.FindbyId(id);
+            Student student = studentService.findByIdNumber(idNumber);
             return new ResponseEntity<>(student, HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.NOT_FOUND);
@@ -45,6 +57,7 @@ public class StudentController {
             return new ResponseEntity<>(Map.of("message", "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @PostMapping("/")
     public ResponseEntity<?> insert(@RequestBody Student student) {
