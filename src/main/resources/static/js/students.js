@@ -176,19 +176,19 @@ window.addEventListener("load", function () {
            </div>
        `);
 
-       // Manejar el envío del formulario de eliminación
+
        document.getElementById('deleteStudentForm').addEventListener('submit', function (e) {
            e.preventDefault();
            const dni = document.getElementById('dniInput').value;
 
-           // Realizar la eliminación del estudiante
-           fetch(`/students/${dni}`, { // Asegúrate de que la ruta coincida con la del backend
+
+           fetch(`/students/${dni}`, {
                method: 'DELETE',
            })
            .then(response => {
                if (response.ok) {
                    alert('Student deleted successfully!');
-                   renderForm(''); // Limpiar el formulario o redirigir a la lista de estudiantes
+                   renderForm('');
                } else if (response.status === 404) {
                    throw new Error('Student not found.');
                } else {
@@ -197,7 +197,7 @@ window.addEventListener("load", function () {
            })
            .catch((error) => {
                console.error('Error:', error);
-               alert(error.message); // Mostrar el mensaje específico del error
+               alert(error.message);
            });
        });
    });
@@ -279,7 +279,7 @@ updateBtn.addEventListener('click', function () {
                     })
                     .catch(error => console.error('Error loading degrees:', error));
 
-                // Handle the form submission for updating the student
+
                 document.getElementById("updateStudentForm").onsubmit = function (e) {
                     e.preventDefault();
 
@@ -290,14 +290,14 @@ updateBtn.addEventListener('click', function () {
                             lastname: document.querySelector('#lastnameInput').value,
                             userName: document.querySelector('#usernameInput').value,
                             email: document.querySelector('#emailInput').value,
-                            password: document.querySelector('#passwordInput').value || undefined // Send undefined if empty
+                            password: document.querySelector('#passwordInput').value || undefined
                         },
                         degree: {
                             id: document.querySelector('#degreeSelect').value
                         }
                     };
 
-                    // PUT request to update student
+
                     fetch(`/students/${idNumber}`, {
                         method: 'PUT',
                         headers: {
@@ -313,7 +313,7 @@ updateBtn.addEventListener('click', function () {
                     })
                     .then(data => {
                         alert('Student updated successfully!');
-                        renderForm(''); // Clear the form or navigate as necessary
+                        renderForm('');
                     })
                     .catch(error => {
                         alert(error.message);
