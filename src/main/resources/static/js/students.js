@@ -161,42 +161,46 @@ window.addEventListener("load", function () {
         };
     });
 
-    // Borrar estudiante
-    deleteBtn.addEventListener('click', function () {
-        renderForm(`
-            <div class="form">
-                <h2><strong>Delete Student</strong></h2>
-                <form id="deleteStudentForm">
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="dniInput" placeholder="Enter ID number" required>
-                    </div>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </div>
-        `);
+//------------------------------------------delete-------------------------------------------------------------------------
 
-        // Manejar el envío del formulario de eliminación
-        document.getElementById('deleteStudentForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const dni = document.getElementById('dniInput').value;
+   deleteBtn.addEventListener('click', function () {
+       renderForm(`
+           <div class="form">
+               <h2><strong>Delete Student</strong></h2>
+               <form id="deleteStudentForm">
+                   <div class="mb-3">
+                       <input type="text" class="form-control" id="dniInput" placeholder="Enter ID number" required>
+                   </div>
+                   <button type="submit" class="btn btn-danger">Delete</button>
+               </form>
+           </div>
+       `);
 
-            // Realizar la eliminación del estudiante
-            fetch(`/api/students/${dni}`, {
-                method: 'DELETE',
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error deleting student');
-                }
-                alert('Student deleted successfully!');
-                renderForm(''); // Limpiar el formulario o redirigir a la lista de estudiantes
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('Error deleting student.');
-            });
-        });
-    });
+       // Manejar el envío del formulario de eliminación
+       document.getElementById('deleteStudentForm').addEventListener('submit', function (e) {
+           e.preventDefault();
+           const dni = document.getElementById('dniInput').value;
+
+           // Realizar la eliminación del estudiante
+           fetch(`/students/${dni}`, { // Asegúrate de que la ruta coincida con la del backend
+               method: 'DELETE',
+           })
+           .then(response => {
+               if (response.ok) {
+                   alert('Student deleted successfully!');
+                   renderForm(''); // Limpiar el formulario o redirigir a la lista de estudiantes
+               } else if (response.status === 404) {
+                   throw new Error('Student not found.');
+               } else {
+                   throw new Error('Error deleting student.');
+               }
+           })
+           .catch((error) => {
+               console.error('Error:', error);
+               alert(error.message); // Mostrar el mensaje específico del error
+           });
+       });
+   });
 
 // ----------------------------------update-------------------------------------------------------------------
 
