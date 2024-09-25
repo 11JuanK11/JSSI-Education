@@ -99,7 +99,7 @@ public class StudentService implements IStudentService {
     }
 
     @Override
-    public void updateByIdNumber(int idNumber, Student student) throws ResourceNotFoundException {
+    public Student updateByIdNumber(int idNumber, Student student) throws ResourceNotFoundException {
 
         Student existingStudent = studentRepository.findByUserIdNumber(idNumber)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found with idNumber: " + idNumber));
@@ -131,7 +131,7 @@ public class StudentService implements IStudentService {
                     .orElseThrow(() -> new ResourceNotFoundException("Degree not found with id: " + student.getDegree().getId()));
             existingStudent.setDegree(degreeToUpdate);
         }
-        studentRepository.save(existingStudent);
+        return studentRepository.save(existingStudent);
     }
     @Override
     public Student findByIdNumber(int idNumber) throws ResourceNotFoundException {

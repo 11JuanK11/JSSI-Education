@@ -14,7 +14,7 @@ public interface IStudentService {
     public void deleteById(Long id) throws ResourceNotFoundException;
     public void deleteByIdNumber(int idNumber) throws ResourceNotFoundException;
     public void update(Long id, Student student) throws ResourceNotFoundException;
-    public void updateByIdNumber(int idNumber, Student student) throws ResourceNotFoundException;
+    public Student updateByIdNumber(int idNumber, Student student) throws ResourceNotFoundException;
     public Student findByIdNumber(int idNumber) throws ResourceNotFoundException;
 
 }

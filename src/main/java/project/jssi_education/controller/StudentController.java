@@ -109,23 +109,23 @@ public class StudentController {
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Student student) {
-        try {
-            studentService.update(id, student);
-            return new ResponseEntity<>("Student successfully updated.", HttpStatus.OK);
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (Exception ex) {
-            return new ResponseEntity<>("An error occurred while updating the student.", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Student student) {
+//        try {
+//            studentService.update(id, student);
+//            return new ResponseEntity<>("Student successfully updated.", HttpStatus.OK);
+//        } catch (ResourceNotFoundException ex) {
+//            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+//        } catch (Exception ex) {
+//            return new ResponseEntity<>("An error occurred while updating the student.", HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
-    @PutMapping("/idnumber/{idNumber}")
-    public ResponseEntity<String> updateByIdNumber(@PathVariable int idNumber, @RequestBody Student student) {
+    @PutMapping("/{idNumber}")
+    public ResponseEntity<?> updateByIdNumber(@PathVariable int idNumber, @RequestBody Student student) {
         try {
-            studentService.updateByIdNumber(idNumber, student);
-            return new ResponseEntity<>("Student successfully updated.", HttpStatus.OK);
+            Student student1= studentService.updateByIdNumber(idNumber, student);
+            return new ResponseEntity<>(student1, HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
