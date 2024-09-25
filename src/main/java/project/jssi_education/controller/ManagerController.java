@@ -76,7 +76,7 @@ public class ManagerController {
 //        }
 //    }
 
-    @DeleteMapping("/{idNumber}/")
+    @DeleteMapping("/{idNumber}")
     public ResponseEntity<?> deleteByIdNumber(@PathVariable int idNumber) {
         try {
             managerService.deleteByIdNumber(idNumber);
