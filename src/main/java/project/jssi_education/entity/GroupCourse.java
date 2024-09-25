@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "group_student")
+@Table(name = "group_course")
 public class GroupCourse implements Serializable {
 
     @Id
@@ -35,6 +35,12 @@ public class GroupCourse implements Serializable {
     @OneToMany(mappedBy = "group_has_course", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<TeacherEvaluation> teacher_evaluations;
+
+    @OneToMany(mappedBy = "group_has_course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<DidacticMaterial> didacticMaterials;
+
+
 
 
 }
