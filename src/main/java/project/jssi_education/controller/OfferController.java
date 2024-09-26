@@ -63,7 +63,7 @@ public class OfferController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> Update(@PathVariable Long id, @RequestBody Offer offer) {
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Offer offer) {
         try {
             offerService.update(id, offer);
             return new ResponseEntity<>("Offer successfully updated.", HttpStatus.OK);

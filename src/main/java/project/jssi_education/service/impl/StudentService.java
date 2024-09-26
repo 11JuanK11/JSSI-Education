@@ -25,7 +25,7 @@ public class StudentService implements IStudentService {
     private IDegreeRepository degreeRepository;
 
     @Override
-    public Student FindbyId(Long id) throws ResourceNotFoundException {
+    public Student findById(Long id) throws ResourceNotFoundException {
         return studentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
     }
@@ -66,7 +66,7 @@ public class StudentService implements IStudentService {
 
     @Override
     public void update(Long id, Student student) throws ResourceNotFoundException {
-        Student existingStudent = FindbyId(id);
+        Student existingStudent = findById(id);
         if (student.getUser() != null) {
             User userToUpdate = existingStudent.getUser();
 

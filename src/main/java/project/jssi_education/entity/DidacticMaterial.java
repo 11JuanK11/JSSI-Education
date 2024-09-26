@@ -13,7 +13,7 @@ public class DidacticMaterial implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String Description;
+    String description;
 
     @ManyToOne
     @JoinColumn(name = "group_has_course_id", nullable = false)

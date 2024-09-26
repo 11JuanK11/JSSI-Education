@@ -59,7 +59,7 @@ public class GroupCourseController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> Update(@PathVariable Long id, @RequestBody GroupCourse groupCourse) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody GroupCourse groupCourse) {
         try {
             GroupCourse updateGroupCourse = groupCourseService.update(id, groupCourse);
             return new ResponseEntity<>(updateGroupCourse, HttpStatus.OK);
