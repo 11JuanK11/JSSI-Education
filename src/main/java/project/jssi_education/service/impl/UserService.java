@@ -9,7 +9,7 @@ import project.jssi_education.service.IUserService;
 import java.util.List;
 
 @Service
-public class UserService implements IUserService{
+public class UserService implements IUserService {
     @Autowired
     private IUserRepository userRepository;
 

@@ -1,0 +1,26 @@
+*{
+    font-family: 'Inter', sans-serif !important;
+}
+
+.navbar{
+    padding: 0 !important;
+}
+
+.logo{
+    height: 80px;
+    width: auto;
+}
+
+.custom-btn {
+    background-color: #27374D;
+    color: white;
+    border: none;
+}
+
+.navbar-brand, nav-link{
+    color: #27374D !important;
+}
+
+.container-fluid{
+    background-color: #9DB2BF !important;
+}

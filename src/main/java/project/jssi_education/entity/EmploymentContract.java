@@ -1,10 +1,13 @@
 package project.jssi_education.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -20,8 +23,9 @@ public class EmploymentContract implements Serializable {
     private LocalDate endDate;
 
     @ManyToOne
-    @JoinColumn(name = "manager_id", nullable = false)
+    @JoinColumn(name = "manager_id")
     private Manager manager;
+
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "teacher_id")
