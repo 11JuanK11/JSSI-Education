@@ -21,7 +21,7 @@ findAllBtn.addEventListener('click', function () {
             return response.json();
         })
         .then(groups => {
-            renderTeacherList(groups);
+            renderGroupList(groups);
         })
         .catch(error => {
             alert('Error fetching groups: ' + error.message);
@@ -31,9 +31,9 @@ findAllBtn.addEventListener('click', function () {
 
 function renderGroupList(groups) {
     const formContainer = document.getElementById('formContainer');
-    formContainer.innerHTML = `<h2><strong>List of Teachers</strong></h2>`;
+    formContainer.innerHTML = `<h2><strong>List of Groups</strong></h2>`;
 
-    if (teachers.length === 0) {
+    if (groups.length === 0) {
         formContainer.innerHTML += '<p>No Groups found.</p>';
         return;
     }
@@ -45,7 +45,8 @@ function renderGroupList(groups) {
                     <th>ID</th>
                     <th>Number Students</th>
                     <th>Classroom</th>
-
+                    <th>Teacher</th>
+                    <th>Day Week</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,6 +55,8 @@ function renderGroupList(groups) {
                         <td>${groups.groupId}</td>
                         <td>${groups.classroom}</td>
                         <td>${groups.numberStudents}</td>
+                        <td>${groups.teacher.user.name}</td>
+                        <td>${groups.offerDayWeek.dayWeek.day}</td>
                     </tr>
                 `).join('')}
             </tbody>
@@ -71,13 +74,16 @@ createBtn.addEventListener('click', function () {
         <h2><strong>Add Groups</strong></h2>
         <form id="groupForm">
             <div class="mb-3">
-                <input type="text" class="form-control" id="idInput" placeholder="ID" required>
-            </div>
-            <div class="mb-3">
                 <input type="text" class="form-control" id="classroomInput" placeholder="Classroom" required>
             </div>
             <div class="mb-3">
                 <input type="text" class="form-control" id="numberStudentsInput" placeholder="Number of students" required>
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="teacherIdInput" placeholder="Teacher Id" required>
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="offerDayWeekIdInput" placeholder="Offer Id" required>
             </div>
             <button type="submit" class="btn btn-primary">Add</button>
         </form>
@@ -88,9 +94,16 @@ createBtn.addEventListener('click', function () {
         e.preventDefault();
 
         const groupData = {
-                idNumber: document.querySelector('#idInput').value,
-                name: document.querySelector('#classroomInput').value,
-                lastname: document.querySelector('#numberStudentsInput').value
+            numberStudents: document.querySelector('#numberStudentsInput').value,
+            classroom: document.querySelector('#classroomInput').value,
+            teacher: {
+                user:{
+                    idNumber: document.querySelector('#teacherIdInput').value
+                }
+            },
+            offerDayWeek: {
+                id: document.querySelector('#offerDayWeekIdInput').value
+            }
         };
 
 
@@ -146,8 +159,8 @@ searchBtn.addEventListener('click', function () {
                 renderForm(`
                     <div class="form">
                         <h2><strong>Group Details</strong></h2>
-                        <p><strong>Name:</strong> ${group.numberStudents}</p>
-                        <p><strong>Lastname:</strong> ${group.classroom}</p>
+                        <p><strong>Number Students:</strong> ${group.numberStudents}</p>
+                        <p><strong>Classroom:</strong> ${group.classroom}</p>
                     </div>
                 `);
             })
@@ -234,6 +247,12 @@ updateBtn.addEventListener('click', function () {
                             <div class="mb-3">
                                 <input type="text" class="form-control" id="numberStudentInput" value="${group.numberStudents}" required>
                             </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="teacherIdInput" value="${group.teacher.user.idNumber}" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="offerDayWeekIdInput" value="${group.offerDayWeek.id}" required>
+                            </div>
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                     </div>
@@ -243,11 +262,17 @@ updateBtn.addEventListener('click', function () {
                     e.preventDefault();
 
                     const updatedData = {
-                        name: document.querySelector('#classroomInput').value,
-                        lastname: document.querySelector('#numberStudentInput').value,
+                        classroom: document.querySelector('#classroomInput').value,
+                        numberStudents: document.querySelector('#numberStudentInput').value,
+                        teacher: {
+                            idNumber: document.querySelector('#teacherIdInput').value
+                        },
+                        offerDayWeek:{
+                            id: document.querySelector('#offerDayWeekIdInput').value
+                        }
                     };
 
-                    const updateUrl = `/groups/${idNumber}`;
+                    const updateUrl = `/groups/${groupId}`;
                     const settings = {
                         method: 'PUT',
                         headers: {
