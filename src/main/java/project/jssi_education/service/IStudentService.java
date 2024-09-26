@@ -6,7 +6,7 @@ import project.jssi_education.exception.ResourceNotFoundException;
 import java.util.List;
 
 public interface IStudentService {
-    public Student FindbyId(Long id) throws ResourceNotFoundException ;
+    public Student findById(Long id) throws ResourceNotFoundException ;
     public List<Student> FindAll();
 
     public Student insert(Student student) throws ResourceNotFoundException;

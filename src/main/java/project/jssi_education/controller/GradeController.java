@@ -72,4 +72,15 @@ public class GradeController {
             return new ResponseEntity<>("An error occurred while updating the Grade.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/student/{studentId}")
+    public ResponseEntity<List<Grade>> findGradesByStudentId(@PathVariable Long studentId) {
+        List<Grade> grades = gradeService.findByStudentId(studentId);
+        if (grades.isEmpty()) {
+            return ResponseEntity.noContent().build(); // Retorna 204 sin contenido
+        }
+        return ResponseEntity.ok(grades); // Devuelve las calificaciones como JSON
+    }
+
+
 }

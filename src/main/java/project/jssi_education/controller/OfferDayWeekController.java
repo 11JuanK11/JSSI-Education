@@ -69,7 +69,7 @@ public class OfferDayWeekController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> Update(@PathVariable Long id, @RequestBody OfferDayWeek offerDayWeek) {
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody OfferDayWeek offerDayWeek) {
         try {
             offerDayWeekService.update(id, offerDayWeek);
             return new ResponseEntity<>("Offer Day Week successfully updated.", HttpStatus.OK);

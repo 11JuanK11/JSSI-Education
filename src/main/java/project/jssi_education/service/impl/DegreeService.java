@@ -23,11 +23,11 @@ public class DegreeService implements IDegreeService {
         throw new ResourceNotFoundException("Degree with id " + id + " not found.");
     }
     @Override
-    public List<Degree> FindAll(){
+    public List<Degree> findAll(){
         return repo.findAll();
     }
     @Override
-    public void Insert(Degree degree){
+    public void insert(Degree degree){
         repo.save(degree);
     }
 }

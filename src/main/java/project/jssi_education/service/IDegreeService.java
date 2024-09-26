@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface IDegreeService {
     public Degree findById(Long id) throws ResourceNotFoundException;
-    public List<Degree> FindAll();
-    public void Insert(Degree degree);
+    public List<Degree> findAll();
+    public void insert(Degree degree);
 }

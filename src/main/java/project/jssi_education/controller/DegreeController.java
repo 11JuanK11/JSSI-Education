@@ -20,7 +20,7 @@ public class DegreeController {
 
     @GetMapping("/")
     public List<Degree> findAll(){
-        return degreeService.FindAll();
+        return degreeService.findAll();
     }
 
 
@@ -38,6 +38,6 @@ public class DegreeController {
 
     @PostMapping("/")
     public void insert(@RequestBody Degree degree){
-        degreeService.Insert(degree);
+        degreeService.insert(degree);
     }
 }

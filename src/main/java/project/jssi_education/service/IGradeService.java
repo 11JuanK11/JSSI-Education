@@ -11,4 +11,5 @@ public interface IGradeService {
     public void insert(Grade grade) throws ResourceNotFoundException;
     public void deleteById(Long id) throws ResourceNotFoundException;
     public void update(Long id, Grade grade) throws ResourceNotFoundException;
+    List<Grade> findByStudentId(Long studentId);
 }

@@ -60,4 +60,9 @@ public class GradeService implements IGradeService {
         }
         gradeRepository.save(existingGrade);
     }
+
+    @Override
+    public List<Grade> findByStudentId(Long studentId) {
+        return gradeRepository.findByStudentId(studentId);
+    }
 }
