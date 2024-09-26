@@ -13,7 +13,7 @@ window.addEventListener("load", function () {
 
 // ---------------------------------------------- findAll -------------------------------------------------
 findAllBtn.addEventListener('click', function () {
-    const url = '/groups/';
+    const url = '/group-course/';
     fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -48,16 +48,19 @@ function renderGroupList(groups) {
                     <th>Classroom</th>
                     <th>Teacher</th>
                     <th>Day Week</th>
+                    <th>Course</th>
                 </tr>
             </thead>
             <tbody>
                 ${groups.map(groups => `
                     <tr>
-                        <td>${groups.groupId}</td>
-                        <td>${groups.classroom}</td>
-                        <td>${groups.numberStudents}</td>
-                        <td>${groups.teacher.user.name}</td>
-                        <td>${groups.offerDayWeek.dayWeek.day}</td>
+                        <td>${groups.group.groupId}</td>
+                        <td>${groups.group.numberStudents}</td>
+                        <td>${groups.group.classroom}</td>
+                        <td>${groups.group.teacher.user.name}</td>
+                        <td>${groups.group.offerDayWeek.dayWeek.day}</td>
+                        <td>${groups.course.courseName}</td>
+
                     </tr>
                 `).join('')}
             </tbody>
