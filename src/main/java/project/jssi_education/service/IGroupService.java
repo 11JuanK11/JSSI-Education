@@ -8,7 +8,7 @@ import java.util.List;
 public interface IGroupService {
     public Group findById(Long id) throws ResourceNotFoundException;
     public List<Group> findAll();
-    public void insert(Group group) throws ResourceNotFoundException;
+    public Group insert(Group group) throws ResourceNotFoundException;
     public void deleteById(Long id) throws ResourceNotFoundException;
-    public void update(Long id, Group group) throws ResourceNotFoundException;
+    public Group update(Long id, Group group) throws ResourceNotFoundException;
 }

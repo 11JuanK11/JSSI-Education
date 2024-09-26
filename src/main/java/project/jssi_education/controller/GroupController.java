@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import project.jssi_education.entity.Group;
 import project.jssi_education.entity.Offer;
+import project.jssi_education.entity.OfferDayWeek;
 import project.jssi_education.entity.Teacher;
 import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.service.IGroupService;
+import project.jssi_education.service.IOfferDayWeekService;
 import project.jssi_education.service.IOfferService;
 import project.jssi_education.service.ITeacherService;
 
@@ -31,7 +33,7 @@ public class GroupController {
     private IGroupService groupService;
 
     @Autowired
-    private IOfferService offerService;
+    private IOfferDayWeekService offerDayWeekService;
 
     @Autowired
     private ITeacherService teacherService;
@@ -54,14 +56,15 @@ public class GroupController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<String> insert(@RequestBody Group group) {
+    public ResponseEntity<?> insert(@RequestBody Group group) {
+        System.out.println("hola" + group.toString());
         try {
-            Offer offer = offerService.findById(group.getOffer().getId());
+            OfferDayWeek offerDayWeek = offerDayWeekService.findById(group.getOfferDayWeek().getId());
             Teacher teacher = teacherService.findByTeacherIdNumber(group.getTeacher().getUser().getIdNumber());
-            group.setOffer(offer);
+            group.setOfferDayWeek(offerDayWeek);
             group.setTeacher(teacher);
-            groupService.insert(group);
-            return new ResponseEntity<>("Group successfully created.", HttpStatus.CREATED);
+            Group newGroup = groupService.insert(group);
+            return new ResponseEntity<>(newGroup, HttpStatus.CREATED);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
@@ -82,10 +85,10 @@ public class GroupController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> Update(@PathVariable Long id, @RequestBody Group group) {
+    public ResponseEntity<?> Update(@PathVariable Long id, @RequestBody Group group) {
         try {
-            groupService.update(id, group);
-            return new ResponseEntity<>("Group successfully updated.", HttpStatus.OK);
+            Group updateGroup = groupService.update(id, group);
+            return new ResponseEntity<>(updateGroup, HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {

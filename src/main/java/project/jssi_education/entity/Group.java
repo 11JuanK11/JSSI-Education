@@ -38,6 +38,6 @@ public class Group implements Serializable {
     private Set<GroupCourse> group_has_course;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Offer_id")
-    private Offer offer;
+    @JoinColumn(name = "offer_day_week_id")
+    private OfferDayWeek offerDayWeek;
 }
