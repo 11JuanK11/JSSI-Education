@@ -13,7 +13,7 @@ public class Semester implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int Semester;
+    private Integer Semester;
 
     @OneToMany(mappedBy = "semester", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

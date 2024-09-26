@@ -15,7 +15,7 @@ public class GroupService implements IGroupService {
     private IGroupRepository groupRepository;
 
     @Autowired
-    private OfferService offerService;
+    private OfferDayWeekService offerDayWeekService;
 
     @Autowired
     private  TeacherService teacherService;
@@ -32,11 +32,11 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public void insert(Group group) throws ResourceNotFoundException {
-        if (group.getOffer() == null && group.getTeacher() == null && group.getClassroom() == null && group.getGroup_has_course() == null && group.getNumberStudents() == null) {
+    public Group insert(Group group) throws ResourceNotFoundException {
+        if (group.getClassroom() == null && group.getNumberStudents() == null) {
             throw new ResourceNotFoundException("group information is missing.");
         }
-        groupRepository.save(group);
+        return groupRepository.save(group);
     }
 
     @Override
@@ -48,13 +48,14 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public void update(Long id, Group group) throws ResourceNotFoundException {
+    public Group update(Long id, Group group) throws ResourceNotFoundException {
         Group existingGroup = findById(id);
-        if(group.getOffer() != null || group.getTeacher() != null || group.getClassroom() != null || group.getGroup_has_course() != null || group.getNumberStudents() != null) {
-            if (group.getOffer() != null) {
-                existingGroup.setOffer(offerService.findById(group.getOffer().getId()));
+        System.out.println(existingGroup.toString());
+        if(group.getOfferDayWeek() != null || group.getTeacher() != null || group.getClassroom() != null || group.getGroup_has_course() != null || group.getNumberStudents() != null) {
+            if (group.getOfferDayWeek() != null && group.getOfferDayWeek().getId() != null) {
+                existingGroup.setOfferDayWeek(offerDayWeekService.findById(group.getOfferDayWeek().getId()));
             }
-            if (group.getTeacher() != null) {
+            if (group.getTeacher() != null && group.getTeacher().getId() != null) {
                 existingGroup.setTeacher(teacherService.findByTeacherIdNumber(group.getTeacher().getUser().getIdNumber()));
             }
             if (group.getClassroom() != null){
@@ -69,6 +70,6 @@ public class GroupService implements IGroupService {
         }else{
             throw new ResourceNotFoundException("Group information is missing");
         }
-        groupRepository.save(existingGroup);
+        return groupRepository.save(existingGroup);
     }
 }

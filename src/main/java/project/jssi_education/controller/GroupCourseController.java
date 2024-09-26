@@ -17,12 +17,12 @@ public class GroupCourseController {
     @Autowired
     private IGroupCourseService groupCourseService;
 
-    @GetMapping("/")
+    @GetMapping
     public List<GroupCourse> findAll(){
         return groupCourseService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<?> findOne(@PathVariable Long id) {
         try {
             GroupCourse groupCourse = groupCourseService.findById(id);
@@ -34,11 +34,11 @@ public class GroupCourseController {
         }
     }
 
-    @PostMapping("/")
-    public ResponseEntity<String> insert(@RequestBody GroupCourse groupCourse) {
+    @PostMapping
+    public ResponseEntity<?> insert(@RequestBody GroupCourse groupCourse) {
         try {
-            groupCourseService.insert(groupCourse);
-            return new ResponseEntity<>("Group Course successfully created.", HttpStatus.CREATED);
+            GroupCourse newGroupCourse = groupCourseService.insert(groupCourse);
+            return new ResponseEntity<>(newGroupCourse, HttpStatus.CREATED);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
@@ -46,7 +46,7 @@ public class GroupCourseController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         try {
             groupCourseService.deleteById(id);
@@ -58,11 +58,11 @@ public class GroupCourseController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<String> Update(@PathVariable Long id, @RequestBody GroupCourse groupCourse) {
+    @PutMapping("{id}")
+    public ResponseEntity<?> Update(@PathVariable Long id, @RequestBody GroupCourse groupCourse) {
         try {
-            groupCourseService.update(id, groupCourse);
-            return new ResponseEntity<>("Group Course successfully updated.", HttpStatus.OK);
+            GroupCourse updateGroupCourse = groupCourseService.update(id, groupCourse);
+            return new ResponseEntity<>(updateGroupCourse, HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {

@@ -1,14 +1,14 @@
 package project.jssi_education.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import project.jssi_education.entity.Offer;
 import project.jssi_education.exception.ResourceNotFoundException;
-
 import project.jssi_education.repository.IOfferRepository;
 import project.jssi_education.service.IOfferService;
-
-import java.util.List;
 
 @Service
 public class OfferService implements IOfferService {
@@ -29,7 +29,7 @@ public class OfferService implements IOfferService {
 
     @Override
     public void insert(Offer offer) throws ResourceNotFoundException {
-        if (offer.getEndTime() == null || offer.getStarTime() == null) {
+        if (offer.getEndTime() == null || offer.getStartTime() == null) {
             throw new ResourceNotFoundException("Offer information is missing.");
         }
         offerRepository.save(offer);
@@ -46,9 +46,9 @@ public class OfferService implements IOfferService {
     @Override
     public void update(Long id, Offer offer) throws ResourceNotFoundException {
         Offer existingOffer = findById(id);
-        if(offer.getStarTime() != null || offer.getEndTime() != null) {
-            if (offer.getStarTime() != null) {
-                existingOffer.setStarTime(offer.getStarTime());
+        if(offer.getStartTime() != null || offer.getEndTime() != null) {
+            if (offer.getStartTime() != null) {
+                existingOffer.setStartTime(offer.getStartTime());
             }
             if (offer.getEndTime() != null) {
                 existingOffer.setEndTime(offer.getEndTime());

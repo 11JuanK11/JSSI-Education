@@ -33,11 +33,11 @@ public class GroupCourseService implements IGroupCourseService {
     }
 
     @Override
-    public void insert(GroupCourse groupCourse) throws ResourceNotFoundException {
+    public GroupCourse insert(GroupCourse groupCourse) throws ResourceNotFoundException {
         if(groupCourse.getCourse() == null || groupCourse.getGroup() == null){
             throw new ResourceNotFoundException("Group Course information is missing.");
         }
-        groupCourseRepository.save(groupCourse);
+        return groupCourseRepository.save(groupCourse);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class GroupCourseService implements IGroupCourseService {
     }
 
     @Override
-    public void update(Long id, GroupCourse groupCourse) throws ResourceNotFoundException {
+    public GroupCourse update(Long id, GroupCourse groupCourse) throws ResourceNotFoundException {
         GroupCourse existingGroupCourse = findById(id);
         if (groupCourse.getCourse() != null || groupCourse.getGroup() != null || groupCourse.getAttendances() != null || groupCourse.getGrades() != null || groupCourse.getTeacher_evaluations() != null){
             if(groupCourse.getCourse() != null){
@@ -71,6 +71,6 @@ public class GroupCourseService implements IGroupCourseService {
         }else{
             throw new ResourceNotFoundException("Group Course information is missing");
         }
-        groupCourseRepository.save(groupCourse);
+        return groupCourseRepository.save(groupCourse);
     }
 }
