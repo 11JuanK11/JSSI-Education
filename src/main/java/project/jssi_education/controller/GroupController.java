@@ -1,20 +1,27 @@
 package project.jssi_education.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import project.jssi_education.entity.Group;
 import project.jssi_education.entity.Offer;
-import project.jssi_education.entity.OfferDayWeek;
 import project.jssi_education.entity.Teacher;
 import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.service.IGroupService;
 import project.jssi_education.service.IOfferService;
 import project.jssi_education.service.ITeacherService;
-
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/groups")
