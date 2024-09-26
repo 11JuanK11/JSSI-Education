@@ -4,6 +4,7 @@ window.addEventListener("load", function () {
     const updateBtn = document.getElementById('updateBtn');
     const deleteBtn = document.getElementById('deleteBtn');
     const findAllBtn = document.getElementById('findAllBtn');
+    const linkCourseBtn = document.getElementById('linkCourseBtn');
     const formContainer = document.getElementById('formContainer');
 
     function renderForm(htmlContent) {
@@ -299,6 +300,57 @@ updateBtn.addEventListener('click', function () {
             })
             .catch(error => {
                 alert(error.message);
+                console.error(error);
+            });
+    };
+});
+
+linkCourseBtn.addEventListener('click', function () {
+    renderForm(`
+    <div class="form">
+        <h2><strong>Link Course</strong></h2>
+        <form id="groupForm">
+            <div class="mb-3">
+                <input type="text" class="form-control" id="groupIdInput" placeholder="Group Id" required>
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="courseIdInput" placeholder="Course Id" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Link</button>
+        </form>
+    </div>
+    `);
+
+    document.getElementById("groupForm").onsubmit = function (e) {
+        e.preventDefault();
+
+        const groupCourseData = {
+            group: {
+                groupId: document.querySelector('#groupIdInput').value
+            },
+            course: {
+                courseId: document.querySelector('#courseIdInput').value
+            }
+        };
+
+
+        const url = '/group-course/';
+        const settings = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(groupCourseData)
+        };
+
+        fetch(url, settings)
+            .then(response => response.json())
+            .then(data => {
+                alert('Group Course added successfully');
+                document.getElementById('groupForm').reset();
+            })
+            .catch(error => {
+                alert('Error adding Course group');
                 console.error(error);
             });
     };
