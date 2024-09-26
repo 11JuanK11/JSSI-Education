@@ -9,8 +9,8 @@ import java.util.List;
 public interface IGroupCourseService {
     public GroupCourse findById(Long id) throws ResourceNotFoundException;
     public List<GroupCourse> findAll();
-    public void insert(GroupCourse groupCourse) throws ResourceNotFoundException;
+    public GroupCourse insert(GroupCourse groupCourse) throws ResourceNotFoundException;
     public void deleteById(Long id) throws ResourceNotFoundException;
-    public void update(Long id, GroupCourse groupCourse) throws ResourceNotFoundException;
+    public GroupCourse update(Long id, GroupCourse groupCourse) throws ResourceNotFoundException;
 
 }
