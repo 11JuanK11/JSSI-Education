@@ -10,3 +10,22 @@ window.onload = function() {
 
     setInterval(cambiarImagenes, 5000);
 };
+
+   document.getElementById('recoverPasswordButton').addEventListener('click', function() {
+            const username = document.getElementById('username').value;
+            const resultMessage = document.getElementById('resultMessage');
+
+            // Realizar la solicitud POST a la API
+            fetch(`/api/recover-password?username=${username}`, {
+                method: 'POST'
+            })
+            .then(response => response.text())
+            .then(data => {
+                resultMessage.innerText = data; // Muestra el mensaje devuelto
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultMessage.innerText = "An error occurred while processing your request.";
+            });
+        });
+

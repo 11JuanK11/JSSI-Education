@@ -10,4 +10,6 @@ public interface IUserService {
     public List<User> findAll();
 
     public User insert(User user);
+
+    public String recoverPasswordByUsername(String username);
 }

@@ -33,5 +33,14 @@ public class UserService implements IUserService {
         return userRepository.save(user);
     }
 
+    @Override
+    public String recoverPasswordByUsername(String username) {
+        User user = userRepository.findByUserName(username);
+        if (user != null) {
+            return user.getPassword();
+        }
+        return null;
+    }
+
 
 }
