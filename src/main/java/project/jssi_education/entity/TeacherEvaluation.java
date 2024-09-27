@@ -20,4 +20,8 @@ public class TeacherEvaluation implements Serializable {
     @ManyToOne
     @JoinColumn(name = "group_has_course_id", nullable = false)
     private GroupCourse group_has_course;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
 }
