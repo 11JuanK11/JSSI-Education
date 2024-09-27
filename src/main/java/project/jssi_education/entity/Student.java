@@ -28,4 +28,11 @@ public class Student implements Serializable {
     @JsonIgnore
     private List<Grade> grades;
 
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Attendance> attendance;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<TeacherEvaluation> teacherEvaluations;
 }
