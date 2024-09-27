@@ -38,14 +38,13 @@ public class TeacherService implements ITeacherService {
             throw new ResourceNotFoundException("User information is missing.");
         }
 
-        // Crear el nuevo usuario
         User newUser = teacher.getUser();
-        User savedUser = userRepository.save(newUser); // Guardamos el usuario primero
+        newUser.setRole("teacher");
+        User savedUser = userRepository.save(newUser);
 
-        // Asignar el usuario guardado al teacher
         teacher.setUser(savedUser);
 
-        return teacherRepository.save(teacher); // Guardar el teacher
+        return teacherRepository.save(teacher);
     }
 
     public void deleteByTeacherIdNumber(int idNumber) throws ResourceNotFoundException {
