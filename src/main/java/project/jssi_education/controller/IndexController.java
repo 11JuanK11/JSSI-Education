@@ -30,6 +30,9 @@ public class IndexController {
 
                 if(user.getRole().equals("teacher"))
                     return "redirect:/indexTeacher.html";
+
+                if(user.getRole().equals("administrator"))
+                    return "redirect:/indexAdmin.html";
             }
         }
         return "redirect:/index.html";
