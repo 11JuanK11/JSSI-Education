@@ -40,7 +40,9 @@ public class StudentService implements IStudentService {
         if (student.getUser() == null) {
             throw new ResourceNotFoundException("User information is missing.");
         }
+        student.getUser().setRole("student");
         User savedUser = userRepository.save(student.getUser());
+        savedUser.setRole("student");
         student.setUser(savedUser);
 
         return studentRepository.save(student);
