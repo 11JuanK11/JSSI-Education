@@ -36,20 +36,27 @@
                 </div>
                 <div class="info-containes">
                     <h2 class="title3">Login</h2>
-                    <div class="text">
-                        <label for="exampleInputEmail1" class="form-label">User</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    </div>
-                    <div class="text">
-                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1">
-                    </div>
-                    <a href="indexAdmin.html" class="login-button">Login</a>
+
+                    <!-- Formulario de Login -->
+                    <form action="/login" method="POST">
+                        <div class="text">
+                            <label for="exampleInputEmail1" class="form-label">User</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" name="username" aria-describedby="emailHelp">
+                        </div>
+                        <div class="text">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                        </div>
+
+                        <!-- Botón de Envío -->
+                        <button type="submit" class="login-button">Login</button>
+                    </form>
                 </div>
             </div>
         </div>
     </main>
     <footer>
-    <script src="js/mainPage.js"></script>
+        <script src="js/mainPage.js"></script>
+    </footer>
 </body>
 </html>
