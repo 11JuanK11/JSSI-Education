@@ -13,7 +13,6 @@ import project.jssi_education.entity.User;
 import project.jssi_education.service.impl.GroupService;
 import project.jssi_education.service.impl.TeacherService;
 import project.jssi_education.service.impl.UserService;
-import project.jssi_education.util.PasswordUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +36,6 @@ public class IndexController {
                         HttpSession session) {
         List<User> users = userService.findAll();
         for (User user : users) {
-
             if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
                 // Almacena el usuario en la sesión
                 session.setAttribute("loggedInUser", user);
@@ -46,7 +44,7 @@ public class IndexController {
                     return "redirect:/indexStudent.html";
                 }
 
-                if (user.getRole().equals("manager"))
+                if (user.getRole().equals("manager")) {
                     return "redirect:/indexManager.html";
                 }
 
@@ -66,12 +64,12 @@ public class IndexController {
                     return "indexTeacher";
                 }
 
-                if (user.getRole().equals("administrator"))
+
+                if (user.getRole().equals("administrator")) {
                     return "redirect:/indexAdmin.html";
                 }
             }
         }
         return "redirect:/index.html";
     }
-
 }
