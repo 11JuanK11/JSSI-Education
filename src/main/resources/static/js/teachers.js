@@ -80,14 +80,6 @@ createBtn.addEventListener('click', function () {
         <h2><strong>Add Teacher</strong></h2>
         <form id="teacherForm">
             <div class="mb-3">
-                <select id="idType" class="form-select" required>
-                    <option value="" disabled selected>ID Type</option>
-                    <option>National ID Card</option>
-                    <option>Foreign ID Card</option>
-                    <option>Passport</option>
-                </select>
-            </div>
-            <div class="mb-3">
                 <input type="text" class="form-control" id="idInput" placeholder="ID" required>
             </div>
             <div class="mb-3">
