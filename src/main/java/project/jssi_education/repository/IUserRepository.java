@@ -6,4 +6,5 @@ import project.jssi_education.entity.User;
 
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
+    User findByUserName(String username);
 }
