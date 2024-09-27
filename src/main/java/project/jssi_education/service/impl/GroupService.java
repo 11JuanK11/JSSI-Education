@@ -2,7 +2,9 @@ package project.jssi_education.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.jssi_education.entity.Course;
 import project.jssi_education.entity.Group;
+import project.jssi_education.entity.Teacher;
 import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.repository.IGroupRepository;
 import project.jssi_education.service.IGroupService;
@@ -72,4 +74,15 @@ public class GroupService implements IGroupService {
         }
         return groupRepository.save(existingGroup);
     }
+
+    @Override
+    public List<Group> findByTeacher(Teacher teacher) {
+        return groupRepository.findByTeacher(teacher);
+    }
+
+    @Override
+    public List<Course> findCoursesByGroup(Group group) {
+        return groupRepository.findCoursesByGroupId(group.getGroupId());
+    }
+
 }

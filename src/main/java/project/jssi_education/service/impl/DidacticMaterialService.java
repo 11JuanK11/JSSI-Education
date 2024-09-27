@@ -27,11 +27,11 @@ public class DidacticMaterialService implements IDidacticMaterialService {
     }
 
     @Override
-    public void insert(DidacticMaterial didacticMaterial) throws ResourceNotFoundException {
+    public DidacticMaterial insert(DidacticMaterial didacticMaterial) throws ResourceNotFoundException {
         if (didacticMaterial.getDescription() != null && didacticMaterial.getId() != null ) {
             throw new ResourceNotFoundException("Didactic Material information is missing.");
         }
-        didacticMaterialsRepository.save(didacticMaterial);
+        return didacticMaterialsRepository.save(didacticMaterial);
     }
 
     @Override
