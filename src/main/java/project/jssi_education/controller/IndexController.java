@@ -13,6 +13,7 @@ import project.jssi_education.entity.User;
 import project.jssi_education.service.impl.GroupService;
 import project.jssi_education.service.impl.TeacherService;
 import project.jssi_education.service.impl.UserService;
+import project.jssi_education.util.PasswordUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,8 +37,7 @@ public class IndexController {
                         HttpSession session) {
         List<User> users = userService.findAll();
         for (User user : users) {
-            if (user.getUserName().equals(username) && user.getPassword().equals(password)) {
-                // Almacena el usuario en la sesión
+            if (user.getUserName().equals(username) && user.getPassword().equals(PasswordUtil.hashPassword(password))) {
                 session.setAttribute("loggedInUser", user);
 
                 if (user.getRole().equals("student")) {
