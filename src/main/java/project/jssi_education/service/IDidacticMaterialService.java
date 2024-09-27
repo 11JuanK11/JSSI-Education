@@ -9,7 +9,7 @@ import java.util.List;
 public interface IDidacticMaterialService {
     public DidacticMaterial findById(Long id) throws ResourceNotFoundException;
     public List<DidacticMaterial> findAll();
-    public void insert(DidacticMaterial didacticMaterial) throws ResourceNotFoundException;
+    public DidacticMaterial insert(DidacticMaterial didacticMaterial) throws ResourceNotFoundException;
     public void deleteById(Long id) throws ResourceNotFoundException;
     public void update(Long id, DidacticMaterial didacticMaterial) throws ResourceNotFoundException;
 

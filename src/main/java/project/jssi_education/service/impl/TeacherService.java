@@ -88,4 +88,9 @@ public class TeacherService implements ITeacherService {
 
         return teacherRepository.save(existingTeacher);
     }
+
+
+    public Teacher findByUserId(Long userId) {
+        return teacherRepository.findByUserId(userId); // Asegúrate de tener este método en el repositorio
+    }
 }

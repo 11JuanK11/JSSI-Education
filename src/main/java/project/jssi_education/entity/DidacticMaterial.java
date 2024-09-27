@@ -8,12 +8,12 @@ import java.io.Serializable;
 
 @Entity
 @Data
+@Table(name = "didactic_material")
 public class DidacticMaterial implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-
-    String description;
+    private Long id;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "group_has_course_id", nullable = false)
