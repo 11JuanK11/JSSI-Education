@@ -10,6 +10,7 @@ import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.service.impl.DidacticMaterialService;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,29 +49,22 @@ public class DidacticMaterialController {
         }
     }
 
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteByIdNumber(@PathVariable Long id) {
-        try {
-            didacticMaterialService.deleteById(id);
-            return new ResponseEntity<>(Map.of("message", "didactic Material successfully deleted."), HttpStatus.NO_CONTENT);
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(Map.of("message", "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @PutMapping("/{id}")
-    public ResponseEntity<String> Update(@PathVariable Long id, @RequestBody DidacticMaterial didacticMaterial) {
+    public ResponseEntity<?> Update(@PathVariable Long id, @RequestBody DidacticMaterial didacticMaterial) {
         try {
-            didacticMaterialService.update(id, didacticMaterial);
-            return new ResponseEntity<>("didactic Material successfully updated.", HttpStatus.OK);
+            DidacticMaterial updatedMaterial = didacticMaterialService.update(id, didacticMaterial);
+            return new ResponseEntity<>(updatedMaterial, HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", ex.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
-            return new ResponseEntity<>("An error occurred while updating the didactic Material.", HttpStatus.INTERNAL_SERVER_ERROR);
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", "An error occurred while updating the Didactic Material.");
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
 }

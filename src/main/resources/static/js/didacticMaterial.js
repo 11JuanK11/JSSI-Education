@@ -1,7 +1,15 @@
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("createMaterialBtn").addEventListener("click", function (e) {
         e.preventDefault();
+        showCreateForm();
+    });
 
+    document.getElementById("updateMaterialBtn").addEventListener("click", function (e) {
+        e.preventDefault();
+        showUpdateForm();
+    });
+
+    function showCreateForm() {
         const formContainer = document.getElementById("formContainer");
         formContainer.innerHTML = `
             <div class="form">
@@ -30,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("groupSelect").addEventListener("change", function () {
             const groupId = this.value;
             const selectedCourses = courses[groupId] || [];
-
             const courseSelect = document.getElementById("courseSelect");
             courseSelect.innerHTML = selectedCourses.map(course => `<option value="${course.courseId}">${course.courseName}</option>`).join('');
         });
@@ -67,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 .then(response => {
                     if (!response.ok) {
                         return response.text().then(text => {
-                            throw new Error('Error creating material: ' + text);
+                            throw new Error(`Error ${response.status}: ${text}`);
                         });
                     }
                     return response.json();
@@ -81,5 +88,132 @@ document.addEventListener("DOMContentLoaded", function() {
                     console.error(error);
                 });
         };
-    });
+    }
+
+    function showUpdateForm() {
+        const formContainer = document.getElementById("formContainer");
+        formContainer.innerHTML = `
+            <div class="form">
+                <h2><strong>Update Didactic Material</strong></h2>
+                <div class="mb-3">
+                    <label for="groupSelectUpdate" class="form-label">Select Group</label>
+                    <select class="form-select" id="groupSelectUpdate" required>
+                        ${groups.map(group => `<option value="${group.groupId}">${group.classroom}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="courseSelectUpdate" class="form-label">Select Course</label>
+                    <select class="form-select" id="courseSelectUpdate" required>
+                        <!-- Aquí se llenará con los cursos asociados al grupo seleccionado -->
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="materialSelect" class="form-label">Select Material</label>
+                    <select class="form-select" id="materialSelect" required>
+                        <!-- Las opciones se llenarán dinámicamente -->
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <textarea id="updateDescriptionInput" class="form-control" placeholder="Enter new description" required></textarea>
+                </div>
+                <button id="submitUpdateBtn" class="btn btn-primary">Update</button>
+            </div>
+        `;
+
+        document.getElementById("groupSelectUpdate").addEventListener("change", function () {
+            const groupId = this.value;
+            const selectedCourses = courses[groupId] || [];
+            const courseSelect = document.getElementById("courseSelectUpdate");
+            courseSelect.innerHTML = selectedCourses.map(course => `<option value="${course.courseId}">${course.courseName}</option>`).join('');
+            document.getElementById("materialSelect").innerHTML = '';
+        });
+
+        document.getElementById("courseSelectUpdate").addEventListener("change", function () {
+            const groupId = document.getElementById("groupSelectUpdate").value;
+            const courseId = this.value;
+            fetchMaterialsByGroupAndCourse(groupId, courseId);
+        });
+
+        document.getElementById("submitUpdateBtn").addEventListener("click", function(e) {
+            e.preventDefault();
+            const materialId = document.getElementById("materialSelect").value;
+            const newDescription = document.getElementById("updateDescriptionInput").value;
+
+            const materialData = {
+                description: newDescription
+            };
+
+            const url = `/didactic-materials/${materialId}`;
+            const settings = {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(materialData)
+            };
+
+            fetch(url, settings)
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            throw new Error(`Error ${response.status}: ${text}`);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Material updated successfully! New Description: ' + data.description);
+                    formContainer.innerHTML = '';
+                })
+                .catch(error => {
+                    alert('Error updating material: ' + error.message);
+                    console.error(error);
+                });
+        });
+    }
+
+    function fetchMaterialsByGroupAndCourse(groupId, courseId) {
+        fetch(`/didactic-materials/?groupId=${groupId}&courseId=${courseId}`)
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(`Error ${response.status}: ${text}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                materials = data;
+                showMaterialsOptions();
+            })
+            .catch(error => {
+                alert('Error fetching materials: ' + error.message);
+                console.error(error);
+            });
+    }
+
+    function showMaterialsOptions() {
+        const materialSelect = document.getElementById("materialSelect");
+        materialSelect.innerHTML = materials.map(material => `<option value="${material.id}">${material.description}</option>`).join('');
+    }
+
+    function fetchMaterials() {
+        fetch('/didactic-materials/')
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(`Error ${response.status}: ${text}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                materials = data;
+            })
+            .catch(error => {
+                alert('Error fetching materials: ' + error.message);
+                console.error(error);
+            });
+    }
+
 });

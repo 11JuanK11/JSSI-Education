@@ -11,6 +11,6 @@ public interface IDidacticMaterialService {
     public List<DidacticMaterial> findAll();
     public DidacticMaterial insert(DidacticMaterial didacticMaterial) throws ResourceNotFoundException;
     public void deleteById(Long id) throws ResourceNotFoundException;
-    public void update(Long id, DidacticMaterial didacticMaterial) throws ResourceNotFoundException;
+    public DidacticMaterial update(Long id, DidacticMaterial didacticMaterial) throws ResourceNotFoundException;
 
 }

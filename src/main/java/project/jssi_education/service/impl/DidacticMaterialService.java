@@ -68,7 +68,7 @@ public class DidacticMaterialService implements IDidacticMaterialService {
     }
 
     @Override
-    public void update(Long id, DidacticMaterial didacticMaterial) throws ResourceNotFoundException {
+    public DidacticMaterial update(Long id, DidacticMaterial didacticMaterial) throws ResourceNotFoundException {
         DidacticMaterial existingDidacticMaterial = findById(id);
         if (didacticMaterial.getDescription() != null || didacticMaterial.getId() != null ) {
             if (didacticMaterial.getDescription()  != null) {
@@ -77,7 +77,7 @@ public class DidacticMaterialService implements IDidacticMaterialService {
         }else{
             throw new ResourceNotFoundException("Didactic Material information is missing");
         }
-        didacticMaterialsRepository.save(existingDidacticMaterial);
+        return didacticMaterialsRepository.save(existingDidacticMaterial);
 
 
     }
