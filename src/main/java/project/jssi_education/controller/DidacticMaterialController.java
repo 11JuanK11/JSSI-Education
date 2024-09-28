@@ -37,17 +37,17 @@ public class DidacticMaterialController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<String> insert(@RequestBody DidacticMaterial didacticMaterial) {
+    public ResponseEntity<?> insert(@RequestBody DidacticMaterial didacticMaterial) {
         try {
-            didacticMaterialService.insert(didacticMaterial);
-            return new ResponseEntity<>("didactic Material successfully created.", HttpStatus.CREATED);
-
+            DidacticMaterial createdMaterial = didacticMaterialService.insert(didacticMaterial);
+            return new ResponseEntity<>(createdMaterial, HttpStatus.CREATED); // Retornar el objeto creado
         } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
-            return new ResponseEntity<>("An error occurred while creating the Offer.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(Map.of("message", "An error occurred while creating the Didactic Material."), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteByIdNumber(@PathVariable Long id) {

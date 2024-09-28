@@ -73,4 +73,11 @@ public class GroupCourseService implements IGroupCourseService {
         }
         return groupCourseRepository.save(groupCourse);
     }
+
+
+    public GroupCourse findByGroupAndCourse(Long groupId, Long courseId) throws ResourceNotFoundException {
+        return groupCourseRepository.findByGroupIdAndCourseId(groupId, courseId)
+                .orElseThrow(() -> new ResourceNotFoundException("GroupCourse not found with groupId: " + groupId + " and courseId: " + courseId));
+    }
+
 }

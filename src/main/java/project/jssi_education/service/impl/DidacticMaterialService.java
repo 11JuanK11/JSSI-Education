@@ -3,6 +3,7 @@ package project.jssi_education.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.jssi_education.entity.DidacticMaterial;
+import project.jssi_education.entity.GroupCourse;
 import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.repository.IDidacticMaterialRepository;
 import project.jssi_education.service.IDidacticMaterialService;
@@ -14,6 +15,10 @@ public class DidacticMaterialService implements IDidacticMaterialService {
 
     @Autowired
     private IDidacticMaterialRepository didacticMaterialsRepository;
+
+    @Autowired
+    private GroupCourseService groupCourseService; // Agregar esta línea
+
     @Override
     public DidacticMaterial findById(Long id) throws ResourceNotFoundException {
         return didacticMaterialsRepository.findById(id)
@@ -28,11 +33,30 @@ public class DidacticMaterialService implements IDidacticMaterialService {
 
     @Override
     public DidacticMaterial insert(DidacticMaterial didacticMaterial) throws ResourceNotFoundException {
-        if (didacticMaterial.getDescription() != null && didacticMaterial.getId() != null ) {
-            throw new ResourceNotFoundException("Didactic Material information is missing.");
+        if (didacticMaterial.getDescription() == null) {
+            throw new ResourceNotFoundException("Didactic Material description is missing.");
         }
+
+        if (didacticMaterial.getGroup_has_course() == null || didacticMaterial.getGroup_has_course().getId() == null) {
+            throw new ResourceNotFoundException("GroupCourse ID is missing.");
+        }
+
+        Long groupCourseId = didacticMaterial.getGroup_has_course().getId();
+
+        GroupCourse groupCourse = groupCourseService.findById(groupCourseId);
+
+        if (groupCourse == null) {
+            throw new ResourceNotFoundException("GroupCourse not found with id: " + groupCourseId);
+        }
+
+        didacticMaterial.setGroup_has_course(groupCourse);
+
         return didacticMaterialsRepository.save(didacticMaterial);
     }
+
+
+
+
 
     @Override
     public void deleteById(Long id) throws ResourceNotFoundException {
