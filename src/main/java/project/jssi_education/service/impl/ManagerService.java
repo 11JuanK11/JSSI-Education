@@ -44,6 +44,7 @@ public class ManagerService implements IManagerService {
         }
 
         User userAux = userRepository.save(manager.getUser());
+        userAux.setRole("manager");
         manager.setUser(userAux);
 
         return managerRepository.save(manager);
