@@ -9,6 +9,36 @@ window.addEventListener("load", function () {
         formContainer.innerHTML = htmlContent;
     }
 
+    function loadDegrees() {
+        return fetch('/degrees/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error fetching degrees');
+                }
+                return response.json();
+            });
+    }
+
+    function loadDegreesCourses() {
+            return fetch('/degreeCourses')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error fetching degrees');
+                    }
+                    return response.json();
+                });
+        }
+
+    function loadSemester() {
+        return fetch('/semesters')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error fetching semester');
+                }
+                return response.json();
+            });
+    }
+
 
 // findAll
 findAllBtn.addEventListener('click', function () {
@@ -67,21 +97,51 @@ function renderCourseList(courses) {
 createBtn.addEventListener('click', function () {
     renderForm(`
     <div class="form">
-        <h2><strong>Add Manager</strong></h2>
+        <h2><strong>Add Course</strong></h2>
         <form id="courseForm">
             <div class="mb-3">
                 <input type="text" class="form-control" id="nameInput" placeholder="Name" required>
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" id="idDegreeInput" placeholder="Id Degree" required>
+                <select id="degreeSelect" class="form-select" required>
+                    <option value="" disabled selected>Select Degree</option>
+                </select>
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" id="idSemesterInput" placeholder="Id Semester" required>
+                <select id="semesterSelect" class="form-select" required>
+                    <option value="" disabled selected>Select Semester</option>
+                </select>
             </div>
             <button type="submit" class="btn btn-primary">Add</button>
         </form>
     </div>
     `);
+
+    fetch('/degrees/')
+        .then(response => response.json())
+        .then(data => {
+            const degreeSelect = document.querySelector('#degreeSelect');
+            data.forEach(degree => {
+                const option = document.createElement('option');
+                option.value = degree.id;
+                option.text = degree.name;
+                degreeSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error loading degrees:', error));
+
+    fetch('/semesters')
+        .then(response => response.json())
+        .then(data => {
+            const semesterSelect = document.querySelector('#semesterSelect');
+            data.forEach(semester => {
+                const option = document.createElement('option');
+                option.value = semester.id;
+                option.text = semester.semester;
+                semesterSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error loading semester:', error));
 
     document.getElementById("courseForm").onsubmit = function (e) {
         e.preventDefault();
@@ -90,11 +150,11 @@ createBtn.addEventListener('click', function () {
             courseName: document.querySelector('#nameInput').value,
             degreeCourses: {
                 degree: {
-                    id: document.querySelector('#idDegreeInput').value
+                    id: document.querySelector('#degreeSelect').value
                 }
             },
             semester: {
-                id: document.querySelector('#idSemesterInput').value
+                id: document.querySelector('#semesterSelect').value
             }
         };
 
@@ -151,29 +211,51 @@ updateBtn.addEventListener('click', function () {
             })
             .then(course => {
                 renderForm(`
-                    <div class="form">
-                        <h2><strong>Update Course</strong></h2>
-                        <form id="updateCourseForm">
-                            <div class="mb-3">
-                                <input type="text" class="form-control" id="nameInput" value="${course.courseName}" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <input type="text" class="form-control" id="idSemesterInput" value="${course.semester.id}" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </form>
-                    </div>
+                <div class="form">
+                    <h2><strong>Update Course</strong></h2>
+                    <form id="updateCourseForm">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="nameInput" value="${course.courseName}" required>
+                        </div>
+                        <div class="mb-3">
+                            <select id="semesterSelect" class="form-select" required>
+                                <option value="" disabled selected>Select Semester</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                </div>
                 `);
+
+                fetch('/semesters')
+                    .then(response => response.json())
+                    .then(data => {
+                        const semesterSelect = document.querySelector('#semesterSelect');
+                        data.forEach(semester => {
+                            const option = document.createElement('option');
+                            option.value = semester.id;
+                            option.text = semester.semester;
+                            semesterSelect.appendChild(option);
+
+                            if (semester.id === course.semester.id) {
+                                option.selected = true; // Select the current course
+                            }
+                        });
+                    })
+                    .catch(error => console.error('Error loading semester:', error));
 
                 document.getElementById("updateCourseForm").onsubmit = function (e) {
                     e.preventDefault();
 
                     const updatedData = {
                         courseName: document.querySelector('#nameInput').value,
-
+                        degreeCourses: {
+                            degree: {
+                                id: document.querySelector('#degreeSelect').value
+                            }
+                        },
                         semester: {
-                            id: document.querySelector('#idSemesterInput').value
+                            id: document.querySelector('#semesterSelect').value
                         }
                     };
 
