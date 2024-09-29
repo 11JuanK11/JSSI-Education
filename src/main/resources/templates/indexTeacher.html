@@ -25,7 +25,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">See Schedule</a>
+                        <a class="nav-link" href="http://localhost:8080/schedule-teacher">See Schedule</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -40,16 +40,13 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
-                            Subject grading management
+                            Groups management
                         </a>
                         <ul class="dropdown-menu" style="background-color: #DDE6ED;">
-                            <li><a class="dropdown-item" href="#">Option 1</a></li>
-                            <li><a class="dropdown-item" href="#">Option 2</a></li>
+                            <li><a class="dropdown-item" href="http://localhost:8080/grade-teacher">Grades</a></li>
+                            <li><a class="dropdown-item" href="#">Attendace</a></li>
                             <li><a class="dropdown-item" href="#">Option 3</a></li>
                         </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Student attendance management</a>
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
@@ -62,6 +59,7 @@
 </header>
 
 <main class="container mt-4">
+    <p>User ID: <span id="userId" th:text="${userId}"></span></p>
     <div id="formContainer"></div>
     <div id="materialsContainer"></div>
 </main>
@@ -75,6 +73,7 @@
     var groups = /*[[${groups}]]*/ [];
     var courses = /*[[${courses}]]*/ {};
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>

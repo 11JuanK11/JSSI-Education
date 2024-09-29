@@ -1,8 +1,12 @@
 package project.jssi_education.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.jssi_education.entity.Teacher;
 import project.jssi_education.entity.User;
+import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.service.IUserService;
 import project.jssi_education.service.impl.UserService;
 
@@ -27,8 +31,16 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public void insert(@RequestBody User user){
-        userService.insert(user);
+    public ResponseEntity<?> insert(@RequestBody User user){
+
+        try {
+            User createduser = userService.insert(user);
+            return new ResponseEntity<>(createduser, HttpStatus.CREATED);
+        } catch (ResourceNotFoundException ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception ex) {
+            return new ResponseEntity<>("An error occurred while creating the teacher.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 

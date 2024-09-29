@@ -62,10 +62,10 @@ public class GradeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> Update(@PathVariable Long id, @RequestBody Grade grade) {
+    public ResponseEntity<?> Update(@PathVariable Long id, @RequestBody Grade grade) {
         try {
-            gradeService.update(id, grade);
-            return new ResponseEntity<>("Grade successfully updated.", HttpStatus.OK);
+            Grade updatedGrade = gradeService.update(id, grade);
+            return new ResponseEntity<>(updatedGrade, HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {

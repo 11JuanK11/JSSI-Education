@@ -16,7 +16,7 @@ public class GroupCourse implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
