@@ -8,8 +8,8 @@ import java.util.List;
 public interface IOfferDayWeekService {
     public OfferDayWeek findById(Long id) throws ResourceNotFoundException;
     public List<OfferDayWeek> findAll();
-    public void insert(OfferDayWeek offerDayWeek) throws ResourceNotFoundException;
+    public OfferDayWeek insert(OfferDayWeek offerDayWeek) throws ResourceNotFoundException;
     public void deleteById(Long id) throws ResourceNotFoundException;
-    public void update(Long id, OfferDayWeek offerDayWeek) throws ResourceNotFoundException;
+    public OfferDayWeek update(Long id, OfferDayWeek offerDayWeek) throws ResourceNotFoundException;
 
 }

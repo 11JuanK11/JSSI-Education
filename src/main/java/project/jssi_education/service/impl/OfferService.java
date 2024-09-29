@@ -28,11 +28,11 @@ public class OfferService implements IOfferService {
     }
 
     @Override
-    public void insert(Offer offer) throws ResourceNotFoundException {
+    public Offer insert(Offer offer) throws ResourceNotFoundException {
         if (offer.getEndTime() == null || offer.getStartTime() == null) {
             throw new ResourceNotFoundException("Offer information is missing.");
         }
-        offerRepository.save(offer);
+        return offerRepository.save(offer);
     }
 
     @Override
