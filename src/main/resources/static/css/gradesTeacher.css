@@ -1,0 +1,155 @@
+* {
+    font-family: 'Inter', sans-serif !important;
+}
+
+.navbar {
+    padding: 0 !important;
+}
+
+.logo {
+    height: 80px;
+    width: auto;
+}
+
+.custom-btn {
+    background-color: #27374D;
+    color: white;
+    border: none;
+}
+
+.navbar-brand, .nav-link {
+    color: #27374D !important;
+}
+
+.container-fluid {
+    background-color: #9DB2BF !important;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: calc(100vh - 80px);
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.side-bar {
+    background-color: #27374D;
+    color: white;
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 30px;
+    padding-left: 30px;
+    gap: 30px;
+    height: 100vh;
+}
+
+.side-bar p {
+    font-size: 1.5vw;
+    cursor: pointer;
+}
+
+.side-bar h1 {
+    font-size: 2vw;
+    cursor: pointer;
+}
+
+.side-bar p:hover {
+    color: #DDE6ED;
+}
+
+.form-container {
+    width: 75vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    font-family: "Rubik", system-ui !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    background-color: #27374D;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.form h2 {
+    font-family: 'Inter', sans-serif !important;
+    margin-bottom: 20px;
+}
+
+
+.form .form-control {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+
+.form button {
+    width: auto;
+    margin: 20px 0;
+    display: inline-block;
+    background-color: white;
+    border: none;
+    color: #27374D;
+    font-weight: bold;
+    font-size: 25px;
+    width: 10vw;
+    transition: background-color 0.3s ease;
+}
+
+.form button:hover {
+    background-color: #9DB2BF;
+    color: white;
+}
+
+.mb-3{
+    width: 30vw;
+}
+main {
+    width: 100%;
+    max-height: 100vh; /* Limita la altura de main */
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed; /* Hace que las celdas tengan un ancho uniforme */
+    border-collapse: collapse;
+}
+
+thead {
+    width: 100%;
+}
+
+tbody {
+    display: block; /* Permite scroll solo en el cuerpo */
+    max-height: 60vh; /* Limita la altura del cuerpo de la tabla */
+    overflow-y: auto; /* Permite desplazamiento vertical */
+    width: 100%;
+}
+
+thead, tbody tr {
+    display: table;
+    table-layout: fixed; /* Fuerza a que el thead y el tbody tengan el mismo ancho */
+    width: 100%;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
