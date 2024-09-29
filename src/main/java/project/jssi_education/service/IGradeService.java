@@ -10,6 +10,6 @@ public interface IGradeService {
     public List<Grade> findAll();
     public void insert(Grade grade) throws ResourceNotFoundException;
     public void deleteById(Long id) throws ResourceNotFoundException;
-    public void update(Long id, Grade grade) throws ResourceNotFoundException;
+    public Grade update(Long id, Grade grade) throws ResourceNotFoundException;
     List<Grade> findByStudentId(Long studentId);
 }
