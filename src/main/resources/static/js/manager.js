@@ -31,7 +31,7 @@ findAllBtn.addEventListener('click', function () {
 
 function renderManagerList(managers) {
     const formContainer = document.getElementById('formContainer');
-    formContainer.innerHTML = <h2><strong>List of Managers</strong></h2>;
+    formContainer.innerHTML = `<h2><strong>List of Managers</strong></h2>`;
 
     if (managers.length === 0) {
         formContainer.innerHTML += '<p>No managers found.</p>';
@@ -77,14 +77,6 @@ createBtn.addEventListener('click', function () {
     <div class="form">
         <h2><strong>Add Manager</strong></h2>
         <form id="managerForm">
-            <div class="mb-3">
-                <select id="idType" class="form-select" required>
-                    <option value="" disabled selected>ID Type</option>
-                    <option>National ID Card</option>
-                    <option>Foreign ID Card</option>
-                    <option>Passport</option>
-                </select>
-            </div>
             <div class="mb-3">
                 <input type="text" class="form-control" id="idInput" placeholder="ID" required>
             </div>
@@ -164,7 +156,7 @@ searchBtn.addEventListener('click', function () {
         e.preventDefault();
         const idNumber = document.querySelector('#idInput').value;
 
-        const url = /managers/${idNumber};
+        const url = `/managers/${idNumber}`;
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -209,7 +201,7 @@ updateBtn.addEventListener('click', function () {
         e.preventDefault();
         const idNumber = document.querySelector('#idInput').value;
 
-        const url = /managers/${idNumber};
+        const url = `/managers/${idNumber}`;
         fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -263,7 +255,7 @@ updateBtn.addEventListener('click', function () {
                         delete updatedData.user.password;
                     }
 
-                    const updateUrl = /managers/${idNumber};
+                    const updateUrl = `/managers/${idNumber}`;
                     const settings = {
                         method: 'PUT',
                         headers: {
@@ -313,7 +305,7 @@ deleteBtn.addEventListener('click', function () {
         e.preventDefault();
         const idNumber = document.querySelector('#idInput').value;
 
-        const url = /managers/${idNumber};
+        const url = `/managers/${idNumber}`;
         const settings = {
             method: 'DELETE'
         };

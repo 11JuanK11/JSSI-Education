@@ -6,11 +6,10 @@ import project.jssi_education.entity.*;
 
 import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.repository.IDayWeekRepository;
+import project.jssi_education.repository.IGroupRepository;
 import project.jssi_education.repository.IOfferDayWeekRepository;
-import project.jssi_education.repository.IOfferRepository;
 import project.jssi_education.service.IOfferDayWeekService;
 
-import javax.swing.*;
 import java.util.List;
 
 @Service
@@ -24,6 +23,11 @@ public class OfferDayWeekService implements IOfferDayWeekService {
     @Autowired
     private OfferService offerService;
 
+    @Autowired
+    private GroupCourseService groupCourseService;
+
+    @Autowired
+    private IGroupRepository groupRepository;
 
     @Override
     public OfferDayWeek findById(Long id) throws ResourceNotFoundException {
@@ -37,7 +41,7 @@ public class OfferDayWeekService implements IOfferDayWeekService {
     }
 
     @Override
-    public void insert(OfferDayWeek offerDayWeek) throws ResourceNotFoundException {
+    public OfferDayWeek insert(OfferDayWeek offerDayWeek) throws ResourceNotFoundException {
         if (offerDayWeek.getOffer() == null) {
             throw new ResourceNotFoundException("Offer information is missing.");
         }
@@ -47,7 +51,7 @@ public class OfferDayWeekService implements IOfferDayWeekService {
         if (day_id < 1 || day_id > 7)
             throw new ResourceNotFoundException("Day Week not found with id: " + offerDayWeek.getDayWeek().getId());
 
-        offerDayWeekRepository.save(offerDayWeek);
+        return offerDayWeekRepository.save(offerDayWeek);
     }
 
     @Override
@@ -59,13 +63,16 @@ public class OfferDayWeekService implements IOfferDayWeekService {
     }
 
     @Override
-    public void update(Long id, OfferDayWeek offerDayWeek) throws ResourceNotFoundException {
+    public OfferDayWeek update(Long id, OfferDayWeek offerDayWeek) throws ResourceNotFoundException {
         OfferDayWeek existingOfferDayWeek = findById(id);
         if (offerDayWeek.getOffer() != null && offerDayWeek.getOffer().getId() != null) {
 
-            Offer offerToUpdate = offerService.findById(offerDayWeek.getOffer().getId());
-
-            existingOfferDayWeek.setOffer(offerToUpdate);
+            if(offerDayWeek.getOffer().getStartTime() != null) {
+                existingOfferDayWeek.getOffer().setStartTime(offerDayWeek.getOffer().getStartTime());
+            }
+            if(offerDayWeek.getOffer().getEndTime() != null) {
+                existingOfferDayWeek.getOffer().setEndTime(offerDayWeek.getOffer().getEndTime());
+            }
         }
         if (offerDayWeek.getDayWeek() != null && offerDayWeek.getDayWeek().getId() != null) {
             long dayWeekId = offerDayWeek.getDayWeek().getId();
@@ -75,7 +82,28 @@ public class OfferDayWeekService implements IOfferDayWeekService {
                 existingOfferDayWeek.setDayWeek(dayWeekToUpdate);
             }
         }
-        offerDayWeekRepository.save(existingOfferDayWeek);
+        return offerDayWeekRepository.save(existingOfferDayWeek);
     }
+
+    public void deleteGroupCourse(Long id){
+        List<GroupCourse> groupsCourses = groupCourseService.findAll();
+
+        for (GroupCourse groupCourse : groupsCourses){
+            if(groupCourse.getGroup().getOfferDayWeek().getId().equals(id)){
+                groupCourseService.deleteById(groupCourse.getId());
+            }
+        }
+    }
+
+    public void deleteGroup(Long id){
+        List<Group> groups = groupRepository.findAll();
+
+        for(Group group : groups){
+            if(group.getOfferDayWeek().getId().equals(id)){
+                groupRepository.deleteById(group.getGroupId());
+            }
+        }
+    }
+
 }
 

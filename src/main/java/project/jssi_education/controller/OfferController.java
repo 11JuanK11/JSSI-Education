@@ -38,10 +38,10 @@ public class OfferController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<String> insert(@RequestBody Offer offer) {
+    public ResponseEntity<?> insert(@RequestBody Offer offer) {
         try {
-            offerService.insert(offer);
-            return new ResponseEntity<>("Offer successfully created.", HttpStatus.CREATED);
+            Offer offerSave = offerService.insert(offer);
+            return new ResponseEntity<>(offerSave, HttpStatus.CREATED);
 
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
