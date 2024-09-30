@@ -17,5 +17,5 @@ public class DidacticMaterial implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "group_has_course_id", nullable = false)
-    private GroupCourse group_has_course;
+    private GroupCourse groupHasCourse;
 }

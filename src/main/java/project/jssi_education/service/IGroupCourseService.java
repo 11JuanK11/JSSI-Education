@@ -1,6 +1,5 @@
 package project.jssi_education.service;
 
-import project.jssi_education.entity.Group;
 import project.jssi_education.entity.GroupCourse;
 import project.jssi_education.exception.ResourceNotFoundException;
 

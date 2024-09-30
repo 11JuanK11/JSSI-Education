@@ -19,7 +19,7 @@ window.addEventListener("load", function () {
             });
     }
 
-    // ---------------------------------------------- create ----------------------------------------------
+
     createBtn.addEventListener('click', function () {
         renderForm(`
         <div class="form">
@@ -107,7 +107,7 @@ window.addEventListener("load", function () {
         };
     });
 
-    // ---------------------------------------------- findOne ----------------------------------------------
+
     searchBtn.addEventListener('click', function () {
         renderForm(`
             <div class="form">
@@ -153,7 +153,6 @@ window.addEventListener("load", function () {
         };
     });
 
-//------------------------------------------delete-------------------------------------------------------------------------
 
    deleteBtn.addEventListener('click', function () {
        renderForm(`
@@ -194,192 +193,185 @@ window.addEventListener("load", function () {
        });
    });
 
-// ----------------------------------update-------------------------------------------------------------------
 
-updateBtn.addEventListener('click', function () {
-    renderForm(`
-        <div class="form">
-            <h2><strong>Update Student</strong></h2>
-            <form id="searchStudentForm">
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="idInput" placeholder="Enter ID number" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Search</button>
-            </form>
-        </div>
-    `);
-
-    document.getElementById("searchStudentForm").onsubmit = function (e) {
-        e.preventDefault();
-        const idNumber = document.querySelector('#idInput').value;
-
-        // Fetch the student by ID number
-        fetch(`/students/${idNumber}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Student not found');
-                }
-                return response.json();
-            })
-            .then(student => {
-                renderForm(`
-                    <div class="form">
-                        <h2><strong>Update Student</strong></h2>
-                        <form id="updateStudentForm">
-                            <div class="mb-3">
-                                <input type="text" class="form-control" id="idNumberInput" value="${student.user.idNumber}" placeholder="Enter ID number" required>
-                            </div>
-                            <div class="mb-3">
-                                <input type="text" class="form-control" id="nameInput" value="${student.user.name}" required>
-                            </div>
-                            <div class="mb-3">
-                                <input type="text" class="form-control" id="lastnameInput" value="${student.user.lastname}" required>
-                            </div>
-                            <div class="mb-3">
-                                <input type="email" class="form-control" id="emailInput" value="${student.user.email}" required>
-                            </div>
-                            <div class="mb-3">
-                                <input type="text" class="form-control" id="usernameInput" value="${student.user.userName}" placeholder="Enter username" required>
-                            </div>
-                            <div class="mb-3">
-                                <input type="password" class="form-control" id="passwordInput" placeholder="Leave blank to keep unchanged">
-                            </div>
-                            <div class="mb-3">
-                                <select id="degreeSelect" class="form-select" required>
-                                    <option value="" disabled>Select Degree</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </form>
+    updateBtn.addEventListener('click', function () {
+        renderForm(`
+            <div class="form">
+                <h2><strong>Update Student</strong></h2>
+                <form id="searchStudentForm">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="idInput" placeholder="Enter ID number" required>
                     </div>
-                `);
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        `);
 
-                // Fetch degrees to populate the dropdown
-                fetch('/degrees/')
-                    .then(response => response.json())
-                    .then(degrees => {
-                        const degreeSelect = document.querySelector('#degreeSelect');
-                        degrees.forEach(degree => {
-                            const option = document.createElement('option');
-                            option.value = degree.id;
-                            option.text = degree.name;
-                            if (degree.id === student.degree.id) {
-                                option.selected = true; // Select the current degree
+        document.getElementById("searchStudentForm").onsubmit = function (e) {
+            e.preventDefault();
+            const idNumber = document.querySelector('#idInput').value;
+
+            fetch(`/students/${idNumber}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Student not found');
+                    }
+                    return response.json();
+                })
+                .then(student => {
+                    renderForm(`
+                        <div class="form">
+                            <h2><strong>Update Student</strong></h2>
+                            <form id="updateStudentForm">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" id="idNumberInput" value="${student.user.idNumber}" placeholder="Enter ID number" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" id="nameInput" value="${student.user.name}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" id="lastnameInput" value="${student.user.lastname}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" id="emailInput" value="${student.user.email}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" id="usernameInput" value="${student.user.userName}" placeholder="Enter username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="password" class="form-control" id="passwordInput" placeholder="Leave blank to keep unchanged">
+                                </div>
+                                <div class="mb-3">
+                                    <select id="degreeSelect" class="form-select" required>
+                                        <option value="" disabled>Select Degree</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </form>
+                        </div>
+                    `);
+
+                    fetch('/degrees/')
+                        .then(response => response.json())
+                        .then(degrees => {
+                            const degreeSelect = document.querySelector('#degreeSelect');
+                            degrees.forEach(degree => {
+                                const option = document.createElement('option');
+                                option.value = degree.id;
+                                option.text = degree.name;
+                                if (degree.id === student.degree.id) {
+                                    option.selected = true; // Select the current degree
+                                }
+                                degreeSelect.appendChild(option);
+                            });
+                        })
+                        .catch(error => console.error('Error loading degrees:', error));
+
+
+                    document.getElementById("updateStudentForm").onsubmit = function (e) {
+                        e.preventDefault();
+
+                        const updatedData = {
+                            user: {
+                                idNumber: document.querySelector('#idNumberInput').value,
+                                name: document.querySelector('#nameInput').value,
+                                lastname: document.querySelector('#lastnameInput').value,
+                                userName: document.querySelector('#usernameInput').value,
+                                email: document.querySelector('#emailInput').value,
+                                password: document.querySelector('#passwordInput').value || undefined
+                            },
+                            degree: {
+                                id: document.querySelector('#degreeSelect').value
                             }
-                            degreeSelect.appendChild(option);
+                        };
+
+                        fetch(`/students/${idNumber}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(updatedData)
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Error updating student');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            alert('Student updated successfully!');
+                            renderForm('');
+                        })
+                        .catch(error => {
+                            alert(error.message);
+                            console.error('Update error details:', error);
                         });
-                    })
-                    .catch(error => console.error('Error loading degrees:', error));
-
-
-                document.getElementById("updateStudentForm").onsubmit = function (e) {
-                    e.preventDefault();
-
-                    const updatedData = {
-                        user: {
-                            idNumber: document.querySelector('#idNumberInput').value,
-                            name: document.querySelector('#nameInput').value,
-                            lastname: document.querySelector('#lastnameInput').value,
-                            userName: document.querySelector('#usernameInput').value,
-                            email: document.querySelector('#emailInput').value,
-                            password: document.querySelector('#passwordInput').value || undefined
-                        },
-                        degree: {
-                            id: document.querySelector('#degreeSelect').value
-                        }
                     };
+                })
+                .catch(error => {
+                    alert(error.message);
+                    console.error('Search error:', error);
+                });
+        };
+    });
 
 
-                    fetch(`/students/${idNumber}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(updatedData)
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Error updating student');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        alert('Student updated successfully!');
-                        renderForm('');
-                    })
-                    .catch(error => {
-                        alert(error.message);
-                        console.error('Update error details:', error);
-                    });
-                };
-            })
-            .catch(error => {
-                alert(error.message);
-                console.error('Search error:', error);
-            });
-    };
-});
- //---------------------------------------------------findAll-------------------------------------------------------------
-
- findAllBtn.addEventListener('click', function () {
-     const url = '/students/';
-     fetch(url)
-         .then(response => {
-             if (!response.ok) {
-                 throw new Error('Network response was not ok');
-             }
-             return response.json();
-         })
-         .then(students => {
-             renderStudentList(students);
-         })
-         .catch(error => {
-             alert('Error fetching students: ' + error.message);
-             console.error(error);
-         });
- });
+     findAllBtn.addEventListener('click', function () {
+         const url = '/students/';
+         fetch(url)
+             .then(response => {
+                 if (!response.ok) {
+                     throw new Error('Network response was not ok');
+                 }
+                 return response.json();
+             })
+             .then(students => {
+                 renderStudentList(students);
+             })
+             .catch(error => {
+                 alert('Error fetching students: ' + error.message);
+                 console.error(error);
+             });
+     });
 
 
- function renderStudentList(students) {
-     const formContainer = document.getElementById('formContainer');
-     formContainer.innerHTML = `<h2><strong>List of Students</strong></h2>`;
+     function renderStudentList(students) {
+         const formContainer = document.getElementById('formContainer');
+         formContainer.innerHTML = `<h2><strong>List of Students</strong></h2>`;
 
-     if (students.length === 0) {
-         formContainer.innerHTML += '<p>No students found.</p>';
-         return;
-     }
+         if (students.length === 0) {
+             formContainer.innerHTML += '<p>No students found.</p>';
+             return;
+         }
 
-     const table = `
-         <table class="table">
-             <thead>
-                 <tr>
-                     <th>ID Number</th>
-                     <th>Name</th>
-                     <th>Lastname</th>
-                     <th>Username</th>
-                     <th>Email</th>
-                     <th>Degree</th>
-                 </tr>
-             </thead>
-             <tbody>
-                 ${students.map(student => `
+         const table = `
+             <table class="table">
+                 <thead>
                      <tr>
-                         <td>${student.user.idNumber}</td>
-                         <td>${student.user.name}</td>
-                         <td>${student.user.lastname}</td>
-                         <td>${student.user.userName}</td>
-                         <td>${student.user.email}</td>
-                         <td>${student.degree ? student.degree.name : 'No degree'}</td>
+                         <th>ID Number</th>
+                         <th>Name</th>
+                         <th>Lastname</th>
+                         <th>Username</th>
+                         <th>Email</th>
+                         <th>Degree</th>
                      </tr>
-                 `).join('')}
-             </tbody>
-         </table>
-     `;
+                 </thead>
+                 <tbody>
+                     ${students.map(student => `
+                         <tr>
+                             <td>${student.user.idNumber}</td>
+                             <td>${student.user.name}</td>
+                             <td>${student.user.lastname}</td>
+                             <td>${student.user.userName}</td>
+                             <td>${student.user.email}</td>
+                             <td>${student.degree ? student.degree.name : 'No degree'}</td>
+                         </tr>
+                     `).join('')}
+                 </tbody>
+             </table>
+         `;
 
-     formContainer.innerHTML += table;
- }
-
-
-
+         formContainer.innerHTML += table;
+     }
 
 });

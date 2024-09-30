@@ -11,7 +11,7 @@ public class Schedule implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scheduleId;
     private Course course;
-    private String timeslot;  
+    private String timeSlot;
     
 
 }

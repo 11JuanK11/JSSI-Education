@@ -1,8 +1,6 @@
 package project.jssi_education.service;
 
 import project.jssi_education.entity.Attendance;
-import project.jssi_education.entity.Grade;
-import project.jssi_education.entity.TeacherEvaluation;
 import project.jssi_education.exception.ResourceNotFoundException;
 
 import java.util.List;

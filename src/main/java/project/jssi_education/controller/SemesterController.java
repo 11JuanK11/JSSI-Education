@@ -17,22 +17,22 @@ public class SemesterController {
     @Autowired
     private ISemesterService semesterService;
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Semester> createSemester(@RequestBody Semester semester) {
-        Semester createdSemester = semesterService.createSemester(semester);
+        Semester createdSemester = semesterService.insert(semester);
         return ResponseEntity.ok(createdSemester);
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<Semester>> getAllSemesters() {
-        List<Semester> semesters = semesterService.getAllSemesters();
+        List<Semester> semesters = semesterService.findAll();
         return ResponseEntity.ok(semesters);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Semester> getSemesterById(@PathVariable Long id) {
         try {
-            Semester semester = semesterService.getSemesterById(id)
+            Semester semester = semesterService.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException("Semester not found with id " + id));
             return ResponseEntity.ok(semester);
         } catch (ResourceNotFoundException ex) {
@@ -45,7 +45,7 @@ public class SemesterController {
     @PutMapping("/{id}")
     public ResponseEntity<String> updateSemester(@PathVariable Long id, @RequestBody Semester semesterDetails) {
         try {
-            Semester updatedSemester = semesterService.updateSemester(id, semesterDetails);
+            Semester updatedSemester = semesterService.update(id, semesterDetails);
             return new ResponseEntity<>("Semester successfully updated.", HttpStatus.OK);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
@@ -57,7 +57,7 @@ public class SemesterController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteSemester(@PathVariable Long id) {
         try {
-            semesterService.deleteSemester(id);
+            semesterService.delete(id);
             return new ResponseEntity<>("Semester successfully deleted.", HttpStatus.NO_CONTENT);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);

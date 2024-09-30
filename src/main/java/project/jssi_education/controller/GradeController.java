@@ -62,7 +62,7 @@ public class GradeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> Update(@PathVariable Long id, @RequestBody Grade grade) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Grade grade) {
         try {
             Grade updatedGrade = gradeService.update(id, grade);
             return new ResponseEntity<>(updatedGrade, HttpStatus.OK);
@@ -77,10 +77,9 @@ public class GradeController {
     public ResponseEntity<List<Grade>> findGradesByStudentId(@PathVariable Long studentId) {
         List<Grade> grades = gradeService.findByStudentId(studentId);
         if (grades.isEmpty()) {
-            return ResponseEntity.noContent().build(); // Retorna 204 sin contenido
+            return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(grades); // Devuelve las calificaciones como JSON
+        return ResponseEntity.ok(grades);
     }
-
 
 }

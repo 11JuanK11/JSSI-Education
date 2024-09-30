@@ -1,13 +1,10 @@
 package project.jssi_education.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data

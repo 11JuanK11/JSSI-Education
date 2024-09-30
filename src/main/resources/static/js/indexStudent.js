@@ -1,5 +1,3 @@
-//--------------------------------see grades----------------------------------------------------------------
-
 document.addEventListener('DOMContentLoaded', function() {
     const seeGradesLink = document.getElementById('see-grades-link');
     const mainContent = document.querySelector('main .welcome');
@@ -7,36 +5,34 @@ document.addEventListener('DOMContentLoaded', function() {
     seeGradesLink.addEventListener('click', function(event) {
         event.preventDefault();
 
-        mainContent.innerHTML = ''; // Limpiar el contenido anterior
+        mainContent.innerHTML = '';
 
-        fetchGrades(); // Llamar a la función para obtener calificaciones
+        fetchGrades();
     });
 
     function fetchGrades() {
-        const studentId = 1; // Cambia esto según cómo obtengas el studentId
+        const studentId = 1;
 
         fetch(`/grades/student/${studentId}`)
             .then(response => {
-                // Manejo de respuesta vacía
                 if (response.status === 204) {
                     console.log('No grades found for this student.');
-                    renderGrades([]); // Llama a renderGrades con un arreglo vacío
-                    return; // Salir de la función
+                    renderGrades([]);
+                    return;
                 }
 
-                // Asegúrate de que la respuesta es OK antes de intentar convertir a JSON
                 if (!response.ok) {
                     throw new Error('Network response was not ok: ' + response.statusText);
                 }
 
-                return response.json(); // Solo llama a json() si la respuesta es válida
+                return response.json();
             })
             .then(data => {
-                renderGrades(data); // Renderiza las calificaciones recibidas
+                renderGrades(data);
             })
             .catch(error => {
                 console.error('Error fetching grades:', error);
-                mainContent.innerHTML = '<p>Error fetching grades. Please try again later.</p>'; // Mensaje de error
+                mainContent.innerHTML = '<p>Error fetching grades. Please try again later.</p>';
             });
     }
 
@@ -69,6 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         table.appendChild(tbody);
-        mainContent.appendChild(table); // Añadir la tabla al contenido principal
+        mainContent.appendChild(table);
     }
 });

@@ -55,7 +55,7 @@ public class GroupCourseService implements IGroupCourseService {
     @Override
     public GroupCourse update(Long id, GroupCourse groupCourse) throws ResourceNotFoundException {
         GroupCourse existingGroupCourse = findById(id);
-        if (groupCourse.getCourse() != null || groupCourse.getGroup() != null || groupCourse.getAttendances() != null || groupCourse.getGrades() != null || groupCourse.getTeacher_evaluations() != null){
+        if (groupCourse.getCourse() != null || groupCourse.getGroup() != null || groupCourse.getAttendances() != null || groupCourse.getGrades() != null || groupCourse.getTeacherEvaluations() != null){
             if(groupCourse.getCourse() != null){
                 existingGroupCourse.setCourse(courseRepository.getReferenceById(groupCourse.getCourse().getCourseId()));
             }
@@ -68,8 +68,8 @@ public class GroupCourseService implements IGroupCourseService {
             if(groupCourse.getGrades() != null){
                 existingGroupCourse.setGrades(groupCourse.getGrades());
             }
-            if(groupCourse.getTeacher_evaluations()!= null){
-                existingGroupCourse.setTeacher_evaluations(groupCourse.getTeacher_evaluations());
+            if(groupCourse.getTeacherEvaluations()!= null){
+                existingGroupCourse.setTeacherEvaluations(groupCourse.getTeacherEvaluations());
             }
         }else{
             throw new ResourceNotFoundException("Group Course information is missing");
@@ -107,7 +107,7 @@ public class GroupCourseService implements IGroupCourseService {
 
         for (Grade grade: gradesAux){
             for (GroupCourse groupCourse: findAll()){
-                if (grade.getGroup_has_course().getId().equals(groupCourse.getId())){
+                if (grade.getGroupHasCourse().getId().equals(groupCourse.getId())){
                     groupCourseAux.add(groupCourse);
                 }
             }

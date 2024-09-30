@@ -22,7 +22,7 @@ public class CourseController {
     private IDegreeCourseService degreeCourseService;
 
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<Course>> getAllCourses() {
         return ResponseEntity.ok(courseService.findAll());
     }
@@ -35,7 +35,7 @@ public class CourseController {
     }
 
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Course> createCourse(@RequestBody Course course) {
 
         Course createdCourse = courseService.createCourse(course);
@@ -50,10 +50,8 @@ public class CourseController {
                 }
             }
         }
-
         return ResponseEntity.ok(createdCourse);
     }
-
 
 
     @PutMapping("/{id}")
@@ -78,9 +76,5 @@ public class CourseController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage); 
         }
     }
-
-
-
-
 
 }

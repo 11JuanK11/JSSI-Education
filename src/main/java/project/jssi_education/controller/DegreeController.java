@@ -5,10 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.jssi_education.entity.Degree;
-import project.jssi_education.entity.User;
 import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.service.IDegreeService;
-import project.jssi_education.service.impl.DegreeService;
 
 import java.util.List;
 

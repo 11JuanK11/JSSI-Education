@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.jssi_education.entity.Teacher;
 import project.jssi_education.entity.User;
 import project.jssi_education.exception.ResourceNotFoundException;
-import project.jssi_education.service.IUserService;
 import project.jssi_education.service.impl.UserService;
 
 import java.util.List;
@@ -27,7 +25,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public User findOne(@PathVariable Long id){
-        return userService.findbyId(id);
+        return userService.findById(id);
     }
 
     @PostMapping("/")
@@ -42,9 +40,5 @@ public class UserController {
             return new ResponseEntity<>("An error occurred while creating the teacher.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-
-
 
 }

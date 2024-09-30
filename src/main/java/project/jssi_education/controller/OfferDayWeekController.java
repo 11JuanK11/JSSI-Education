@@ -42,7 +42,7 @@ public class OfferDayWeekController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> Insert(@RequestBody OfferDayWeek offerDayWeek) {
+    public ResponseEntity<?> insert(@RequestBody OfferDayWeek offerDayWeek) {
         try {
             Offer offer = offerService.insert(offerDayWeek.getOffer());
             offerDayWeek.setOffer(offer);

@@ -28,7 +28,7 @@ public class GradeService implements IGradeService {
 
     @Override
     public void insert(Grade grade) throws ResourceNotFoundException {
-        if(grade.getGroup_has_course().getId() == null || grade.getStudent().getId() == null){//get user get idnumber
+        if(grade.getGroupHasCourse().getId() == null || grade.getStudent().getId() == null){//get user get idnumber
             throw new ResourceNotFoundException("Grade information is missing.");
         }
         gradeRepository.save(grade);
@@ -45,7 +45,7 @@ public class GradeService implements IGradeService {
     @Override
     public Grade update(Long id, Grade grade) throws ResourceNotFoundException {
         Grade existingGrade = findById(id);
-        if (grade.getStudent().getId() != null && grade.getGroup_has_course().getId() != null){
+        if (grade.getStudent().getId() != null && grade.getGroupHasCourse().getId() != null){
             if (grade.getTestOne() != null){
                 existingGrade.setTestOne(grade.getTestOne());
             }

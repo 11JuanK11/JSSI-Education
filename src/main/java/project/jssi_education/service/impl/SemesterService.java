@@ -15,22 +15,22 @@ public class SemesterService implements ISemesterService {
     private ISemesterRepository semesterRepository;
 
     @Override
-    public Semester createSemester(Semester semester) {
+    public Semester insert(Semester semester) {
         return semesterRepository.save(semester);
     }
 
     @Override
-    public List<Semester> getAllSemesters() {
+    public List<Semester> findAll() {
         return semesterRepository.findAll();
     }
 
     @Override
-    public Optional<Semester> getSemesterById(Long id) {
+    public Optional<Semester> findById(Long id) {
         return semesterRepository.findById(id);
     }
 
     @Override
-    public Semester updateSemester(Long id, Semester semesterDetails) {
+    public Semester update(Long id, Semester semesterDetails) {
         Semester semester = semesterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Semester not found with id " + id));
         semester.setSemester(semesterDetails.getSemester());
@@ -38,7 +38,7 @@ public class SemesterService implements ISemesterService {
     }
 
     @Override
-    public void deleteSemester(Long id) {
+    public void delete(Long id) {
         Semester semester = semesterRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Semester not found with id " + id));
         semesterRepository.delete(semester);

@@ -5,7 +5,7 @@ import project.jssi_education.entity.User;
 import java.util.List;
 
 public interface IUserService {
-    public User findbyId(Long id);
+    public User findById(Long id);
 
     public List<User> findAll();
 

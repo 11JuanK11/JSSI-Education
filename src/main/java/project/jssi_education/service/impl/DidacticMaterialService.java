@@ -37,11 +37,11 @@ public class DidacticMaterialService implements IDidacticMaterialService {
             throw new ResourceNotFoundException("Didactic Material description is missing.");
         }
 
-        if (didacticMaterial.getGroup_has_course() == null || didacticMaterial.getGroup_has_course().getId() == null) {
+        if (didacticMaterial.getGroupHasCourse() == null || didacticMaterial.getGroupHasCourse().getId() == null) {
             throw new ResourceNotFoundException("GroupCourse ID is missing.");
         }
 
-        Long groupCourseId = didacticMaterial.getGroup_has_course().getId();
+        Long groupCourseId = didacticMaterial.getGroupHasCourse().getId();
 
         GroupCourse groupCourse = groupCourseService.findById(groupCourseId);
 
@@ -49,13 +49,10 @@ public class DidacticMaterialService implements IDidacticMaterialService {
             throw new ResourceNotFoundException("GroupCourse not found with id: " + groupCourseId);
         }
 
-        didacticMaterial.setGroup_has_course(groupCourse);
+        didacticMaterial.setGroupHasCourse(groupCourse);
 
         return didacticMaterialsRepository.save(didacticMaterial);
     }
-
-
-
 
 
     @Override
@@ -79,12 +76,11 @@ public class DidacticMaterialService implements IDidacticMaterialService {
         }
         return didacticMaterialsRepository.save(existingDidacticMaterial);
 
-
     }
 
     public List<DidacticMaterial> findByGroupAndCourse(Long groupId, Long courseId) throws ResourceNotFoundException {
         List<DidacticMaterial> materials = didacticMaterialsRepository.findAll();
-        materials.removeIf(didacticMaterial -> !didacticMaterial.getGroup_has_course().getGroup().getGroupId().equals(groupId) || !didacticMaterial.getGroup_has_course().getCourse().getCourseId().equals(courseId));
+        materials.removeIf(didacticMaterial -> !didacticMaterial.getGroupHasCourse().getGroup().getGroupId().equals(groupId) || !didacticMaterial.getGroupHasCourse().getCourse().getCourseId().equals(courseId));
         return materials;
     }
 
