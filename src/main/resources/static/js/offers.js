@@ -120,7 +120,7 @@ window.addEventListener("load", function () {
                 fetch(url, settings)
                     .then(response => response.json())
                     .then(data => {
-                        alert('Offer added successfully');
+                        alert('Offer added successfully with id: ' + data.id);
                         document.getElementById('offerForm').reset();
                     })
                     .catch(error => {
@@ -134,7 +134,7 @@ window.addEventListener("load", function () {
     updateBtn.addEventListener('click', function () {
         renderForm(`
             <div class="form">
-                <h2><strong>Update Teacher</strong></h2>
+                <h2><strong>Update Offer</strong></h2>
                 <form id="searchOfferForm">
                     <div class="mb-3">
                         <input type="text" class="form-control" id="idInput" placeholder="Enter ID" required>
@@ -152,7 +152,7 @@ window.addEventListener("load", function () {
             fetch(url)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Manager not found');
+                        throw new Error('Offer not found');
                     }
                     return response.json();
                 })
@@ -200,9 +200,6 @@ window.addEventListener("load", function () {
 
                         fetch(updateUrl, settings)
                             .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Error updating offer');
-                                }
                                 return response.json();
                             })
                             .then(data => {
@@ -212,6 +209,7 @@ window.addEventListener("load", function () {
                                 alert(error.message);
                                 console.error(error);
                             });
+
                     };
                 })
                 .catch(error => {
@@ -250,6 +248,7 @@ window.addEventListener("load", function () {
                         throw new Error('Error deleting offer');
                     }
                     alert('Offer deleted successfully');
+                    document.getElementById('deleteOfferForm').reset();
                 })
                 .catch(error => {
                     alert(error.message);

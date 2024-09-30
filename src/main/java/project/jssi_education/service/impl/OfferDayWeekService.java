@@ -65,9 +65,7 @@ public class OfferDayWeekService implements IOfferDayWeekService {
 
     @Override
     public void deleteById(Long id) throws ResourceNotFoundException {
-//        if (!offerDayWeekRepository.existsById(id)) {
-//            throw new ResourceNotFoundException("Offer not found with id: " + id);
-//        }
+
         offerDayWeekRepository.deleteById(id);
     }
 
