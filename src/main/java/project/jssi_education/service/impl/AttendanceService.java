@@ -21,10 +21,45 @@ public class AttendanceService implements IAttendanceService {
     }
 
     @Override
+    public Attendance findById(Long id) throws ResourceNotFoundException {
+        return attendanceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Attendance not found with id: " + id));
+    }
+
+    @Override
     public void deleteById(Long id) {
         if (!attendanceRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Offer not found with id: " + id);
+            throw new ResourceNotFoundException("Attendance not found with id: " + id);
         }
         attendanceRepository.deleteById(id);
+    }
+
+    @Override
+    public Attendance insert(Attendance attendance) throws ResourceNotFoundException {
+        if(attendance.getGroup_has_course().getId() == null || attendance.getStudent().getId() == null){//get user get idnumber
+            throw new ResourceNotFoundException("Attendance information is missing.");
+        }
+        return attendanceRepository.save(attendance);
+    }
+
+    @Override
+    public Attendance update(Long id, Attendance attendance) throws ResourceNotFoundException {
+        Attendance attendance1 = findById(id);
+        if (attendance.getStudent().getId() != null && attendance.getGroup_has_course().getId() != null){
+            if (attendance.getDate() != null){
+                attendance1.setDate(attendance.getDate());
+            }
+            if (attendance.getStatus() != null){
+                attendance1.setStatus(attendance.getStatus());
+            }
+        }else{
+            throw new ResourceNotFoundException("Grade information is missing");
+        }
+        return attendanceRepository.save(attendance1);
+    }
+
+    @Override
+    public List<Attendance> findByStudentId(Long studentId) {
+        return attendanceRepository.findByStudentId(studentId);
     }
 }

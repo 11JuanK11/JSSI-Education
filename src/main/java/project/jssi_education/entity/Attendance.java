@@ -15,7 +15,7 @@ public class Attendance implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long attendanceId;
     private Date date;
-    private boolean status;
+    private Boolean status;
 
     @ManyToOne
     @JoinColumn(name = "group_has_course_id", nullable = false)
