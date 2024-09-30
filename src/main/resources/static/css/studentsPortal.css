@@ -31,9 +31,10 @@
 
 
 .welcome{
-    height: 50px;
+    height: 10vh;
     background-color: #27374D;
     color: white;
+
 }
 
 footer {

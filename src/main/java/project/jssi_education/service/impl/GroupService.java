@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.jssi_education.entity.Course;
 import project.jssi_education.entity.Group;
+import project.jssi_education.entity.GroupCourse;
 import project.jssi_education.entity.Teacher;
 import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.repository.IGroupRepository;
 import project.jssi_education.service.IGroupService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -83,6 +85,32 @@ public class GroupService implements IGroupService {
     @Override
     public List<Course> findCoursesByGroup(Group group) {
         return groupRepository.findCoursesByGroupId(group.getGroupId());
+    }
+
+    public List<Group> getGroupsByTeacher(int teacherId) throws ResourceNotFoundException {
+        Teacher teacher = teacherService.findByTeacherIdNumber(teacherId);
+        List<Group> groupsAux = new ArrayList<>();
+
+        for(Group groups: groupRepository.findAll()){
+            if(groups.getTeacher().getUser().getIdNumber() == teacher.getUser().getIdNumber()){
+                groupsAux.add(groups);
+            }
+        }
+        return groupsAux;
+    }
+
+    public List<Group> getGroupsbyGroupCourse(List<GroupCourse> studentGroupCourses) throws ResourceNotFoundException {
+        List<Group> groupsAux = new ArrayList<>();
+
+        for(Group group: groupRepository.findAll()){
+            for (GroupCourse studentGroupCourse: studentGroupCourses){
+                if (group.getGroupId().equals(studentGroupCourse.getGroup().getGroupId())){
+                    groupsAux.add(group);
+                }
+            }
+
+        }
+        return groupsAux;
     }
 
 }

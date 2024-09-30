@@ -41,7 +41,7 @@ public class DidacticMaterialController {
     public ResponseEntity<?> insert(@RequestBody DidacticMaterial didacticMaterial) {
         try {
             DidacticMaterial createdMaterial = didacticMaterialService.insert(didacticMaterial);
-            return new ResponseEntity<>(createdMaterial, HttpStatus.CREATED); // Retornar el objeto creado
+            return new ResponseEntity<>(createdMaterial, HttpStatus.CREATED);
         } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
@@ -62,6 +62,18 @@ public class DidacticMaterialController {
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("message", "An error occurred while updating the Didactic Material.");
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/{groupId}/{courseId}")
+    public ResponseEntity<?> findByGroupAndCourse(@PathVariable Long groupId, @PathVariable Long courseId) {
+        try {
+            List<DidacticMaterial> materials = didacticMaterialService.findByGroupAndCourse(groupId, courseId);
+            return new ResponseEntity<>(materials, HttpStatus.OK);
+        } catch (ResourceNotFoundException ex) {
+            return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(Map.of("message", "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

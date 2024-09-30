@@ -2,15 +2,15 @@ package project.jssi_education.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.jssi_education.entity.Degree;
-import project.jssi_education.entity.Student;
-import project.jssi_education.entity.User;
+import project.jssi_education.entity.*;
 import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.repository.IDegreeRepository;
+import project.jssi_education.repository.IGroupRepository;
 import project.jssi_education.repository.IStudentRepository;
 import project.jssi_education.repository.IUserRepository;
 import project.jssi_education.service.IStudentService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +23,15 @@ public class StudentService implements IStudentService {
 
     @Autowired
     private IDegreeRepository degreeRepository;
+
+    @Autowired
+    private GradeService gradeService;
+
+    @Autowired
+    private GroupCourseService groupCourseService;
+
+    @Autowired
+    IGroupRepository groupRepository;
 
     @Override
     public Student findById(Long id) throws ResourceNotFoundException {
@@ -140,6 +149,19 @@ public class StudentService implements IStudentService {
         return studentRepository.findByUserIdNumber(idNumber)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found with idNumber: " + idNumber));
     }
+
+    public List<Grade> getGrades(int studentId) throws ResourceNotFoundException {
+        try {
+            Student student = findByIdNumber(studentId);
+            return gradeService.findByStudentId(student.getId());
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Grade information is missing.");
+        }
+    }
+
+
+
+
 
 
 

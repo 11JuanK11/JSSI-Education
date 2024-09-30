@@ -38,11 +38,14 @@ public class IndexController {
         model.addAttribute("userId", loggedInUser.getIdNumber());
 
         if (loggedInUser.getRole().equals("student")) {
-            return "redirect:/indexStudent.html";
+            model.addAttribute("name", loggedInUser.getName());
+            model.addAttribute("lastname", loggedInUser.getLastname());
+
+            return "indexStudent";
         }
 
         if (loggedInUser.getRole().equals("manager")) {
-            return "redirect:/indexManager.html";
+            return "indexManager";
         }
 
         if (loggedInUser.getRole().equals("teacher")) {
@@ -81,11 +84,14 @@ public class IndexController {
 
 
                 if (user.getRole().equals("student")) {
-                    return "redirect:/indexStudent.html";
+                    model.addAttribute("name", loggedInUser.getName());
+                    model.addAttribute("lastname", loggedInUser.getLastname());
+
+                    return "indexStudent";
                 }
 
                 if (user.getRole().equals("manager")) {
-                    return "redirect:/indexManager.html";
+                    return "indexManager";
                 }
 
                 if (user.getRole().equals("teacher")) {

@@ -3,6 +3,8 @@ package project.jssi_education.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
+import project.jssi_education.entity.Grade;
+import project.jssi_education.entity.Group;
 import project.jssi_education.entity.GroupCourse;
 import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.repository.ICourseRepository;
@@ -11,6 +13,7 @@ import project.jssi_education.repository.IGroupCourseRepository;
 import project.jssi_education.repository.IGroupRepository;
 import project.jssi_education.service.IGroupCourseService;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class GroupCourseService implements IGroupCourseService {
@@ -78,6 +81,38 @@ public class GroupCourseService implements IGroupCourseService {
     public GroupCourse findByGroupAndCourse(Long groupId, Long courseId) throws ResourceNotFoundException {
         return groupCourseRepository.findByGroupIdAndCourseId(groupId, courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("GroupCourse not found with groupId: " + groupId + " and courseId: " + courseId));
+    }
+
+    public List<GroupCourse> getGroupsCourse(List<Group> groupsAux, Long courseId) throws ResourceNotFoundException {
+        List<GroupCourse> groupCourseAux = new ArrayList<>();
+
+        for (Group group: groupsAux){
+            for (GroupCourse groupCourse: findAll()){
+                if (courseId != null){
+                    if (groupCourse.getGroup().getGroupId().equals(group.getGroupId()) && groupCourse.getCourse().getCourseId().equals(courseId)){
+                        groupCourseAux.add(groupCourse);
+                    }
+                }else{
+                    if (groupCourse.getGroup().getGroupId().equals(group.getGroupId())){
+                        groupCourseAux.add(groupCourse);
+                    }
+                }
+            }
+        }
+        return groupCourseAux;
+    }
+
+    public List<GroupCourse> getGroupsCoursebyGrades(List<Grade> gradesAux) throws ResourceNotFoundException {
+        List<GroupCourse> groupCourseAux = new ArrayList<>();
+
+        for (Grade grade: gradesAux){
+            for (GroupCourse groupCourse: findAll()){
+                if (grade.getGroup_has_course().getId().equals(groupCourse.getId())){
+                    groupCourseAux.add(groupCourse);
+                }
+            }
+        }
+        return groupCourseAux;
     }
 
 }
