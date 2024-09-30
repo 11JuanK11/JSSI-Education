@@ -29,6 +29,15 @@ public class OfferDayWeekService implements IOfferDayWeekService {
     @Autowired
     private IGroupRepository groupRepository;
 
+    @Autowired
+    private AttendanceService attendanceService;
+    @Autowired
+    private GradeService gradeService;
+    @Autowired
+    private DidacticMaterialService didacticMaterialService;
+    @Autowired
+    private TeacherEvaluationService teacherEvaluationService;
+
     @Override
     public OfferDayWeek findById(Long id) throws ResourceNotFoundException {
         return offerDayWeekRepository.findById(id)
@@ -83,6 +92,46 @@ public class OfferDayWeekService implements IOfferDayWeekService {
             }
         }
         return offerDayWeekRepository.save(existingOfferDayWeek);
+    }
+
+    public void deleteGrade(Long id){
+        List<Grade> grades = gradeService.findAll();
+
+        for (Grade grade : grades){
+            if(grade.getGroup_has_course().getGroup().getOfferDayWeek().getId().equals(id)){
+                gradeService.deleteById(grade.getGradeId());
+            }
+        }
+    }
+
+    public void deleteDidacticMaterial(Long id){
+        List<DidacticMaterial> didacticMaterials = didacticMaterialService.findAll();
+
+        for (DidacticMaterial didacticMaterial : didacticMaterials){
+            if(didacticMaterial.getGroup_has_course().getGroup().getOfferDayWeek().getId().equals(id)){
+                didacticMaterialService.deleteById(didacticMaterial.getId());
+            }
+        }
+    }
+
+    public void deleteTeacherEvaluation(Long id){
+        List<TeacherEvaluation> teacherEvaluations = teacherEvaluationService.findAll();
+
+        for (TeacherEvaluation teacherEvaluation : teacherEvaluations){
+            if(teacherEvaluation.getGroup_has_course().getGroup().getOfferDayWeek().getId().equals(id)){
+                teacherEvaluationService.deleteById(teacherEvaluation.getId());
+            }
+        }
+    }
+
+    public void deleteAttendance(Long id){
+        List<Attendance> attendances = attendanceService.findAll();
+
+        for (Attendance attendance : attendances){
+            if(attendance.getGroup_has_course().getGroup().getOfferDayWeek().getId().equals(id)){
+                attendanceService.deleteById(attendance.getAttendanceId());
+            }
+        }
     }
 
     public void deleteGroupCourse(Long id){
