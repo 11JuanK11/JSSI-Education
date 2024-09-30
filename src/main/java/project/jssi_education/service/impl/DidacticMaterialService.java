@@ -17,7 +17,7 @@ public class DidacticMaterialService implements IDidacticMaterialService {
     private IDidacticMaterialRepository didacticMaterialsRepository;
 
     @Autowired
-    private GroupCourseService groupCourseService; // Agregar esta línea
+    private GroupCourseService groupCourseService;
 
     @Override
     public DidacticMaterial findById(Long id) throws ResourceNotFoundException {
@@ -81,4 +81,11 @@ public class DidacticMaterialService implements IDidacticMaterialService {
 
 
     }
+
+    public List<DidacticMaterial> findByGroupAndCourse(Long groupId, Long courseId) throws ResourceNotFoundException {
+        List<DidacticMaterial> materials = didacticMaterialsRepository.findAll();
+        materials.removeIf(didacticMaterial -> !didacticMaterial.getGroup_has_course().getGroup().getGroupId().equals(groupId) || !didacticMaterial.getGroup_has_course().getCourse().getCourseId().equals(courseId));
+        return materials;
+    }
+
 }

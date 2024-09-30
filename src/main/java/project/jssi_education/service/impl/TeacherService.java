@@ -1,10 +1,7 @@
 package project.jssi_education.service.impl;
 
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.jssi_education.entity.*;
 import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.repository.IGroupRepository;
@@ -12,9 +9,7 @@ import project.jssi_education.repository.ITeacherRepository;
 import project.jssi_education.repository.IUserRepository;
 import project.jssi_education.service.ITeacherService;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TeacherService implements ITeacherService {
@@ -125,37 +120,7 @@ public class TeacherService implements ITeacherService {
 
     }
 
-    public List<GroupCourse> getGroupsCourse(List<Group> groupsAux, Long courseId) throws ResourceNotFoundException {
-        List<GroupCourse> groupCourseAux = new ArrayList<>();
 
-        for (Group group: groupsAux){
-            for (GroupCourse groupCourse: groupCourseService.findAll()){
-                if (courseId != null){
-                    if (groupCourse.getGroup().getGroupId().equals(group.getGroupId()) && groupCourse.getCourse().getCourseId().equals(courseId)){
-                        groupCourseAux.add(groupCourse);
-                    }
-                }else{
-                    if (groupCourse.getGroup().getGroupId().equals(group.getGroupId())){
-                        groupCourseAux.add(groupCourse);
-                    }
-                }
-            }
-        }
-        return groupCourseAux;
-    }
-
-    public List<Group> getGroups(int teacherId) throws ResourceNotFoundException {
-        Teacher teacher = findByTeacherIdNumber(teacherId);
-        List<Group> groupsAux = new ArrayList<>();
-
-        for(Group groups: groupRepository.findAll()){
-            if(groups.getTeacher().getUser().getIdNumber() == teacher.getUser().getIdNumber()){
-                groupsAux.add(groups);
-            }
-        }
-
-        return groupsAux;
-    }
 
 
 }
