@@ -82,6 +82,10 @@ public class OfferDayWeekController {
     @DeleteMapping("/deletes/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
+            offerDayWeekService.deleteDidacticMaterial(id);
+            offerDayWeekService.deleteAttendance(id);
+            offerDayWeekService.deleteTeacherEvaluation(id);
+            offerDayWeekService.deleteGrade(id);
             offerDayWeekService.deleteGroupCourse(id);
             offerDayWeekService.deleteGroup(id);
             offerDayWeekService.deleteById(id);
