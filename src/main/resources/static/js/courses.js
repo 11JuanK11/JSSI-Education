@@ -235,7 +235,7 @@ window.addEventListener("load", function () {
                                 semesterSelect.appendChild(option);
 
                                 if (semester.id === course.semester.id) {
-                                    option.selected = true; // Select the current course
+                                    option.selected = true;
                                 }
                             });
                         })
@@ -246,11 +246,6 @@ window.addEventListener("load", function () {
 
                         const updatedData = {
                             courseName: document.querySelector('#nameInput').value,
-                            degreeCourses: {
-                                degree: {
-                                    id: document.querySelector('#degreeSelect').value
-                                }
-                            },
                             semester: {
                                 id: document.querySelector('#semesterSelect').value
                             }
