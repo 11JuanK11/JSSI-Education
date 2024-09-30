@@ -1,18 +1,14 @@
 package project.jssi_education.controller;
 
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import project.jssi_education.entity.*;
 import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.repository.IGroupRepository;
-import project.jssi_education.service.ITeacherService;
 import project.jssi_education.service.impl.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +20,9 @@ public class TeacherController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private GroupService groupService;
 
     @Autowired
     private StudentService studentService;
@@ -92,13 +91,13 @@ public class TeacherController {
 
     @GetMapping("/teacher-group/{idNumber}")
     public List<Group> getAssociatedGroups(@PathVariable int idNumber){
-        return teacherService.getGroups(idNumber);
+        return groupService.getGroupsByTeacher(idNumber);
     }
 
     @GetMapping("/teacher-grade/{studentId}/{groupId}/{teacherId}")
     public Grade getStudentGrades(@PathVariable int studentId, @PathVariable Long groupId, @PathVariable int teacherId){
-        List<Group> groups = teacherService.getGroups(teacherId);
-        List<GroupCourse>groupCourses = teacherService.getGroupsCourse(groups, null);
+        List<Group> groups = groupService.getGroupsByTeacher(teacherId);
+        List<GroupCourse>groupCourses = groupCourseService.getGroupsCourse(groups, null);
         return teacherService.getGradesForStudent(groupCourses, studentId);
     }
 }
