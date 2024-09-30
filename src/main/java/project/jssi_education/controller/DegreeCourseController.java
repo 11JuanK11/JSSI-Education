@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/degreeCourses")
+@RequestMapping("/degree-courses")
 public class DegreeCourseController {
     @Autowired
     private IDegreeCourseService degreeCourseService;
@@ -28,50 +28,44 @@ public class DegreeCourseController {
     private IDegreeRepository degreeRepository;
 
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<DegreeCourse> createDegreeCourse(@RequestBody DegreeCourse degreeCourse) {
 
         if (degreeCourse.getDegreeId() == null) {
             throw new ResourceNotFoundException("Degree ID cannot be null");
         }
 
-
         Optional<Degree> optionalDegree = degreeRepository.findById(degreeCourse.getDegreeId());
+
         if (!optionalDegree.isPresent()) {
             throw new ResourceNotFoundException("Degree with ID " + degreeCourse.getDegreeId() + " not found");
         }
 
-
         degreeCourse.setDegree(optionalDegree.get());
-
 
         if (degreeCourse.getCourseId() == null) {
             throw new ResourceNotFoundException("Course ID cannot be null");
         }
 
-
         Optional<Course> optionalCourse = courseRepository.findById(degreeCourse.getCourseId());
+
         if (!optionalCourse.isPresent()) {
             throw new ResourceNotFoundException("Course with ID " + degreeCourse.getCourseId() + " not found");
         }
 
-
         degreeCourse.setCourse(optionalCourse.get());
-
 
         DegreeCourse createdDegreeCourse = degreeCourseService.createDegreeCourse(degreeCourse);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdDegreeCourse);
     }
 
 
-
-
-
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<DegreeCourse>> getAllDegreeCourses() {
         List<DegreeCourse> degreeCourses = degreeCourseService.getAllDegreeCourses();
         return ResponseEntity.ok(degreeCourses);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<DegreeCourse> updateDegreeCourse(@PathVariable Long id, @RequestBody DegreeCourse degreeCourseDetails) {
@@ -85,6 +79,7 @@ public class DegreeCourseController {
         }
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDegreeCourse(@PathVariable Long id) {
         try {
@@ -96,6 +91,5 @@ public class DegreeCourseController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
 }

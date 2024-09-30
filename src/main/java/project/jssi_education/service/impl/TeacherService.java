@@ -110,7 +110,7 @@ public class TeacherService implements ITeacherService {
 
         for (Grade grade:gradeService.findAll()){
             for (GroupCourse groupCourse: groupCourseAux){
-                if (grade.getStudent().getUser().getIdNumber() == student.getUser().getIdNumber() && grade.getGroup_has_course().getId().equals(groupCourse.getId())) {
+                if (grade.getStudent().getUser().getIdNumber() == student.getUser().getIdNumber() && grade.getGroupHasCourse().getId().equals(groupCourse.getId())) {
                     return grade;
                 }
             }

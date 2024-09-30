@@ -1,6 +1,5 @@
 package project.jssi_education.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +49,7 @@ public class DidacticMaterialController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> Update(@PathVariable Long id, @RequestBody DidacticMaterial didacticMaterial) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody DidacticMaterial didacticMaterial) {
         try {
             DidacticMaterial updatedMaterial = didacticMaterialService.update(id, didacticMaterial);
             return new ResponseEntity<>(updatedMaterial, HttpStatus.OK);
@@ -76,7 +75,5 @@ public class DidacticMaterialController {
             return new ResponseEntity<>(Map.of("message", "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
 
 }

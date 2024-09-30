@@ -2,7 +2,6 @@ package project.jssi_education.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.generator.values.GeneratedValues;
 
 @Data
 @Entity

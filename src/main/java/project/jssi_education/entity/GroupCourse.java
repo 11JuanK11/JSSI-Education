@@ -24,19 +24,19 @@ public class GroupCourse implements Serializable {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    @OneToMany(mappedBy = "group_has_course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "groupHasCourse", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<Attendance> attendances;
 
-    @OneToMany(mappedBy = "group_has_course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "groupHasCourse", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<Grade> grades;
 
-    @OneToMany(mappedBy = "group_has_course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "groupHasCourse", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private Set<TeacherEvaluation> teacher_evaluations;
+    private Set<TeacherEvaluation> teacherEvaluations;
 
-    @OneToMany(mappedBy = "group_has_course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "groupHasCourse", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<DidacticMaterial> didacticMaterials;
 

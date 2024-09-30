@@ -1,9 +1,6 @@
 package project.jssi_education.entity;
 
 import java.io.Serializable;
-import java.time.LocalTime;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,5 +28,5 @@ public class Course implements Serializable {
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private Set<GroupCourse> group_has_course;
+    private Set<GroupCourse> groupHasCourse;
 }

@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
         showUpdateForm();
     });
 
+
     function showCreateForm() {
         const formContainer = document.getElementById("formContainer");
         formContainer.innerHTML = `
@@ -24,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     <div class="mb-3">
                         <label for="courseSelect" class="form-label">Select Course</label>
                         <select class="form-select" id="courseSelect" required>
-                            <!-- Aquí se llenará con los cursos asociados al grupo seleccionado -->
                         </select>
                     </div>
                     <div class="mb-3">
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const description = document.querySelector('#descriptionInput').value;
 
             const materialData = {
-                group_has_course: {
+                groupHasCourse: {
                     id: groupId
                 },
                 description: description
@@ -89,7 +89,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
         };
     }
-
 
 
     function showUpdateForm() {
@@ -181,7 +180,6 @@ document.addEventListener("DOMContentLoaded", function() {
             const groupId = document.getElementById("groupSelectUpdate").value;
             const courseId = document.getElementById("courseSelectUpdate").value;
 
-            // Verifica que ambos campos tengan valores
             if (groupId && courseId) {
                 const url = `/didactic-materials/${groupId}/${courseId}`;
 
@@ -208,17 +206,15 @@ document.addEventListener("DOMContentLoaded", function() {
             const materialsContainer = document.getElementById("materialsContainer");
             const tbody = document.getElementById("materialsTable").querySelector("tbody");
 
-            // Limpia el contenido previo
             tbody.innerHTML = '';
 
-            // Agrega los materiales a la tabla
             materials.forEach(material => {
                 const row = `<tr>
                     <td>${material.id}</td>
                     <td>${material.description}</td>
-                    <td>${material.group_has_course.group.classroom}</td>
-                    <td>${material.group_has_course.group.teacher.user.name} ${material.group_has_course.group.teacher.user.lastname}</td>
-                    <td>${material.group_has_course.course.courseName}</td>
+                    <td>${material.groupHasCourse.group.classroom}</td>
+                    <td>${material.groupHasCourse.group.teacher.user.name} ${material.groupHasCourse.group.teacher.user.lastname}</td>
+                    <td>${material.groupHasCourse.course.courseName}</td>
                 </tr>`;
                 tbody.innerHTML += row;
             });
@@ -231,7 +227,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
     }
-
 
 
     function fetchMaterialsByGroupAndCourse( groupId, courseId) {
@@ -254,10 +249,12 @@ document.addEventListener("DOMContentLoaded", function() {
             });
     }
 
+
     function showMaterialsOptions() {
         const materialSelect = document.getElementById("materialSelect");
         materialSelect.innerHTML = materials.map(material => `<option value="${material.id}">${material.description}</option>`).join('');
     }
+
 
     function fetchMaterials() {
         fetch('/didactic-materials/')

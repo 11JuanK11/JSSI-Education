@@ -1,7 +1,6 @@
 package project.jssi_education.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -22,7 +21,7 @@ public class Grade implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "group_has_course_id", nullable = false)
-    private GroupCourse group_has_course;
+    private GroupCourse groupHasCourse;
 
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)

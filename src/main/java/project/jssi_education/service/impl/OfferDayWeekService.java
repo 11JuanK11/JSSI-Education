@@ -65,9 +65,9 @@ public class OfferDayWeekService implements IOfferDayWeekService {
 
     @Override
     public void deleteById(Long id) throws ResourceNotFoundException {
-        if (!offerDayWeekRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Offer not found with id: " + id);
-        }
+//        if (!offerDayWeekRepository.existsById(id)) {
+//            throw new ResourceNotFoundException("Offer not found with id: " + id);
+//        }
         offerDayWeekRepository.deleteById(id);
     }
 
@@ -98,7 +98,7 @@ public class OfferDayWeekService implements IOfferDayWeekService {
         List<Grade> grades = gradeService.findAll();
 
         for (Grade grade : grades){
-            if(grade.getGroup_has_course().getGroup().getOfferDayWeek().getId().equals(id)){
+            if(grade.getGroupHasCourse().getGroup().getOfferDayWeek().getId().equals(id)){
                 gradeService.deleteById(grade.getGradeId());
             }
         }
@@ -108,7 +108,7 @@ public class OfferDayWeekService implements IOfferDayWeekService {
         List<DidacticMaterial> didacticMaterials = didacticMaterialService.findAll();
 
         for (DidacticMaterial didacticMaterial : didacticMaterials){
-            if(didacticMaterial.getGroup_has_course().getGroup().getOfferDayWeek().getId().equals(id)){
+            if(didacticMaterial.getGroupHasCourse().getGroup().getOfferDayWeek().getId().equals(id)){
                 didacticMaterialService.deleteById(didacticMaterial.getId());
             }
         }
@@ -118,7 +118,7 @@ public class OfferDayWeekService implements IOfferDayWeekService {
         List<TeacherEvaluation> teacherEvaluations = teacherEvaluationService.findAll();
 
         for (TeacherEvaluation teacherEvaluation : teacherEvaluations){
-            if(teacherEvaluation.getGroup_has_course().getGroup().getOfferDayWeek().getId().equals(id)){
+            if(teacherEvaluation.getGroupHasCourse().getGroup().getOfferDayWeek().getId().equals(id)){
                 teacherEvaluationService.deleteById(teacherEvaluation.getId());
             }
         }
@@ -128,7 +128,7 @@ public class OfferDayWeekService implements IOfferDayWeekService {
         List<Attendance> attendances = attendanceService.findAll();
 
         for (Attendance attendance : attendances){
-            if(attendance.getGroup_has_course().getGroup().getOfferDayWeek().getId().equals(id)){
+            if(attendance.getGroupHasCourse().getGroup().getOfferDayWeek().getId().equals(id)){
                 attendanceService.deleteById(attendance.getAttendanceId());
             }
         }

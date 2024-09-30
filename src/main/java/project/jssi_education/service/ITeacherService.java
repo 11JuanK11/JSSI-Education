@@ -4,7 +4,6 @@ import project.jssi_education.entity.Teacher;
 import project.jssi_education.exception.ResourceNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ITeacherService {
     Teacher findByTeacherIdNumber(int idNumber) throws ResourceNotFoundException;

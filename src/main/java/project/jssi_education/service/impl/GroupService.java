@@ -54,8 +54,7 @@ public class GroupService implements IGroupService {
     @Override
     public Group update(Long id, Group group) throws ResourceNotFoundException {
         Group existingGroup = findById(id);
-        System.out.println(existingGroup.toString());
-        if(group.getOfferDayWeek() != null || group.getTeacher() != null || group.getClassroom() != null || group.getGroup_has_course() != null || group.getNumberStudents() != null) {
+        if(group.getOfferDayWeek() != null || group.getTeacher() != null || group.getClassroom() != null || group.getGroupHasCourse() != null || group.getNumberStudents() != null) {
             if (group.getOfferDayWeek() != null && group.getOfferDayWeek().getId() != null) {
                 existingGroup.setOfferDayWeek(offerDayWeekService.findById(group.getOfferDayWeek().getId()));
             }
@@ -65,8 +64,8 @@ public class GroupService implements IGroupService {
             if (group.getClassroom() != null){
                 existingGroup.setClassroom(group.getClassroom());
             }
-            if(group.getGroup_has_course() != null){
-                existingGroup.setGroup_has_course(group.getGroup_has_course());
+            if(group.getGroupHasCourse() != null){
+                existingGroup.setGroupHasCourse(group.getGroupHasCourse());
             }
             if( group.getNumberStudents() != null){
                 existingGroup.setNumberStudents(group.getNumberStudents());

@@ -36,7 +36,7 @@ public class AttendanceService implements IAttendanceService {
 
     @Override
     public Attendance insert(Attendance attendance) throws ResourceNotFoundException {
-        if(attendance.getGroup_has_course().getId() == null || attendance.getStudent().getId() == null){//get user get idnumber
+        if(attendance.getGroupHasCourse().getId() == null || attendance.getStudent().getId() == null){//get user get idnumber
             throw new ResourceNotFoundException("Attendance information is missing.");
         }
         return attendanceRepository.save(attendance);
@@ -45,7 +45,7 @@ public class AttendanceService implements IAttendanceService {
     @Override
     public Attendance update(Long id, Attendance attendance) throws ResourceNotFoundException {
         Attendance attendance1 = findById(id);
-        if (attendance.getStudent().getId() != null && attendance.getGroup_has_course().getId() != null){
+        if (attendance.getStudent().getId() != null && attendance.getGroupHasCourse().getId() != null){
             if (attendance.getDate() != null){
                 attendance1.setDate(attendance.getDate());
             }

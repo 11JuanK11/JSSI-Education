@@ -35,7 +35,7 @@ public class Group implements Serializable {
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private Set<GroupCourse> group_has_course;
+    private Set<GroupCourse> groupHasCourse;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "offer_day_week_id")

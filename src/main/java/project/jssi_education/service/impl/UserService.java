@@ -16,7 +16,7 @@ public class UserService implements IUserService {
     private IUserRepository userRepository;
 
     @Override
-    public User findbyId(Long id){
+    public User findById(Long id){
         for (User user: userRepository.findAll()){
             if (user.getId().equals(id)){
                 return user;

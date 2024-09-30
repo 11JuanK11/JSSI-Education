@@ -57,7 +57,6 @@ public class GroupController {
 
     @PostMapping("/")
     public ResponseEntity<?> insert(@RequestBody Group group) {
-        System.out.println("hola" + group.toString());
         try {
             OfferDayWeek offerDayWeek = offerDayWeekService.findById(group.getOfferDayWeek().getId());
             Teacher teacher = teacherService.findByTeacherIdNumber(group.getTeacher().getUser().getIdNumber());

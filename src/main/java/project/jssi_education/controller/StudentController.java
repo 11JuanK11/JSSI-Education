@@ -11,8 +11,6 @@ import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.service.IStudentService;
 import project.jssi_education.service.IUserService;
 import project.jssi_education.service.impl.DegreeService;
-import project.jssi_education.service.impl.StudentService;
-import project.jssi_education.service.impl.UserService;
 
 import java.util.List;
 import java.util.Map;
@@ -34,17 +32,6 @@ public class StudentController {
         return studentService.FindAll();
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<?> findOne(@PathVariable Long id) {
-//        try {
-//            Student student = studentService.FindbyId(id);
-//            return new ResponseEntity<>(student, HttpStatus.OK);
-//        } catch (ResourceNotFoundException ex) {
-//            return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.NOT_FOUND);
-//        } catch (Exception ex) {
-//            return new ResponseEntity<>(Map.of("message", "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
 
     @GetMapping("/{idNumber}")
     public ResponseEntity<?> findOneByIdNumber(@PathVariable int idNumber) {
@@ -83,19 +70,6 @@ public class StudentController {
     }
 
 
-
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<?> deleteById(@PathVariable Long id) {
-//        try {
-//            studentService.deleteById(id);
-//            return new ResponseEntity<>(Map.of("message", "Student successfully deleted."), HttpStatus.NO_CONTENT);
-//        } catch (ResourceNotFoundException ex) {
-//            return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.NOT_FOUND);
-//        } catch (Exception ex) {
-//            return new ResponseEntity<>(Map.of("message", "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
     @DeleteMapping("/{idNumber}")
     public ResponseEntity<?> deleteByIdNumber(@PathVariable int idNumber) {
         try {
@@ -109,18 +83,6 @@ public class StudentController {
     }
 
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Student student) {
-//        try {
-//            studentService.update(id, student);
-//            return new ResponseEntity<>("Student successfully updated.", HttpStatus.OK);
-//        } catch (ResourceNotFoundException ex) {
-//            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-//        } catch (Exception ex) {
-//            return new ResponseEntity<>("An error occurred while updating the student.", HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
     @PutMapping("/{idNumber}")
     public ResponseEntity<?> updateByIdNumber(@PathVariable int idNumber, @RequestBody Student student) {
         try {
@@ -132,9 +94,5 @@ public class StudentController {
             return new ResponseEntity<>("An error occurred while updating the student.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-
-
 
 }
