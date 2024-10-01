@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
         grades.forEach(grade => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${grade.courseName}</td>
-                <td>${grade.gradeValue}</td>
+                <td>${grade.groupHasCourse.course.courseName}</td>
+                <td>${(grade.testOne + grade.testTwo + grade.followUp) / 3} </td>
             `;
             tbody.appendChild(row);
         });
