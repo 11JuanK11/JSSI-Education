@@ -2,10 +2,7 @@ package project.jssi_education.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.jssi_education.entity.Course;
-import project.jssi_education.entity.Group;
-import project.jssi_education.entity.GroupCourse;
-import project.jssi_education.entity.Teacher;
+import project.jssi_education.entity.*;
 import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.repository.IGroupRepository;
 import project.jssi_education.service.IGroupService;
@@ -23,6 +20,17 @@ public class GroupService implements IGroupService {
 
     @Autowired
     private  TeacherService teacherService;
+
+    @Autowired
+    private GroupCourseService groupCourseService;
+    @Autowired
+    private AttendanceService attendanceService;
+    @Autowired
+    private GradeService gradeService;
+    @Autowired
+    private DidacticMaterialService didacticMaterialService;
+    @Autowired
+    private TeacherEvaluationService teacherEvaluationService;
 
     @Override
     public Group findById(Long id) throws ResourceNotFoundException {
@@ -110,6 +118,56 @@ public class GroupService implements IGroupService {
 
         }
         return groupsAux;
+    }
+
+    public void deleteGrade(Long id){
+        List<Grade> grades = gradeService.findAll();
+
+        for (Grade grade : grades){
+            if(grade.getGroupHasCourse().getGroup().getOfferDayWeek().getId().equals(id)){
+                gradeService.deleteById(grade.getGradeId());
+            }
+        }
+    }
+
+    public void deleteDidacticMaterial(Long id){
+        List<DidacticMaterial> didacticMaterials = didacticMaterialService.findAll();
+
+        for (DidacticMaterial didacticMaterial : didacticMaterials){
+            if(didacticMaterial.getGroupHasCourse().getGroup().getGroupId().equals(id)){
+                didacticMaterialService.deleteById(didacticMaterial.getId());
+            }
+        }
+    }
+
+    public void deleteTeacherEvaluation(Long id){
+        List<TeacherEvaluation> teacherEvaluations = teacherEvaluationService.findAll();
+
+        for (TeacherEvaluation teacherEvaluation : teacherEvaluations){
+            if(teacherEvaluation.getGroupHasCourse().getGroup().getGroupId().equals(id)){
+                teacherEvaluationService.deleteById(teacherEvaluation.getId());
+            }
+        }
+    }
+
+    public void deleteAttendance(Long id){
+        List<Attendance> attendances = attendanceService.findAll();
+
+        for (Attendance attendance : attendances){
+            if(attendance.getGroupHasCourse().getGroup().getGroupId().equals(id)){
+                attendanceService.deleteById(attendance.getAttendanceId());
+            }
+        }
+    }
+
+    public void deleteGroupCourse(Long id){
+        List<GroupCourse> groupsCourses = groupCourseService.findAll();
+
+        for (GroupCourse groupCourse : groupsCourses){
+            if(groupCourse.getGroup().getGroupId().equals(id)){
+                groupCourseService.deleteById(groupCourse.getId());
+            }
+        }
     }
 
 }

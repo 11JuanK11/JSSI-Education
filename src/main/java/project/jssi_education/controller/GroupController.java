@@ -24,13 +24,14 @@ import project.jssi_education.service.IGroupService;
 import project.jssi_education.service.IOfferDayWeekService;
 import project.jssi_education.service.IOfferService;
 import project.jssi_education.service.ITeacherService;
+import project.jssi_education.service.impl.GroupService;
 
 @RestController
 @RequestMapping("/groups")
 public class GroupController {
 
     @Autowired
-    private IGroupService groupService;
+    private GroupService groupService;
 
     @Autowired
     private IOfferDayWeekService offerDayWeekService;
@@ -74,6 +75,11 @@ public class GroupController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Long id) {
         try {
+            groupService.deleteTeacherEvaluation(id);
+            groupService.deleteDidacticMaterial(id);
+            groupService.deleteGrade(id);
+            groupService.deleteAttendance(id);
+            groupService.deleteGroupCourse(id);
             groupService.deleteById(id);
             return new ResponseEntity<>(Map.of("message", "Group successfully deleted."), HttpStatus.NO_CONTENT);
         } catch (ResourceNotFoundException ex) {
