@@ -42,25 +42,21 @@ window.addEventListener("load", function () {
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>ID Number</th>
                         <th>Name</th>
                         <th>Lastname</th>
                         <th>Username</th>
                         <th>Email</th>
-                        <th>Password</th>
                     </tr>
                 </thead>
                 <tbody>
                     ${managers.map(manager => `
                         <tr>
-                            <td>${manager.id}</td>
                             <td>${manager.user.idNumber}</td>
                             <td>${manager.user.name}</td>
                             <td>${manager.user.lastname}</td>
                             <td>${manager.user.userName}</td>
                             <td>${manager.user.email}</td>
-                            <td>${manager.user.password}</td>
                         </tr>
                     `).join('')}
                 </tbody>
