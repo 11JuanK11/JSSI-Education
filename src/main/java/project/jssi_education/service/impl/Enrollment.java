@@ -1,13 +1,10 @@
-package project.jssi_education.service;
+package project.jssi_education.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.jssi_education.entity.*;
 import project.jssi_education.repository.IAttendanceRepository;
 import project.jssi_education.repository.ITeacherEvaluationRepository;
-import project.jssi_education.service.impl.GradeService;
-import project.jssi_education.service.impl.GroupCourseService;
-import project.jssi_education.service.impl.StudentService;
 
 import java.io.Serializable;
 
