@@ -1,6 +1,6 @@
 window.addEventListener("load", function () {
     const updateBtn = document.getElementById('updateBtn');
-    const deleteBtn = document.getElementById('deleteBtn');
+    const degreeId = document.getElementById('degreeId').value;
     const findAllBtn = document.getElementById('findAllBtn');
     const formContainer = document.getElementById('formContainer');
 
@@ -10,7 +10,7 @@ window.addEventListener("load", function () {
 
 
     findAllBtn.addEventListener('click', function () {
-        const url = '/group-course/';
+        const url = `/group-course/degree/${degreeId}`;
         fetch(url)
             .then(response => {
                 if (!response.ok) {
