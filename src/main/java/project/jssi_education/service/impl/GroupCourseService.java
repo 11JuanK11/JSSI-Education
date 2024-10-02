@@ -3,9 +3,7 @@ package project.jssi_education.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
-import project.jssi_education.entity.Grade;
-import project.jssi_education.entity.Group;
-import project.jssi_education.entity.GroupCourse;
+import project.jssi_education.entity.*;
 import project.jssi_education.exception.ResourceNotFoundException;
 import project.jssi_education.repository.ICourseRepository;
 
@@ -23,6 +21,8 @@ public class GroupCourseService implements IGroupCourseService {
     private ICourseRepository courseRepository;
     @Autowired
     private IGroupRepository groupRepository;
+    @Autowired
+    private DegreeCourseService degreeCourseService;
 
     @Override
     public GroupCourse findById(Long id) throws ResourceNotFoundException {
@@ -108,6 +108,25 @@ public class GroupCourseService implements IGroupCourseService {
         for (Grade grade: gradesAux){
             for (GroupCourse groupCourse: findAll()){
                 if (grade.getGroupHasCourse().getId().equals(groupCourse.getId())){
+                    groupCourseAux.add(groupCourse);
+                }
+            }
+        }
+        return groupCourseAux;
+    }
+
+    public List<GroupCourse> getGroupsCourseByDegree(Degree degree) throws ResourceNotFoundException {
+        List<GroupCourse> groupCourseAux = new ArrayList<>();
+        List<DegreeCourse> degreeCourses = new ArrayList<>();
+        for (DegreeCourse degreeCourse: degreeCourseService.getAllDegreeCourses()){
+            if (degreeCourse.getDegree().getId().equals(degree.getId())){
+                degreeCourses.add(degreeCourse);
+            }
+        }
+
+        for (DegreeCourse degreeCourse: degreeCourses){
+            for (GroupCourse groupCourse: findAll()){
+                if (degreeCourse.getCourse().getCourseId().equals(groupCourse.getCourse().getCourseId())){
                     groupCourseAux.add(groupCourse);
                 }
             }

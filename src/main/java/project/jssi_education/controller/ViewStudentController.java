@@ -26,6 +26,7 @@ public class ViewStudentController {
     private GroupCourseService groupCourseService;
 
 
+
     @GetMapping("/schedule-student")
     public String schedule(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
@@ -42,6 +43,14 @@ public class ViewStudentController {
         model.addAttribute("userId", loggedInUser.getIdNumber());
 
         return "gradeStudent";
+    }
+
+    @GetMapping("/enrollment")
+    public String enrollment(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        model.addAttribute("userId", loggedInUser.getIdNumber());
+        model.addAttribute("degreeId",studentService.findByIdNumber(loggedInUser.getIdNumber()).getDegree().getId());
+        return "enrollment";
     }
 
 }

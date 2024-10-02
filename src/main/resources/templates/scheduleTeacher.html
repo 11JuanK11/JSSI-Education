@@ -50,10 +50,10 @@
                         <th:block th:each="group : ${groups}">
                             <li class="list-group-item">
                                 <h5 th:text="${group.group.classroom}">Name</h5>
-                                <p th:text="'Número de estudiantes: ' + ${group.group.numberStudents}"></p>
-                                <p th:text="'Dia: ' + ${group.group.offerDayWeek.dayWeek.day}"></p>
-                                <p th:text="'Hora inicio: ' + ${group.group.offerDayWeek.offer.startTime}"></p>
-                                <p th:text="'Hora fin: ' + ${group.group.offerDayWeek.offer.endTime}"></p>
+                                <p th:text="'Number students ' + ${group.group.numberStudents}"></p>
+                                <p th:text="'Day: ' + ${group.group.offerDayWeek.dayWeek.day}"></p>
+                                <p th:text="'Start time: ' + ${group.group.offerDayWeek.offer.startTime}"></p>
+                                <p th:text="'End time: ' + ${group.group.offerDayWeek.offer.endTime}"></p>
 
                                 <h6>Course:</h6>
                                 <ul>

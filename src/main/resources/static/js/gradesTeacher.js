@@ -10,7 +10,7 @@ window.addEventListener("load", function () {
     searchBtn.addEventListener('click', function () {
         renderForm(`
                 <div class="form">
-                    <h2><strong>Search Group by ID</strong></h2>
+                    <h2><strong>Search Student by Id Number</strong></h2>
                     <form id="searchGroupForm">
                         <div class="mb-3">
                             <input type="text" class="form-control" id="idInput" placeholder="Enter Student ID" required>
@@ -47,7 +47,7 @@ window.addEventListener("load", function () {
             fetch(url)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Group not found');
+                        throw new Error('Student not found');
                     }
                     return response.json();
                 })
