@@ -128,7 +128,6 @@ Before you begin, ensure you have the following installed on your machine:
    ```
 
 #### 4. **Connection DB MySQL**
-**[Canva](https://www.canva.com/)**
 
 ##### Step 1: Open MySQL and Select the Root User Connection
 
